@@ -8,6 +8,8 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.scribe.builder.api.Api;
 import org.scribe.builder.api.TwitterApi;
 
+import ca.owenpeterson.twittegorize.utils.KeyManager;
+
 /**
  * Created by Owen on 3/14/2015.
  */
@@ -15,8 +17,8 @@ public class TwitterClient extends OAuthBaseClient {
 
     public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class;
     public static final String REST_URL = "https://api.twitter.com/1.1/";
-    public static final String REST_CONSUMER_KEY = "ybKcPWQubOZrxBCA0jrZUVNrb";
-    public static final String REST_CONSUMER_SECRET = "7e8IHqlg9seOqhTi7Jpzn89L3Zi1Ete6aH9IenlVh4m6V1n73R";
+    public static final String REST_CONSUMER_KEY = KeyManager.getConsumerKey();
+    public static final String REST_CONSUMER_SECRET = KeyManager.getCosnumerSecret();
     public static final String REST_CALLBACK_URL = "oauth://ca.owenpeterson.twittergorize";
 
     public TwitterClient(Context context) {
