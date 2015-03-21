@@ -16,16 +16,18 @@ import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.data.CategoryManager;
 import ca.owenpeterson.twittegorize.models.Category;
 import ca.owenpeterson.twittegorize.rest.TwitterApplication;
+import ca.owenpeterson.twittegorize.views.fragments.NavigationDrawerFragment;
+import ca.owenpeterson.twittegorize.views.fragments.TwitterFeedFragment;
 
 
 public class CategoryViewSelector extends ActionBarActivity
-        implements ca.owenpeterson.twittegorize.views.fragments.NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
-    private ca.owenpeterson.twittegorize.views.fragments.NavigationDrawerFragment mNavigationDrawerFragment;
-    private ca.owenpeterson.twittegorize.views.fragments.TwitterFeedFragment currentFragment;
+    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private TwitterFeedFragment currentFragment;
     //private TweetCacheService tweetCacheService = new TweetCacheService(this);
     private CategoryManager categoryManager;
     private final int STANDARD_REQUEST = 1;
@@ -44,7 +46,7 @@ public class CategoryViewSelector extends ActionBarActivity
 
         setContentView(R.layout.activity_category_view_selector);
 
-        mNavigationDrawerFragment = (ca.owenpeterson.twittegorize.views.fragments.NavigationDrawerFragment)
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
@@ -63,7 +65,7 @@ public class CategoryViewSelector extends ActionBarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         //create a fragment object palceholder
-        ca.owenpeterson.twittegorize.views.fragments.TwitterFeedFragment fragment = null;
+        TwitterFeedFragment fragment = null;
 
         String fragmentName = "CUSTOM_FRAGMENT";
         // update the main content by replacing fragments
@@ -76,7 +78,7 @@ public class CategoryViewSelector extends ActionBarActivity
             case 0:
                 //load all the tweets by default.
                 bundle.putLong("categoryId", position);
-                fragment = new ca.owenpeterson.twittegorize.views.fragments.TwitterFeedFragment();
+                fragment = new TwitterFeedFragment();
                 fragment.setArguments(bundle);
                 setCurrentFragment(fragment);
                 break;
@@ -113,13 +115,13 @@ public class CategoryViewSelector extends ActionBarActivity
         long Id = selectedCategory.getId();
 
         Bundle bundle = new Bundle();
-        ca.owenpeterson.twittegorize.views.fragments.TwitterFeedFragment fragment = null;
+        TwitterFeedFragment fragment = null;
 
         bundle.putLong("categoryId", Id);
 
         bundle.putString("categoryName", selectedCategory.getCategoryName());
 
-        fragment = new ca.owenpeterson.twittegorize.views.fragments.TwitterFeedFragment();
+        fragment = new TwitterFeedFragment();
         fragment.setArguments(bundle);
         setCurrentFragment(fragment);
     }
@@ -190,7 +192,7 @@ public class CategoryViewSelector extends ActionBarActivity
      * In the future it might make more sense to make an interface.
      * @param currentFragment
      */
-    public void setCurrentFragment(ca.owenpeterson.twittegorize.views.fragments.TwitterFeedFragment currentFragment) {
+    public void setCurrentFragment(TwitterFeedFragment currentFragment) {
         this.currentFragment = currentFragment;
     }
 
