@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="text_category_default_feed" type="id">All Tweets</item>
+    <item name="text_category_help" type="id">Help</item>
+</resources>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ca.owenpeterson.twittegorize" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="21" />
+
+    <application
+        android:name=".rest.TwitterApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".views.activities.LoginActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="ca.owenpeterson.twittergorize"
+                    android:scheme="oauth" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".views.activities.CategoryViewSelector"
+            android:label="@string/title_activity_category_view_selector" >
+        </activity>
+
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="/storage/emulated/0/Twittegorize.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="1" />
+        <meta-data
+            android:name="AA_MODELS"
+            android:value="ca.owenpeterson.twittegorize.models.Tweet,
+            ca.owenpeterson.twittegorize.models.User,
+            ca.owenpeterson.twittegorize.models.Category,
+            ca.owenpeterson.twittegorize.models.UserCategory" />
+
+        <activity
+            android:name=".views.activities.CategoryManagerView"
+            android:label="@string/title_activity_category_manager_view"
+            android:parentActivityName=".views.activities.CategoryViewSelector" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.activities.CategoryViewSelector" />
+        </activity>
+        <activity
+            android:name=".views.activities.CategoryUserView"
+            android:label="@string/title_activity_category_user_view"
+            android:parentActivityName=".views.activities.CategoryManagerView" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.activities.CategoryManagerView" />
+        </activity>
+    </application>
+
+</manifest>
