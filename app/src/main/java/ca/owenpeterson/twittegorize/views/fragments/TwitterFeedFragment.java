@@ -48,7 +48,6 @@ public class TwitterFeedFragment extends Fragment {
         } else {
             //add a new method to the tweetmanager to get tweets by categoryId
             tweets = tweetService.getTweetsByCategoryId(categoryId);
-            Toast.makeText(getActivity(), "Category ID:" + categoryId + " Category Name: " + argBundle.getString("categoryName"), Toast.LENGTH_SHORT).show();
         }
 
         //maybe get this from the database instead
