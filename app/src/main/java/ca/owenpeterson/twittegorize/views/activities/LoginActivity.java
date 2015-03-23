@@ -15,7 +15,7 @@ import ca.owenpeterson.twittegorize.utils.OnFeedLoaded;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 
-    private static final int STANDARD_REQUEST = 1;
+    private static final int RETURN_TO_LOGIN = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
             @Override
             public void onFeedLoaded() {
                 Intent i = new Intent(getBaseContext(), CategoryViewSelector.class);
-                startActivityForResult(i, STANDARD_REQUEST);
+                startActivityForResult(i, RETURN_TO_LOGIN);
             }
         };
 
@@ -67,7 +67,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode) {
-            case STANDARD_REQUEST:
+            case RETURN_TO_LOGIN:
                 if (resultCode == RESULT_OK) {
                     finish();
                 }
