@@ -28,5 +28,7 @@
     <string name="title_activity_category_user_view">Add/Remove Users</string>
     <string name="text_button_manage_category">Add/Remove Users</string>
     <string name="title_activity_tweet_details">TweetDetailsActivity</string>
+    <string name="fake_body">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et ma</string>
+    <string name="text_button_reply">Reply</string>
 
 </resources>

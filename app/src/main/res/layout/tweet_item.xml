@@ -31,8 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="12sp"
-                android:text="Test Name" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tweet_screen_name"
@@ -68,7 +67,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"/>
-
 
         </LinearLayout>
 
