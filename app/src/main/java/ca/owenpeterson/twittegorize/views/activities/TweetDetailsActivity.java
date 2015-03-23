@@ -10,7 +10,7 @@ import ca.owenpeterson.twittegorize.R;
 
 public class TweetDetailsActivity extends ActionBarActivity {
 
-    private static final int RETURN_TO_TWEET_LIST = 2;
+    //private static final int TO_TWEETS_FROM_DETAILS = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,24 +37,14 @@ public class TweetDetailsActivity extends ActionBarActivity {
             case R.id.action_settings:
                 break;
             case android.R.id.home:
-                onBackPressed();
-                break;
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
+                return true;
             default:
                 break;
         }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
-        super.onBackPressed();
     }
 }

@@ -34,8 +34,6 @@ public class TwitterFeedFragment extends Fragment {
     private long latestTweetId;
     private OnFeedLoaded listener;
 
-    private final int RETURN_TO_TWEET_LIST = 2;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,7 +73,7 @@ public class TwitterFeedFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), TweetDetailsActivity.class);
-                startActivityForResult(intent, RETURN_TO_TWEET_LIST);
+                startActivity(intent);
             }
         });
     }
@@ -101,6 +99,8 @@ public class TwitterFeedFragment extends Fragment {
     }
 
 
+
+
     public long getLatestTweetId() {
         return latestTweetId;
     }
@@ -108,5 +108,4 @@ public class TwitterFeedFragment extends Fragment {
     private void setLatestTweetId(long id) {
         this.latestTweetId = id;
     }
-
 }

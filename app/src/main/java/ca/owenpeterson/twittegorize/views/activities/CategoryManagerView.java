@@ -79,8 +79,10 @@ public class CategoryManagerView extends ActionBarActivity {
             case R.id.action_settings:
                 break;
             case android.R.id.home:
-                this.onBackPressed();
-                break;
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
