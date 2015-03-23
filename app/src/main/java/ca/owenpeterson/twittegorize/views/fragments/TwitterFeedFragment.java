@@ -81,9 +81,8 @@ public class TwitterFeedFragment extends Fragment {
     }
 
     public void refreshFeed() {
-        Tweet latestTweet = tweetService.getLatestTweet();
-        long latestTweetId = latestTweet.getTweetId();
-        //long latestTweetId = tweets.get(0).getTweetId();
+        //Tweet latestTweet = tweetService.getLatestTweet();
+        //long latestTweetId = latestTweet.getTweetId();
         listener = new OnFeedLoaded() {
             @Override
             public void onFeedLoaded() {
@@ -99,11 +98,8 @@ public class TwitterFeedFragment extends Fragment {
             }
         };
 
-        tweetService.putNewTweetsToDatabase(latestTweetId, listener);
+        tweetService.putNewTweetsToDatabase(getLatestTweetId(), listener);
     }
-
-
-
 
     public long getLatestTweetId() {
         return latestTweetId;
