@@ -87,6 +87,13 @@ public class TweetService {
 
     }
 
+    public Tweet getLatestTweet() {
+
+        Tweet latestTweet = new Select().from(Tweet.class).orderBy("Id DESC").limit(1).executeSingle();
+
+        return latestTweet;
+    }
+
 
     private class TweetResponseHandler extends JsonHttpResponseHandler {
 
