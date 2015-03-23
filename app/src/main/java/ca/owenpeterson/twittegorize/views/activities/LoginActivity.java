@@ -45,9 +45,6 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 
         TweetService tweetService = new TweetService(this);
         tweetService.putTweetsToDatabase(listener);
-
-//        Intent i = new Intent(getBaseContext(), CategoryViewSelector.class);
-//        startActivityForResult(i, STANDARD_REQUEST);
     }
 
     // OAuth authentication flow failed, handle the error
