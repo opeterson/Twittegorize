@@ -47,8 +47,7 @@ public class TwitterFeedFragment extends Fragment {
         if (categoryId == 0) {
             tweets = tweetService.getAllTweets();
         } else {
-            //add a new method to the tweetmanager to get tweets by categoryId
-            tweets = tweetService.getTweetsByCategoryId(categoryId);
+             tweets = tweetService.getTweetsByCategoryId(categoryId);
         }
 
         //get the latest tweet from the database
@@ -81,8 +80,6 @@ public class TwitterFeedFragment extends Fragment {
     }
 
     public void refreshFeed() {
-        //Tweet latestTweet = tweetService.getLatestTweet();
-        //long latestTweetId = latestTweet.getTweetId();
         listener = new OnFeedLoaded() {
             @Override
             public void onFeedLoaded() {
