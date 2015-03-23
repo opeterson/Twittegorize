@@ -81,8 +81,6 @@ public class TweetService {
         userIds = userIds.replace("[", "");
         userIds = userIds.replace("]", "");
 
-        Log.d("USER IDS: ",userIds);
-
         List<Tweet> tweets = new Select().from(Tweet.class).where("User IN (" + userIds + ")").orderBy("tweetId DESC").execute();
 
         return tweets;
