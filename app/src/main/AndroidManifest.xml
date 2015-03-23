@@ -47,10 +47,7 @@
             android:value="1" />
         <meta-data
             android:name="AA_MODELS"
-            android:value="ca.owenpeterson.twittegorize.models.Tweet,
-            ca.owenpeterson.twittegorize.models.User,
-            ca.owenpeterson.twittegorize.models.Category,
-            ca.owenpeterson.twittegorize.models.UserCategory" />
+            android:value="ca.owenpeterson.twittegorize.models.Tweet,             ca.owenpeterson.twittegorize.models.User,             ca.owenpeterson.twittegorize.models.Category,             ca.owenpeterson.twittegorize.models.UserCategory" />
 
         <activity
             android:name=".views.activities.CategoryManagerView"
@@ -67,6 +64,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".views.activities.CategoryManagerView" />
+        </activity>
+        <activity
+            android:name=".views.activities.TweetDetailsActivity"
+            android:label="@string/title_activity_tweet_details"
+            android:parentActivityName=".views.activities.CategoryViewSelector" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.owenpeterson.twittegorize.views.activities.CategoryViewSelector" />
         </activity>
     </application>
 

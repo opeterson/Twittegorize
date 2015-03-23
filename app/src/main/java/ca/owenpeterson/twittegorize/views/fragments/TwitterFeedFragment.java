@@ -1,5 +1,6 @@
 package ca.owenpeterson.twittegorize.views.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,16 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.data.TweetService;
-import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.listviewadapters.TweetsAdapter;
+import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.utils.AppConstants;
 import ca.owenpeterson.twittegorize.utils.OnFeedLoaded;
+import ca.owenpeterson.twittegorize.views.activities.TweetDetailsActivity;
 
 /**
  * Created by Owen on 3/14/2015.
@@ -71,9 +72,8 @@ public class TwitterFeedFragment extends Fragment {
         tweetsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Intent intent = new Intent(getActivity(), TweetDetailsActivity.class);
-                //startActivity(intent);
-                Toast.makeText(getActivity(), "Item Clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), TweetDetailsActivity.class);
+                startActivity(intent);
             }
         });
     }

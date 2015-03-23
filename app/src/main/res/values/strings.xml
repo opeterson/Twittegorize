@@ -27,5 +27,6 @@
     <string name="text_modify_users">Select a category to add or delete users from that category</string>
     <string name="title_activity_category_user_view">Add/Remove Users</string>
     <string name="text_button_manage_category">Add/Remove Users</string>
+    <string name="title_activity_tweet_details">TweetDetailsActivity</string>
 
 </resources>
