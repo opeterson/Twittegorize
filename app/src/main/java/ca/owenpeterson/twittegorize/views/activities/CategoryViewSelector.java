@@ -30,7 +30,7 @@ public class CategoryViewSelector extends ActionBarActivity
     private TwitterFeedFragment currentFragment;
     //private TweetCacheService tweetCacheService = new TweetCacheService(this);
     private CategoryManager categoryManager;
-    private final int STANDARD_REQUEST = 1;
+    private final int RETURN_TO_TWEET_LIST = 2;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -86,7 +86,8 @@ public class CategoryViewSelector extends ActionBarActivity
                 Intent intent = new Intent(this, CategoryManagerView.class);
                 //may have to change this to be for result again, so that you can use the onActivityResult method
                 //which will prevent refreshing of the fragment.
-                startActivityForResult(intent, STANDARD_REQUEST);
+                startActivityForResult(intent, RETURN_TO_TWEET_LIST);
+                //startActivity(intent);
                 break;
             case 2:
                 Toast.makeText(getApplicationContext(), "Help not yet available", Toast.LENGTH_LONG).show();
@@ -207,7 +208,7 @@ public class CategoryViewSelector extends ActionBarActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode) {
-            case STANDARD_REQUEST:
+            case RETURN_TO_TWEET_LIST:
                 if (resultCode == RESULT_OK) {
                     //I'm not sure why I had this here.
                     //I think I want the user to explicitly refresh the feed.
