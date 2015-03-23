@@ -8,7 +8,7 @@ import android.view.View;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
 import ca.owenpeterson.twittegorize.R;
-import ca.owenpeterson.twittegorize.data.TweetCacheService;
+import ca.owenpeterson.twittegorize.data.TweetService;
 import ca.owenpeterson.twittegorize.rest.TwitterClient;
 import ca.owenpeterson.twittegorize.utils.OnFeedLoaded;
 
@@ -43,7 +43,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
             }
         };
 
-        TweetCacheService tweetService = new TweetCacheService(this);
+        TweetService tweetService = new TweetService(this);
         tweetService.putTweetsToDatabase(listener);
 
 //        Intent i = new Intent(getBaseContext(), CategoryViewSelector.class);

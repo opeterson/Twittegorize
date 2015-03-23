@@ -13,7 +13,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import ca.owenpeterson.twittegorize.R;
-import ca.owenpeterson.twittegorize.data.TweetCacheService;
+import ca.owenpeterson.twittegorize.data.TweetService;
 import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.listviewadapters.TweetsAdapter;
 import ca.owenpeterson.twittegorize.utils.AppConstants;
@@ -28,7 +28,7 @@ public class TwitterFeedFragment extends Fragment {
     private ListView tweetsListView;
     private TweetsAdapter tweetsAdapter;
     private long categoryId;
-    private TweetCacheService tweetService;
+    private TweetService tweetService;
     private List<Tweet> tweets;
     private long latestTweetId;
     private OnFeedLoaded listener;
@@ -38,7 +38,7 @@ public class TwitterFeedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_twitter_feed, container, false);
 
-        tweetService = new TweetCacheService(getActivity());
+        tweetService = new TweetService(getActivity());
 
         Bundle argBundle = getArguments();
         this.categoryId = argBundle.getLong(AppConstants.Strings.CATEGORY_ID);

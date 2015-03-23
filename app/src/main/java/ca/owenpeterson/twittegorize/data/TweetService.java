@@ -27,13 +27,13 @@ import ca.owenpeterson.twittegorize.utils.OnFeedLoaded;
  *
  * Consider renaming this to TweetManager
  */
-public class TweetCacheService {
+public class TweetService {
     private Context context;
     private ArrayList<Tweet> tweets;
     private TweetComparator comparator = new TweetComparator();
     private ProgressDialog dialog;
 
-    public TweetCacheService(Context context) {
+    public TweetService(Context context) {
         this.context = context;
     }
 
