@@ -33,6 +33,7 @@ public class TwitterFeedFragment extends Fragment {
     private List<Tweet> tweets;
     private long latestTweetId;
     private OnFeedLoaded listener;
+    private ItemClickListener itemClickListener;
 
     @Nullable
     @Override
@@ -70,13 +71,8 @@ public class TwitterFeedFragment extends Fragment {
         tweetsAdapter = new TweetsAdapter(getActivity(), tweets);
         tweetsListView.setAdapter(tweetsAdapter);
 
-        tweetsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), TweetDetailsActivity.class);
-                startActivity(intent);
-            }
-        });
+        itemClickListener = new ItemClickListener();
+        tweetsListView.setOnItemClickListener(itemClickListener);
     }
 
     public void refreshFeed() {
@@ -104,5 +100,16 @@ public class TwitterFeedFragment extends Fragment {
 
     private void setLatestTweetId(long id) {
         this.latestTweetId = id;
+    }
+
+    private class ItemClickListener implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Tweet selectedTweet = tweets.get(position);
+            long tweetId = selectedTweet.getTweetId();
+            Intent intent = new Intent(getActivity(), TweetDetailsActivity.class);
+            intent.putExtra("tweetId", tweetId);
+            startActivity(intent);
+        }
     }
 }
