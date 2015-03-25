@@ -34,7 +34,12 @@ public class TwitterClient extends OAuthBaseClient {
         String id = String.valueOf(tweetId);
         String url = getApiUrl("statuses/home_timeline.json?since_id=" + id);
         client.get(url, null, handler);
+    }
 
+    public void getTweetById(long tweetId, AsyncHttpResponseHandler handler) {
+        String id = String.valueOf(tweetId);
+        String url = getApiUrl("/statuses/show.json?id=" + id);
+        client.get(url, null, handler);
     }
 
 
