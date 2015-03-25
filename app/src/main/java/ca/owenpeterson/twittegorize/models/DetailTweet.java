@@ -29,12 +29,13 @@ public class DetailTweet {
         super();
     }
 
-    public DetailTweet(long tweetId, String body, String createdDate, User user ) {
+    public DetailTweet(long tweetId, String body, String createdDate, User user, List<URL> urls ) {
         super();
         this.tweetId = tweetId;
         this.body = body;
         this.createdDate = createdDate;
         this.user = user;
+        this.urls = urls;
     }
 
     public User getUser() {

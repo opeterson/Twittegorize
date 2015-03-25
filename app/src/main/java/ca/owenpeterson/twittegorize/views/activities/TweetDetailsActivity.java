@@ -21,6 +21,7 @@ public class TweetDetailsActivity extends ActionBarActivity {
     private TextView textTweetBody;
     private TextView textCreatedDate;
     private Button buttonReply;
+    private Button buttonViewBrowser;
     private TweetLoadedHandler tweetLoadedHandler;
     private TweetService tweetService;
 
@@ -42,6 +43,7 @@ public class TweetDetailsActivity extends ActionBarActivity {
         textTweetBody = (TextView) findViewById(R.id.text_details_tweet_body);
         textCreatedDate = (TextView) findViewById(R.id.text_details_date_created);
         buttonReply = (Button) findViewById(R.id.button_details_reply);
+        buttonViewBrowser = (Button) findViewById(R.id.button_details_view_in_browser);
     }
 
 
