@@ -1,6 +1,7 @@
 package ca.owenpeterson.twittegorize.views.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -39,6 +40,7 @@ public class TweetDetailsActivity extends ActionBarActivity {
     private TweetLoadedListener tweetLoadedListener;
     private TweetService tweetService;
     private DetailTweet detailTweet;
+    private ButtonClickHandler buttonClickHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +62,14 @@ public class TweetDetailsActivity extends ActionBarActivity {
         textScreenName = (TextView) findViewById(R.id.text_details_tweet_screen_name);
         textTweetBody = (TextView) findViewById(R.id.text_details_tweet_body);
         textCreatedDate = (TextView) findViewById(R.id.text_details_date_created);
+
+        buttonClickHandler = new ButtonClickHandler();
+
         buttonReply = (Button) findViewById(R.id.button_details_reply);
+        buttonReply.setOnClickListener(buttonClickHandler);
+
         buttonViewBrowser = (Button) findViewById(R.id.button_details_view_in_browser);
+        buttonViewBrowser.setOnClickListener(buttonClickHandler);
     }
 
     @Override
@@ -107,15 +115,27 @@ public class TweetDetailsActivity extends ActionBarActivity {
                 case R.id.button_details_reply:
                     break;
                 case R.id.button_details_view_in_browser:
+                    handleOpenLinkExternally();
                     break;
             }
         }
+    }
+
+    private void handleOpenLinkExternally() {
+        String tweetId = String.valueOf(detailTweet.getTweetId());
+        String userId = String.valueOf(detailTweet.getUser().getUserId());
+
+        String url = "http://twitter.com/" + userId + "/status/" + tweetId;
+        Intent browser = new Intent (Intent.ACTION_VIEW, Uri.parse(url) );
+        startActivity(browser);
     }
 
     private class TweetLoadedListener implements OnDetailTweetLoaded {
         @Override
         public void onDetailTweetLoaded(DetailTweet detailTweet) {
             String imageURL = detailTweet.getUser().getProfileImageUrl();
+
+            //add a setting for this, high quality images, hide images, etc
             imageURL = StringUtils.replace(imageURL, "normal", "bigger");
 
             Log.d(this.getClass().getName(), imageURL);
