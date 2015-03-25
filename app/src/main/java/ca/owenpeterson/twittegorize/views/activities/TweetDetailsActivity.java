@@ -29,6 +29,8 @@ public class TweetDetailsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tweet_details);
 
+        long tweetId = getIntent().getLongExtra("tweetId", 0);
+
         tweetService = new TweetService(TweetDetailsActivity.this);
         tweetLoadedHandler = new TweetLoadedHandler();
 
