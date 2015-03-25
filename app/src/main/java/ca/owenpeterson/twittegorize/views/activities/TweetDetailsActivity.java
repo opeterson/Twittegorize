@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
@@ -115,7 +116,7 @@ public class TweetDetailsActivity extends ActionBarActivity {
         @Override
         public void onDetailTweetLoaded(DetailTweet detailTweet) {
             String imageURL = detailTweet.getUser().getProfileImageUrl();
-            //imageURL = StringUtils.replace(imageURL,".png", "_bigger.png");
+            imageURL = StringUtils.replace(imageURL, "normal", "bigger");
 
             Log.d(this.getClass().getName(), imageURL);
 
