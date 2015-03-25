@@ -97,7 +97,7 @@
             android:id="@+id/button_details_view_in_browser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/text_button_in_browser"
+            android:text="@string/text_button_external"
             android:layout_marginLeft="10dp"/>
 
         </LinearLayout>

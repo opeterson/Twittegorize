@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +16,9 @@ import com.squareup.picasso.Picasso;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
+
+import java.net.URL;
+import java.util.List;
 
 import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.data.TweetService;
@@ -93,6 +97,20 @@ public class TweetDetailsActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private class ButtonClickHandler implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            int id = v.getId();
+
+            switch(id) {
+                case R.id.button_details_reply:
+                    break;
+                case R.id.button_details_view_in_browser:
+                    break;
+            }
+        }
+    }
+
     private class TweetLoadedListener implements OnDetailTweetLoaded {
         @Override
         public void onDetailTweetLoaded(DetailTweet detailTweet) {
@@ -105,6 +123,7 @@ public class TweetDetailsActivity extends ActionBarActivity {
             String screenName = detailTweet.getUser().getScreenName();
             String tweetBody = detailTweet.getBody();
             String createdDate = detailTweet.getCreatedDate();
+            List<URL> urls = detailTweet.getUrls();
 
             Picasso.with(TweetDetailsActivity.this).load(imageURL).noFade().fit().into(imageProfile);
             textUserName.setText(name);

@@ -62,6 +62,14 @@ public class DetailTweet {
         return retweeted;
     }
 
+    public List<URL> getUrls() {
+        return urls;
+    }
+
+    public void setUrls(List<URL> urls) {
+        this.urls = urls;
+    }
+
     public static DetailTweet fromJson(JSONObject jsonObject) {
         DetailTweet tweet = new DetailTweet();
         try {
