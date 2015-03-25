@@ -3,15 +3,24 @@ package ca.owenpeterson.twittegorize.views.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.squareup.picasso.Picasso;
+
+import org.apache.http.Header;
+import org.json.JSONObject;
+
 import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.data.TweetService;
-import ca.owenpeterson.twittegorize.utils.OnFeedLoaded;
+import ca.owenpeterson.twittegorize.models.DetailTweet;
+import ca.owenpeterson.twittegorize.rest.TwitterApplication;
+import ca.owenpeterson.twittegorize.utils.OnDetailTweetLoaded;
 
 public class TweetDetailsActivity extends ActionBarActivity {
 
@@ -22,8 +31,9 @@ public class TweetDetailsActivity extends ActionBarActivity {
     private TextView textCreatedDate;
     private Button buttonReply;
     private Button buttonViewBrowser;
-    private TweetLoadedHandler tweetLoadedHandler;
+    private TweetLoadedListener tweetLoadedListener;
     private TweetService tweetService;
+    private DetailTweet detailTweet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +43,12 @@ public class TweetDetailsActivity extends ActionBarActivity {
         long tweetId = getIntent().getLongExtra("tweetId", 0);
 
         tweetService = new TweetService(TweetDetailsActivity.this);
-        tweetLoadedHandler = new TweetLoadedHandler();
+        tweetLoadedListener = new TweetLoadedListener();
 
         //call tweetservice for tweet by id with listener
+        TweetLoadedListener listener = new TweetLoadedListener();
+        DetailTweetResponseHandler handler = new DetailTweetResponseHandler(listener);
+        TwitterApplication.getRestClient().getTweetById(tweetId, handler);
 
         imageProfile = (ImageView) findViewById(R.id.image_details_profile);
         textUserName = (TextView) findViewById(R.id.text_details_tweet_name);
@@ -46,6 +59,10 @@ public class TweetDetailsActivity extends ActionBarActivity {
         buttonViewBrowser = (Button) findViewById(R.id.button_details_view_in_browser);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -76,10 +93,45 @@ public class TweetDetailsActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class TweetLoadedHandler implements OnFeedLoaded {
+    private class TweetLoadedListener implements OnDetailTweetLoaded {
         @Override
-        public void onFeedLoaded() {
+        public void onDetailTweetLoaded(DetailTweet detailTweet) {
+            String imageURL = detailTweet.getUser().getProfileImageUrl();
+            //imageURL = StringUtils.replace(imageURL,".png", "_bigger.png");
 
+            Log.d(this.getClass().getName(), imageURL);
+
+            String name = detailTweet.getUser().getName();
+            String screenName = detailTweet.getUser().getScreenName();
+            String tweetBody = detailTweet.getBody();
+            String createdDate = detailTweet.getCreatedDate();
+
+            Picasso.with(TweetDetailsActivity.this).load(imageURL).noFade().fit().into(imageProfile);
+            textUserName.setText(name);
+            textScreenName.setText("@" + screenName);
+            textTweetBody.setText(tweetBody);
+            textCreatedDate.setText(createdDate);
+        }
+    }
+
+    private class DetailTweetResponseHandler extends JsonHttpResponseHandler {
+
+        private OnDetailTweetLoaded listener;
+
+        public DetailTweetResponseHandler(OnDetailTweetLoaded listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            //build the detailTweet here.
+            detailTweet = DetailTweet.fromJson(response);
+            listener.onDetailTweetLoaded(detailTweet);
+            super.onSuccess(statusCode, headers, response);
+        }
+
+        public void setListener(OnDetailTweetLoaded listener) {
+            this.listener = listener;
         }
     }
 }

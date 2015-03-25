@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +26,7 @@ public class DetailTweet {
     private List<URL> urls;
 
     public DetailTweet() {
-        super();
+
     }
 
     public DetailTweet(long tweetId, String body, String createdDate, User user, List<URL> urls ) {
@@ -71,7 +71,7 @@ public class DetailTweet {
             tweet.retweeted = jsonObject.getBoolean("retweeted");
             tweet.createdDate = jsonObject.getString("created_at");
             tweet.user = User.queryOrCreateUser(jsonObject.getJSONObject("user"));
-            tweet.urls = DetailTweet.createURLList(jsonObject.getJSONArray("urls"));
+            tweet.urls = DetailTweet.createURLList(jsonObject.getJSONObject("entities"));
         } catch (JSONException e) {
             Log.e("ERROR", e.getMessage());
             return null;
@@ -79,30 +79,41 @@ public class DetailTweet {
         return tweet;
     }
 
-    private static List<URL> createURLList(JSONArray urls) {
+    private static List<URL> createURLList(JSONObject entities) {
 
-        List<URL> tweetURLs = Collections.emptyList();
-        for (int i = 0; i < urls.length(); i++) {
-            JSONObject urlElement = null;
-            String expandedURL = "";
-            try {
-                urlElement =  urls.getJSONObject(i);
-                expandedURL = urlElement.getString("expanded_url");
-            } catch (JSONException ex) {
-                Log.e("DetailTweet", "Could not extract URLs from tweet. \n" + ex.getMessage());
-            }
+        JSONArray urls = null;
+        List<URL> tweetURLs = new ArrayList<>();
 
-            if (StringUtils.isNotBlank(expandedURL)) {
-                URL url = null;
+        try {
+            urls = entities.getJSONArray("urls");
+            Log.d("URLS", urls.toString());
+        } catch (JSONException ex) {
+            Log.e("DetailTweet", "No entity found for 'urls' \n" + ex.getMessage());
+        }
+
+        if (null != urls) {
+            for (int i = 0; i < urls.length(); i++) {
+                JSONObject urlElement = null;
+                String expandedURL = "";
                 try {
-                    url = new URL(expandedURL);
-                } catch (MalformedURLException ex) {
-                    Log.e("DetailTweet", "URL is not in the correct format. \n" + ex.getMessage());
+                    urlElement = urls.getJSONObject(i);
+                    expandedURL = urlElement.getString("expanded_url");
+                } catch (JSONException ex) {
+                    Log.e("DetailTweet", "Could not extract URLs from tweet. \n" + ex.getMessage());
                 }
 
-                //if the URL object was created successfully, add it to the list.
-                if (null != url) {
-                    tweetURLs.add(url);
+                if (StringUtils.isNotBlank(expandedURL)) {
+                    URL url = null;
+                    try {
+                        url = new URL(expandedURL);
+                    } catch (MalformedURLException ex) {
+                        Log.e("DetailTweet", "URL is not in the correct format. \n" + ex.getMessage());
+                    }
+
+                    //if the URL object was created successfully, add it to the list.
+                    if (null != url) {
+                        tweetURLs.add(url);
+                    }
                 }
             }
         }

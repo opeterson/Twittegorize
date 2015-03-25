@@ -92,6 +92,35 @@ public class TweetService {
         return latestTweet;
     }
 
+//    public DetailTweet getTweetById(long tweetId) {
+//        DetailTweet detailTweet;
+//        DetailTweetResponseHandler detailTweetResponseHandler = new DetailTweetResponseHandler();
+//        //DetailTweetLoadedListener detailTweetLoadedListener = new DetailTweetLoadedListener();
+//        //detailTweetResponseHandler.setOnFeedLoadedListener(detailTweetLoadedListener);
+//        TwitterApplication.getRestClient().getTweetById(tweetId, detailTweetResponseHandler);
+//
+//        detailTweet = detailTweetResponseHandler.getDetailTweet();
+//
+//        return detailTweet;
+//    }
+//
+//
+//    private class DetailTweetResponseHandler extends JsonHttpResponseHandler {
+//
+//        private DetailTweet detailTweet;
+//
+//        @Override
+//        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+//            //build the detailTweet here.
+//            detailTweet = DetailTweet.fromJson(response);
+//            super.onSuccess(statusCode, headers, response);
+//        }
+//
+//        public DetailTweet getDetailTweet() {
+//            return detailTweet;
+//        }
+//
+//    }
 
     private class TweetResponseHandler extends JsonHttpResponseHandler {
 
