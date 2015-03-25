@@ -5,17 +5,41 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import ca.owenpeterson.twittegorize.R;
+import ca.owenpeterson.twittegorize.data.TweetService;
+import ca.owenpeterson.twittegorize.utils.OnFeedLoaded;
 
 public class TweetDetailsActivity extends ActionBarActivity {
 
-    //private static final int TO_TWEETS_FROM_DETAILS = 3;
+    private ImageView imageProfile;
+    private TextView textUserName;
+    private TextView textScreenName;
+    private TextView textTweetBody;
+    private TextView textCreatedDate;
+    private Button buttonReply;
+    private TweetLoadedHandler tweetLoadedHandler;
+    private TweetService tweetService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tweet_details);
+
+        tweetService = new TweetService(TweetDetailsActivity.this);
+        tweetLoadedHandler = new TweetLoadedHandler();
+
+        //call tweetservice for tweet by id with listener
+
+        imageProfile = (ImageView) findViewById(R.id.image_details_profile);
+        textUserName = (TextView) findViewById(R.id.text_details_tweet_name);
+        textScreenName = (TextView) findViewById(R.id.text_details_tweet_screen_name);
+        textTweetBody = (TextView) findViewById(R.id.text_details_tweet_body);
+        textCreatedDate = (TextView) findViewById(R.id.text_details_date_created);
+        buttonReply = (Button) findViewById(R.id.button_details_reply);
     }
 
 
@@ -46,5 +70,12 @@ public class TweetDetailsActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class TweetLoadedHandler implements OnFeedLoaded {
+        @Override
+        public void onFeedLoaded() {
+
+        }
     }
 }
