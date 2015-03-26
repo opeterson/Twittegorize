@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:textSize="12sp"
+                    android:textSize="20sp"
                     android:text="Test Name" />
 
                 <TextView
@@ -44,11 +44,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="italic"
-                    android:textSize="12sp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_toRightOf="@+id/text_details_tweet_name"
-                    android:layout_toEndOf="@+id/text_details_tweet_name"
+                    android:textSize="20sp"
+                    android:layout_below="@+id/text_details_tweet_name"
                     android:text="Test Id"/>
             </RelativeLayout>
         </LinearLayout>
