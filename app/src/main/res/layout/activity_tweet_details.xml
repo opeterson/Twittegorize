@@ -77,9 +77,9 @@
         </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/pane_button_bar"
         android:layout_below="@+id/pane_tweet_details"
         android:layout_marginTop="10dp"
-        android:id="@+id/pane_button_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -96,6 +96,34 @@
             android:layout_height="wrap_content"
             android:text="@string/text_button_external"
             android:layout_marginLeft="10dp"/>
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/pane_entities"
+        android:layout_below="@+id/pane_button_bar"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_title_entities"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_title_urls"
+            android:layout_marginTop="10dp"
+            android:textSize="14sp"/>
+
+        <ListView
+            android:id="@+id/list_view_urls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></ListView>
 
         </LinearLayout>
 </RelativeLayout>

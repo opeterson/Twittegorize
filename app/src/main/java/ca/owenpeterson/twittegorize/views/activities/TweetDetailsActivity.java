@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -40,6 +41,7 @@ public class TweetDetailsActivity extends ActionBarActivity {
     private Button buttonViewBrowser;
     private TweetLoadedListener tweetLoadedListener;
     private TweetService tweetService;
+    private ListView urlsListView;
     private DetailTweet detailTweet;
     private ButtonClickHandler buttonClickHandler;
 
@@ -63,6 +65,9 @@ public class TweetDetailsActivity extends ActionBarActivity {
         textScreenName = (TextView) findViewById(R.id.text_details_tweet_screen_name);
         textTweetBody = (TextView) findViewById(R.id.text_details_tweet_body);
         textCreatedDate = (TextView) findViewById(R.id.text_details_date_created);
+        urlsListView = (ListView) findViewById(R.id.list_view_urls);
+
+        //set up the urllistview adapter here.
 
         buttonClickHandler = new ButtonClickHandler();
 
