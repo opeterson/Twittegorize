@@ -26,6 +26,7 @@ import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.data.TweetService;
 import ca.owenpeterson.twittegorize.models.DetailTweet;
 import ca.owenpeterson.twittegorize.rest.TwitterApplication;
+import ca.owenpeterson.twittegorize.utils.JodaDateUtils;
 import ca.owenpeterson.twittegorize.utils.OnDetailTweetLoaded;
 
 public class TweetDetailsActivity extends ActionBarActivity {
@@ -150,7 +151,9 @@ public class TweetDetailsActivity extends ActionBarActivity {
             textUserName.setText(name);
             textScreenName.setText("@" + screenName);
             textTweetBody.setText(tweetBody);
-            textCreatedDate.setText(createdDate);
+
+            String formattedDate = JodaDateUtils.formatDate(createdDate);
+            textCreatedDate.setText(formattedDate);
         }
     }
 

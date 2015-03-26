@@ -7,5 +7,10 @@ public class AppConstants {
 
     public class Strings {
         public static final String CATEGORY_ID = "categoryId";
+
+    }
+
+    public class Dates {
+        public final static String DISPLAY_DATE_FORMAT = "EEE, d MMM yyy h:mm a";
     }
 }
