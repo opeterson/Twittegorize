@@ -44,43 +44,11 @@
 
         <LinearLayout
             android:layout_marginTop="20dp"
-            android:id="@+id/pane_delete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@+id/pane_create">
-
-            <TextView
-                android:text="@string/text_title_delete"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:layout_marginBottom="10dp"/>
-
-            <TextView
-                android:text="@string/text_delete_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Spinner
-                android:id="@+id/spinner_categories"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"></Spinner>
-
-            <Button
-                android:id="@+id/button_delete_category"
-                android:text="@string/text_button_delete_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="20dp"
             android:id="@+id/pane_modify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_below="@+id/pane_delete">
+            android:layout_below="@+id/pane_create">
 
             <TextView
                 android:text="@string/text_title_modify_users"
@@ -105,5 +73,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:id="@+id/pane_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/pane_modify">
+
+            <TextView
+                android:text="@string/text_title_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:text="@string/text_delete_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Spinner
+                android:id="@+id/spinner_categories"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"></Spinner>
+
+            <Button
+                android:id="@+id/button_delete_category"
+                android:text="@string/text_button_delete_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
     </RelativeLayout>
 </ScrollView>
