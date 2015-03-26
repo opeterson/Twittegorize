@@ -25,6 +25,7 @@ import java.util.List;
 
 import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.data.TweetService;
+import ca.owenpeterson.twittegorize.listviewadapters.LinkAdapter;
 import ca.owenpeterson.twittegorize.models.DetailTweet;
 import ca.owenpeterson.twittegorize.rest.TwitterApplication;
 import ca.owenpeterson.twittegorize.utils.JodaDateUtils;
@@ -44,6 +45,7 @@ public class TweetDetailsActivity extends ActionBarActivity {
     private ListView urlsListView;
     private DetailTweet detailTweet;
     private ButtonClickHandler buttonClickHandler;
+    private LinkAdapter linkAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,6 @@ public class TweetDetailsActivity extends ActionBarActivity {
         textCreatedDate = (TextView) findViewById(R.id.text_details_date_created);
         urlsListView = (ListView) findViewById(R.id.list_view_urls);
 
-        //set up the urllistview adapter here.
 
         buttonClickHandler = new ButtonClickHandler();
 
@@ -159,6 +160,10 @@ public class TweetDetailsActivity extends ActionBarActivity {
 
             String formattedDate = JodaDateUtils.formatDate(createdDate);
             textCreatedDate.setText(formattedDate);
+
+            //set up the urllistview adapter here.
+            linkAdapter = new LinkAdapter(TweetDetailsActivity.this, urls);
+            urlsListView.setAdapter(linkAdapter);
         }
     }
 
