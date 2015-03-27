@@ -165,6 +165,12 @@ public class TweetDetailsActivity extends ActionBarActivity {
             String formattedDate = JodaDateUtils.formatDate(createdDate);
             textCreatedDate.setText(formattedDate);
 
+            //check to see if there are any links, images, or hashtags available.
+            //if so, enable the entire entities pane.
+
+            //create three new panes within the entities pane, and then enable each individual pane
+            //as required if there is content to display.
+
             if (urls.size() != 0) {
                 //set up the urllistview adapter here.
                 linkAdapter = new LinkAdapter(TweetDetailsActivity.this, urls);
