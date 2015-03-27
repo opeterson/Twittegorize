@@ -88,12 +88,13 @@ public class DetailTweet {
     }
 
     private static List<URL> createURLList(JSONObject entities) {
+        Log.d("ENTITIES OBJECT:", entities.toString());
 
         JSONArray urls = null;
         List<URL> tweetURLs = new ArrayList<>();
 
         try {
-            urls = entities.getJSONArray("urls");
+            urls = entities.getJSONArray("expanded_url");
             Log.d("URLS", urls.toString());
         } catch (JSONException ex) {
             Log.e("DetailTweet", "No entity found for 'urls' \n" + ex.getMessage());
@@ -105,7 +106,7 @@ public class DetailTweet {
                 String expandedURL = "";
                 try {
                     urlElement = urls.getJSONObject(i);
-                    expandedURL = urlElement.getString("expanded_url");
+                    expandedURL = urlElement.getString("url");
                 } catch (JSONException ex) {
                     Log.e("DetailTweet", "Could not extract URLs from tweet. \n" + ex.getMessage());
                 }
