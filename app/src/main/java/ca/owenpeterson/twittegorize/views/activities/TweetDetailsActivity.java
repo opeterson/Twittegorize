@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -46,6 +47,7 @@ public class TweetDetailsActivity extends ActionBarActivity {
     private DetailTweet detailTweet;
     private ButtonClickHandler buttonClickHandler;
     private LinkAdapter linkAdapter;
+    private LinearLayout entitiesLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,8 @@ public class TweetDetailsActivity extends ActionBarActivity {
         textTweetBody = (TextView) findViewById(R.id.text_details_tweet_body);
         textCreatedDate = (TextView) findViewById(R.id.text_details_date_created);
         urlsListView = (ListView) findViewById(R.id.list_view_urls);
+        entitiesLayout = (LinearLayout) findViewById(R.id.pane_entities);
+        entitiesLayout.setVisibility(View.GONE);
 
 
         buttonClickHandler = new ButtonClickHandler();
@@ -161,9 +165,13 @@ public class TweetDetailsActivity extends ActionBarActivity {
             String formattedDate = JodaDateUtils.formatDate(createdDate);
             textCreatedDate.setText(formattedDate);
 
-            //set up the urllistview adapter here.
-            linkAdapter = new LinkAdapter(TweetDetailsActivity.this, urls);
-            urlsListView.setAdapter(linkAdapter);
+            if (urls.size() != 0) {
+                //set up the urllistview adapter here.
+                linkAdapter = new LinkAdapter(TweetDetailsActivity.this, urls);
+                urlsListView.setAdapter(linkAdapter);
+                entitiesLayout.setVisibility(View.VISIBLE);
+
+            }
         }
     }
 
