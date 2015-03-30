@@ -115,7 +115,7 @@ public class DetailTweet {
 
         try {
             images = entities.getJSONArray("media");
-            Log.d("IMAGES", images.toString());
+           // Log.d("IMAGES", images.toString());
 
         } catch (JSONException ex) {
             Log.e("DetailTweet", "No entity found for 'media' \n" + ex.getMessage());
@@ -152,7 +152,7 @@ public class DetailTweet {
     }
 
     private static List<URL> createURLList(JSONObject entities) {
-        Log.d("ENTITIES OBJECT:", entities.toString());
+        //Log.d("ENTITIES OBJECT:", entities.toString());
 
         JSONArray urls = null;
         List<URL> tweetURLs = new ArrayList<>();

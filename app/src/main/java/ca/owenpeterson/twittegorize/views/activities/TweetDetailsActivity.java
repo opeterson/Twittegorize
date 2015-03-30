@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +25,7 @@ import java.util.List;
 
 import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.data.TweetService;
+import ca.owenpeterson.twittegorize.listviewadapters.ImageAdapter;
 import ca.owenpeterson.twittegorize.listviewadapters.LinkAdapter;
 import ca.owenpeterson.twittegorize.models.DetailTweet;
 import ca.owenpeterson.twittegorize.rest.TwitterApplication;
@@ -44,10 +44,14 @@ public class TweetDetailsActivity extends ActionBarActivity {
     private TweetLoadedListener tweetLoadedListener;
     private TweetService tweetService;
     private ListView urlsListView;
+    private ListView imagesListView;
     private DetailTweet detailTweet;
     private ButtonClickHandler buttonClickHandler;
     private LinkAdapter linkAdapter;
+    private ImageAdapter imageAdapter;
     private LinearLayout entitiesLayout;
+    private LinearLayout linkLayout;
+    private LinearLayout imageLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +74,13 @@ public class TweetDetailsActivity extends ActionBarActivity {
         textTweetBody = (TextView) findViewById(R.id.text_details_tweet_body);
         textCreatedDate = (TextView) findViewById(R.id.text_details_date_created);
         urlsListView = (ListView) findViewById(R.id.list_view_urls);
+        imagesListView = (ListView) findViewById(R.id.list_view_images);
         entitiesLayout = (LinearLayout) findViewById(R.id.pane_entities);
-        entitiesLayout.setVisibility(View.GONE);
+        linkLayout = (LinearLayout) findViewById(R.id.subpane_links);
+        imageLayout = (LinearLayout) findViewById(R.id.subpane_images);
+        entitiesLayout.setVisibility(LinearLayout.GONE);
+        linkLayout.setVisibility(LinearLayout.GONE);
+        imageLayout.setVisibility(LinearLayout.GONE);
 
 
         buttonClickHandler = new ButtonClickHandler();
@@ -149,13 +158,12 @@ public class TweetDetailsActivity extends ActionBarActivity {
             //add a setting for this, high quality images, hide images, etc
             imageURL = StringUtils.replace(imageURL, "normal", "bigger");
 
-            Log.d(this.getClass().getName(), imageURL);
-
             String name = detailTweet.getUser().getName();
             String screenName = detailTweet.getUser().getScreenName();
             String tweetBody = detailTweet.getBody();
             String createdDate = detailTweet.getCreatedDate();
             List<URL> urls = detailTweet.getUrls();
+            List<URL> images = detailTweet.getImages();
 
             Picasso.with(TweetDetailsActivity.this).load(imageURL).noFade().fit().into(imageProfile);
             textUserName.setText(name);
@@ -165,18 +173,23 @@ public class TweetDetailsActivity extends ActionBarActivity {
             String formattedDate = JodaDateUtils.formatDate(createdDate);
             textCreatedDate.setText(formattedDate);
 
-            //check to see if there are any links, images, or hashtags available.
-            //if so, enable the entire entities pane.
+            Boolean hasLinks = urls.size() > 0;
+            Boolean hasImages = images.size() > 0;
 
-            //create three new panes within the entities pane, and then enable each individual pane
-            //as required if there is content to display.
+            if (hasLinks || hasImages) {
+                entitiesLayout.setVisibility(LinearLayout.VISIBLE);
 
-            if (urls.size() != 0) {
-                //set up the urllistview adapter here.
-                linkAdapter = new LinkAdapter(TweetDetailsActivity.this, urls);
-                urlsListView.setAdapter(linkAdapter);
-                entitiesLayout.setVisibility(View.VISIBLE);
+                if (hasLinks) {
+                    linkAdapter = new LinkAdapter(TweetDetailsActivity.this, urls);
+                    urlsListView.setAdapter(linkAdapter);
+                    linkLayout.setVisibility(LinearLayout.VISIBLE);
+                }
 
+                if(hasImages) {
+                    imageAdapter = new ImageAdapter(TweetDetailsActivity.this, images);
+                    imagesListView.setAdapter(imageAdapter);
+                    imageLayout.setVisibility(LinearLayout.VISIBLE);
+                }
             }
         }
     }

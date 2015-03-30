@@ -118,17 +118,46 @@
                 android:text="@string/text_title_entities"
                 android:textSize="18sp"/>
 
-            <TextView
+            <!-- Wrap this in another layout so that it can be hidden/shown when needed -->
+            <LinearLayout
+                android:id="@+id/subpane_links"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/text_title_urls"
-                android:layout_marginTop="10dp"
-                android:textSize="14sp"/>
+                android:orientation="vertical">
 
-            <ListView
-                android:id="@+id/list_view_urls"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_title_urls"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"/>
+
+                <ListView
+                    android:id="@+id/list_view_urls"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></ListView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/subpane_images"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></ListView>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_title_images"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"/>
+
+                <ListView
+                    android:id="@+id/list_view_images"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></ListView>
+
+            </LinearLayout>
 
             </LinearLayout>
     </RelativeLayout>

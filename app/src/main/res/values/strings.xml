@@ -33,5 +33,6 @@
     <string name="text_button_external">View On Twitter</string>
     <string name="text_title_entities">Items Associated With This Tweet</string>
     <string name="text_title_urls">Links</string>
+    <string name="text_title_images">Images</string>
 
 </resources>
