@@ -41,8 +41,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:textSize="20sp"
-                        android:text="Test Name" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/text_details_tweet_screen_name"
@@ -50,8 +49,7 @@
                         android:layout_height="wrap_content"
                         android:textStyle="italic"
                         android:textSize="20sp"
-                        android:layout_below="@+id/text_details_tweet_name"
-                        android:text="Test Id"/>
+                        android:layout_below="@+id/text_details_tweet_name" />
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
@@ -68,16 +66,13 @@
                 android:id="@+id/text_details_tweet_body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
-                android:text="@string/fake_body"/>
+                android:textSize="16dp" />
 
             <TextView
                 android:layout_marginTop="10dp"
                 android:id="@+id/text_details_date_created"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="8:30 AM August 29th, 1997"
-                />
+                android:layout_height="wrap_content" />
 
             </LinearLayout>
 
