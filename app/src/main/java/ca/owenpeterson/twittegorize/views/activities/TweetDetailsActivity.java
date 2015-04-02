@@ -52,6 +52,7 @@ public class TweetDetailsActivity extends ActionBarActivity {
     private LinearLayout entitiesLayout;
     private LinearLayout linkLayout;
     private LinearLayout imageLayout;
+    private LinearLayout buttonLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,9 +79,11 @@ public class TweetDetailsActivity extends ActionBarActivity {
         entitiesLayout = (LinearLayout) findViewById(R.id.pane_entities);
         linkLayout = (LinearLayout) findViewById(R.id.subpane_links);
         imageLayout = (LinearLayout) findViewById(R.id.subpane_images);
+        buttonLayout = (LinearLayout) findViewById(R.id.pane_button_bar);
         entitiesLayout.setVisibility(LinearLayout.GONE);
         linkLayout.setVisibility(LinearLayout.GONE);
         imageLayout.setVisibility(LinearLayout.GONE);
+
 
 
         buttonClickHandler = new ButtonClickHandler();
@@ -191,6 +194,9 @@ public class TweetDetailsActivity extends ActionBarActivity {
                     imageLayout.setVisibility(LinearLayout.VISIBLE);
                 }
             }
+
+            buttonLayout.setVisibility(LinearLayout.VISIBLE);
+
         }
     }
 
