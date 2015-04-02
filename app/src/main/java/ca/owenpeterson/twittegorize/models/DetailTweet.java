@@ -115,7 +115,6 @@ public class DetailTweet {
 
         try {
             images = entities.getJSONArray("media");
-           // Log.d("IMAGES", images.toString());
 
         } catch (JSONException ex) {
             Log.e("DetailTweet", "No entity found for 'media' \n" + ex.getMessage());
@@ -152,21 +151,19 @@ public class DetailTweet {
     }
 
     private static List<URL> createURLList(JSONObject entities) {
-        //Log.d("ENTITIES OBJECT:", entities.toString());
 
         JSONArray urls = null;
         List<URL> tweetURLs = new ArrayList<>();
 
         try {
             urls = entities.getJSONArray("urls");
-            Log.d("URLS", urls.toString());
         } catch (JSONException ex) {
             Log.e("DetailTweet", "No entity found for 'urls' \n" + ex.getMessage());
         }
 
         if (null != urls) {
             for (int i = 0; i < urls.length(); i++) {
-                JSONObject urlElement = null;
+                JSONObject urlElement;
                 String expandedURL = "";
                 try {
                     urlElement = urls.getJSONObject(i);
@@ -193,25 +190,4 @@ public class DetailTweet {
 
         return tweetURLs;
     }
-
-//    public static ArrayList<Tweet> fromJson(JSONArray jsonArray) {
-//        ArrayList<Tweet> tweets = new ArrayList<Tweet>(jsonArray.length());
-//
-//        for (int i=0; i < jsonArray.length(); i++) {
-//            JSONObject tweetJson = null;
-//            try {
-//                tweetJson = jsonArray.getJSONObject(i);
-//            } catch (Exception e) {
-//                Log.e("TWEET PARSE ERROR", e.getMessage());
-//                continue;
-//            }
-//
-//            Tweet tweet = Tweet.fromJson(tweetJson);
-//            if (tweet != null) {
-//                tweets.add(tweet);
-//            }
-//        }
-//
-//        return tweets;
-//    }
 }
