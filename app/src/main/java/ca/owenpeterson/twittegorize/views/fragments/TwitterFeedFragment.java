@@ -1,5 +1,7 @@
 package ca.owenpeterson.twittegorize.views.fragments;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -49,7 +51,7 @@ public class TwitterFeedFragment extends Fragment {
         Bundle argBundle = getArguments();
         this.categoryId = argBundle.getLong(AppConstants.Strings.CATEGORY_ID);
 
-        tweetDBLoader = new AsyncTweetDBLoader();
+        tweetDBLoader = new AsyncTweetDBLoader(getActivity());
         queryListener = new OnQueryComplete() {
             @Override
             public void onQueryComplete() {
@@ -64,19 +66,6 @@ public class TwitterFeedFragment extends Fragment {
         tweetDBLoader.setOnQueryCompleteListener(queryListener);
         tweetDBLoader.execute();
 
-//        if (categoryId == 0) {
-//            tweets = tweetService.getAllTweets();
-//        } else {
-//             tweets = tweetService.getTweetsByCategoryId(categoryId);
-//        }
-//
-//        //get the latest tweet from the database
-//        Tweet latestTweet = tweetService.getLatestTweet();
-//        latestTweetId = latestTweet.getTweetId();
-//
-//        setLatestTweetId(latestTweetId);
-//        initFeedItems(tweets);
-
         return rootView;
     }
 
@@ -86,6 +75,7 @@ public class TwitterFeedFragment extends Fragment {
     }
 
     private void initFeedItems(List<Tweet> tweets) {
+
         tweetsListView = (ListView) rootView.findViewById(R.id.tweet_list_view);
         tweetsAdapter = new TweetsAdapter(getActivity(), tweets);
         tweetsListView.setAdapter(tweetsAdapter);
@@ -98,15 +88,17 @@ public class TwitterFeedFragment extends Fragment {
         listener = new OnFeedLoaded() {
             @Override
             public void onFeedLoaded() {
+                OnQueryComplete listener = new OnQueryComplete() {
+                    @Override
+                    public void onQueryComplete() {
+                        tweetsAdapter = new TweetsAdapter(getActivity(), tweets);
+                        tweetsListView.setAdapter(tweetsAdapter);
+                    }
+                };
 
-                if (categoryId == 0) {
-                    tweets = tweetService.getAllTweets();
-                } else if (categoryId >= 4) {
-                    tweets = tweetService.getTweetsByCategoryId(categoryId);
-                }
-
-                tweetsAdapter = new TweetsAdapter(getActivity(), tweets);
-                tweetsListView.setAdapter(tweetsAdapter);
+                AsyncTweetDBLoader dbLoader = new AsyncTweetDBLoader(getActivity());
+                dbLoader.setOnQueryCompleteListener(listener);
+                dbLoader.execute();
             }
         };
 
@@ -135,9 +127,18 @@ public class TwitterFeedFragment extends Fragment {
     private class AsyncTweetDBLoader extends AsyncTask<Void, Void, List<Tweet>> {
 
         private OnQueryComplete listener;
+        private Context context;
+        private ProgressDialog dialog;
+
+        public AsyncTweetDBLoader(Context context) {
+            this.context = context;
+        }
 
         @Override
         protected void onPreExecute() {
+            dialog = new ProgressDialog(context);
+            dialog.setMessage("Retrieving Your Tweets.");
+            dialog.show();
             super.onPreExecute();
         }
 
@@ -158,9 +159,12 @@ public class TwitterFeedFragment extends Fragment {
         protected void onPostExecute(List<Tweet> tweets) {
             super.onPostExecute(tweets);
             TwitterFeedFragment.this.tweets = tweets;
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+
             listener.onQueryComplete();
         }
-
 
         public void setOnQueryCompleteListener(OnQueryComplete listener) {
             this.listener = listener;

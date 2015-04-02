@@ -39,7 +39,7 @@ public class TweetService {
 
     public void putTweetsToDatabase(OnFeedLoaded listener) {
         dialog = new ProgressDialog(context);
-        dialog.setMessage("Collecting Tweets");
+        dialog.setMessage("Contacting Twitter");
         dialog.show();
         TweetResponseHandler responseHandler = new TweetResponseHandler();
         responseHandler.setOnFeedLoadedListener(listener);
@@ -48,27 +48,17 @@ public class TweetService {
 
     public void putNewTweetsToDatabase(long tweetId, OnFeedLoaded listener) {
         dialog = new ProgressDialog(context);
-        dialog.setMessage("Collecting Tweets");
+        dialog.setMessage("Contacting Twitter");
         dialog.show();
         TweetResponseHandler responseHandler = new TweetResponseHandler();
         responseHandler.setOnFeedLoadedListener(listener);
         TwitterApplication.getRestClient().getNewTweets(tweetId, responseHandler);
     }
 
-    //try to make this an async task eventually
     public List<Tweet> getAllTweets() {
-//        ProgressDialog dialog;
-//        dialog = new ProgressDialog(context);
-//        dialog.setMessage("Collecting Tweets");
-//        dialog.show();
-
         List<Tweet> tweets = new Select().from(Tweet.class).orderBy("tweetId").execute();
 
         Collections.sort(tweets, comparator);
-
-//        if (dialog.isShowing()) {
-//            dialog.dismiss();
-//        }
         return tweets;
     }
 
