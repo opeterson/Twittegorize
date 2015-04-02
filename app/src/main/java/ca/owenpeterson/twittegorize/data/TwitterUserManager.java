@@ -62,6 +62,15 @@ public class TwitterUserManager {
         }
     }
 
+    public void removeUserCategoryEntries(long categoryId) {
+        List<UserCategory> userCategories = Collections.emptyList();
+        userCategories = new Select().from(UserCategory.class).where("categoryId = ?", categoryId).execute();
+
+        for (UserCategory uc : userCategories) {
+            uc.delete();
+        }
+    }
+
 
     public void addUserIdListToCategory(long categoryId, List<Long> usersToAdd) {
         for (Long userId : usersToAdd) {
@@ -73,12 +82,6 @@ public class TwitterUserManager {
     }
 
     public void removeUserIdListFromCategory(long categoryId, List<Long> usersToRemove) {
-
-//        List<UserCategory> matches = new Select().from(UserCategory.class).where("categoryId = ?", categoryId).and("userId in ?", usersToRemove.toArray()).execute();
-//
-//        for (UserCategory uc : matches) {
-//            uc.delete();
-//        }
 
         //this needs work. get all of the usercategories in one query instead of each time.
         for (Long userId : usersToRemove) {

@@ -17,6 +17,7 @@ import java.util.List;
 
 import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.data.CategoryManager;
+import ca.owenpeterson.twittegorize.data.TwitterUserManager;
 import ca.owenpeterson.twittegorize.models.Category;
 
 public class CategoryManagerView extends ActionBarActivity {
@@ -122,7 +123,14 @@ public class CategoryManagerView extends ActionBarActivity {
         selectedCategory = (Category) spinnerCategories.getSelectedItem();
 
         if (selectedCategory != null) {
-            selectedCategory.delete();
+            //selectedCategory.delete();
+            long categoryId = selectedCategory.getId();
+            categoryManager.removeCategory(categoryId);
+
+            //this works for now but I may want to do this asynchronously (if its not already)
+            TwitterUserManager twitterUserManager = new TwitterUserManager();
+            twitterUserManager.removeUserCategoryEntries(categoryId);
+
             populateCategorySpinners();
         }
 
