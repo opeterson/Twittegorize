@@ -40,17 +40,9 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
         Tweet latestTweet = tweetService.getLatestTweet();
 
         long id = 0;
-
         if (null != latestTweet) {
             id = latestTweet.getId();
         }
-
-        //String date = latestTweet.getCreatedDate();
-        //DateTime latestTweetDate = JodaDateUtils.parseToDateTime(date);
-        //DateTime today = new DateTime();
-
-        //Intent i = new Intent(getBaseContext(), CategoryViewSelector.class);
-        //startActivityForResult(i, RETURN_TO_LOGIN);
 
         OnFeedLoaded listener = new OnFeedLoaded() {
             @Override
@@ -59,9 +51,6 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
                 startActivityForResult(i, RETURN_TO_LOGIN);
             }
         };
-
-        //TweetService tweetService = new TweetService(this);
-        //tweetService.putTweetsToDatabase(listener);
 
         if (id != 0) {
             tweetService.putNewTweetsToDatabase(id, listener);
