@@ -38,7 +38,12 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
         TweetService tweetService = new TweetService(this);
 
         Tweet latestTweet = tweetService.getLatestTweet();
-        long id = latestTweet.getId();
+
+        long id = 0;
+
+        if (null != latestTweet) {
+            id = latestTweet.getId();
+        }
 
         //String date = latestTweet.getCreatedDate();
         //DateTime latestTweetDate = JodaDateUtils.parseToDateTime(date);
@@ -57,7 +62,12 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 
         //TweetService tweetService = new TweetService(this);
         //tweetService.putTweetsToDatabase(listener);
-        tweetService.putNewTweetsToDatabase(id, listener);
+
+        if (id != 0) {
+            tweetService.putNewTweetsToDatabase(id, listener);
+        } else {
+            tweetService.putTweetsToDatabase(listener);
+        }
     }
 
     // OAuth authentication flow failed, handle the error
