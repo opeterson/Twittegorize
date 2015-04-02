@@ -137,7 +137,7 @@ public class TwitterFeedFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             dialog = new ProgressDialog(context);
-            dialog.setMessage("Retrieving Your Tweets.");
+            dialog.setMessage("Retrieving Your Tweets");
             dialog.show();
             super.onPreExecute();
         }
