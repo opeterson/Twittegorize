@@ -9,6 +9,7 @@ import com.codepath.oauth.OAuthLoginActionBarActivity;
 
 import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.data.TweetService;
+import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.rest.TwitterClient;
 import ca.owenpeterson.twittegorize.utils.OnFeedLoaded;
 
@@ -34,6 +35,17 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
     // i.e Display application "homepage"
     @Override
     public void onLoginSuccess() {
+        TweetService tweetService = new TweetService(this);
+
+        Tweet latestTweet = tweetService.getLatestTweet();
+        long id = latestTweet.getId();
+
+        //String date = latestTweet.getCreatedDate();
+        //DateTime latestTweetDate = JodaDateUtils.parseToDateTime(date);
+        //DateTime today = new DateTime();
+
+        //Intent i = new Intent(getBaseContext(), CategoryViewSelector.class);
+        //startActivityForResult(i, RETURN_TO_LOGIN);
 
         OnFeedLoaded listener = new OnFeedLoaded() {
             @Override
@@ -43,8 +55,9 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
             }
         };
 
-        TweetService tweetService = new TweetService(this);
-        tweetService.putTweetsToDatabase(listener);
+        //TweetService tweetService = new TweetService(this);
+        //tweetService.putTweetsToDatabase(listener);
+        tweetService.putNewTweetsToDatabase(id, listener);
     }
 
     // OAuth authentication flow failed, handle the error

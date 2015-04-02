@@ -25,4 +25,9 @@ public class JodaDateUtils {
 
         return formattedDate;
     }
+
+    public static DateTime parseToDateTime(String originalDateString) {
+        DateTime date = dateFormatter.parseDateTime(originalDateString);
+        return date;
+    }
 }
