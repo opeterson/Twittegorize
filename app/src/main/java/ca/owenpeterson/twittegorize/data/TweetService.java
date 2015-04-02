@@ -57,18 +57,18 @@ public class TweetService {
 
     //try to make this an async task eventually
     public List<Tweet> getAllTweets() {
-        ProgressDialog dialog;
-        dialog = new ProgressDialog(context);
-        dialog.setMessage("Collecting Tweets");
-        dialog.show();
+//        ProgressDialog dialog;
+//        dialog = new ProgressDialog(context);
+//        dialog.setMessage("Collecting Tweets");
+//        dialog.show();
 
         List<Tweet> tweets = new Select().from(Tweet.class).orderBy("tweetId").execute();
 
         Collections.sort(tweets, comparator);
 
-        if (dialog.isShowing()) {
-            dialog.dismiss();
-        }
+//        if (dialog.isShowing()) {
+//            dialog.dismiss();
+//        }
         return tweets;
     }
 

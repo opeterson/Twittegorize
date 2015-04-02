@@ -1,6 +1,7 @@
 package ca.owenpeterson.twittegorize.views.fragments;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import ca.owenpeterson.twittegorize.listviewadapters.TweetsAdapter;
 import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.utils.AppConstants;
 import ca.owenpeterson.twittegorize.utils.OnFeedLoaded;
+import ca.owenpeterson.twittegorize.utils.OnQueryComplete;
 import ca.owenpeterson.twittegorize.views.activities.TweetDetailsActivity;
 
 /**
@@ -33,7 +35,9 @@ public class TwitterFeedFragment extends Fragment {
     private List<Tweet> tweets;
     private long latestTweetId;
     private OnFeedLoaded listener;
+    private OnQueryComplete queryListener;
     private ItemClickListener itemClickListener;
+    private AsyncTweetDBLoader tweetDBLoader;
 
     @Nullable
     @Override
@@ -45,18 +49,33 @@ public class TwitterFeedFragment extends Fragment {
         Bundle argBundle = getArguments();
         this.categoryId = argBundle.getLong(AppConstants.Strings.CATEGORY_ID);
 
-        if (categoryId == 0) {
-            tweets = tweetService.getAllTweets();
-        } else {
-             tweets = tweetService.getTweetsByCategoryId(categoryId);
-        }
+        tweetDBLoader = new AsyncTweetDBLoader();
+        queryListener = new OnQueryComplete() {
+            @Override
+            public void onQueryComplete() {
+                Tweet latestTweet = tweetService.getLatestTweet();
+                latestTweetId = latestTweet.getTweetId();
 
-        //get the latest tweet from the database
-        Tweet latestTweet = tweetService.getLatestTweet();
-        latestTweetId = latestTweet.getTweetId();
+                setLatestTweetId(latestTweetId);
+                initFeedItems(tweets);
+            }
+        };
 
-        setLatestTweetId(latestTweetId);
-        initFeedItems(tweets);
+        tweetDBLoader.setOnQueryCompleteListener(queryListener);
+        tweetDBLoader.execute();
+
+//        if (categoryId == 0) {
+//            tweets = tweetService.getAllTweets();
+//        } else {
+//             tweets = tweetService.getTweetsByCategoryId(categoryId);
+//        }
+//
+//        //get the latest tweet from the database
+//        Tweet latestTweet = tweetService.getLatestTweet();
+//        latestTweetId = latestTweet.getTweetId();
+//
+//        setLatestTweetId(latestTweetId);
+//        initFeedItems(tweets);
 
         return rootView;
     }
@@ -110,6 +129,41 @@ public class TwitterFeedFragment extends Fragment {
             Intent intent = new Intent(getActivity(), TweetDetailsActivity.class);
             intent.putExtra("tweetId", tweetId);
             startActivity(intent);
+        }
+    }
+
+    private class AsyncTweetDBLoader extends AsyncTask<Void, Void, List<Tweet>> {
+
+        private OnQueryComplete listener;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected List<Tweet> doInBackground(Void... params) {
+            List<Tweet> tweets;
+
+            if (categoryId == 0) {
+                tweets = tweetService.getAllTweets();
+            } else {
+                tweets = tweetService.getTweetsByCategoryId(categoryId);
+            }
+
+            return tweets;
+        }
+
+        @Override
+        protected void onPostExecute(List<Tweet> tweets) {
+            super.onPostExecute(tweets);
+            TwitterFeedFragment.this.tweets = tweets;
+            listener.onQueryComplete();
+        }
+
+
+        public void setOnQueryCompleteListener(OnQueryComplete listener) {
+            this.listener = listener;
         }
     }
 }
