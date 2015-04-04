@@ -42,8 +42,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_toRightOf="@+id/tweet_name"
-                android:layout_toEndOf="@+id/tweet_name"
-                android:text="Test Id"/>
+                android:layout_toEndOf="@+id/tweet_name"/>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -56,7 +55,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textSize="10sp"
-                    android:text="1m"
                     android:gravity="right"/>
             </LinearLayout>
 

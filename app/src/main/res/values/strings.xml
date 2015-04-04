@@ -15,7 +15,6 @@
     <string name="text_logout">Log Out</string>
     <string name="title_activity_category_manager_view">Category Manager</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="text_category_manager">Manage Categories</string>
     <string name="text_create_category">Create a new category by entering the category name</string>
     <string name="text_title_create">Create Category</string>
@@ -27,12 +26,14 @@
     <string name="text_modify_users">Select a category to add or delete users from that category</string>
     <string name="title_activity_category_user_view">Add/Remove Users</string>
     <string name="text_button_manage_category">Add/Remove Users</string>
-    <string name="title_activity_tweet_details">TweetDetailsActivity</string>
+    <string name="title_activity_tweet_details">Details</string>
     <string name="fake_body">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et ma</string>
     <string name="text_button_reply">Reply</string>
     <string name="text_button_external">View On Twitter</string>
     <string name="text_title_entities">Items Associated With This Tweet</string>
     <string name="text_title_urls">Links</string>
     <string name="text_title_images">Images</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="text_setting_dark_theme">Use Dark Theme</string>
 
 </resources>

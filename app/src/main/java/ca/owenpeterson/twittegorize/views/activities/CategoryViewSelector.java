@@ -173,7 +173,8 @@ public class CategoryViewSelector extends ActionBarActivity
 
         switch(id) {
             case R.id.action_settings:
-                Toast.makeText(this, "No Settings available yet", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
                 break;
             case R.id.action_refresh:
                 currentFragment.refreshFeed();

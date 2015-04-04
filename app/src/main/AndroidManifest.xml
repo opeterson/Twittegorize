@@ -73,6 +73,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.owenpeterson.twittegorize.views.activities.CategoryViewSelector" />
         </activity>
+        <activity
+            android:name=".views.activities.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".views.activities.CategoryViewSelector" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.owenpeterson.twittegorize.views.activities.CategoryViewSelector" />
+        </activity>
     </application>
 
 </manifest>
