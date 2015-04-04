@@ -7,6 +7,8 @@ public class AppConstants {
 
     public class Strings {
         public static final String CATEGORY_ID = "categoryId";
+        public static final String THEME = "THEME";
+        public static final String SETTINGS_PREFERENCES_ID = "APP_SETTINGS";
 
     }
 

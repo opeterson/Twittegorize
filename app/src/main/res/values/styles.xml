@@ -9,4 +9,11 @@
         <item name="icon_settings">@drawable/ic_action_settings_dark</item>
     </style>
 
+    <!-- Base application theme. -->
+    <style name="Dark" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!-- Customize your theme here. -->
+        <item name="icon_refresh">@drawable/ic_action_refresh_dark</item>
+        <item name="icon_settings">@drawable/ic_action_settings_dark</item>
+    </style>
+
 </resources>
