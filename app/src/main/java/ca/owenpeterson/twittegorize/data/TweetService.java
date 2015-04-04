@@ -148,6 +148,8 @@ public class TweetService {
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
+
+            //TODO: add code here to show an error dialog.
         }
 
         public void setOnFeedLoadedListener(OnFeedLoaded listener) {
