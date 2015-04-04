@@ -30,6 +30,7 @@
                 android:layout_toRightOf="@+id/dark_theme">
 
                 <Switch
+                    android:id="@+id/switch_theme"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="right"/>

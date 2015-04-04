@@ -1,20 +1,23 @@
 package ca.owenpeterson.twittegorize.utils;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v7.app.ActionBarActivity;
 
 import ca.owenpeterson.twittegorize.R;
 
 /**
  * Created by Owen on 4/4/2015.
  */
-public class SettingsManager extends Activity {
+public class SettingsManager extends ActionBarActivity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private Context context;
     
-    public SettingsManager() {
-        sharedPreferences = getSharedPreferences(AppConstants.Strings.SETTINGS_PREFERENCES_ID, MODE_PRIVATE);
-        editor = sharedPreferences.edit();
+    public SettingsManager(Context context) {
+        this.context = context;
+        this.sharedPreferences = context.getSharedPreferences(AppConstants.Strings.SETTINGS_PREFERENCES_ID, MODE_PRIVATE);
+        this.editor = sharedPreferences.edit();
     }
 
     public void setThemeDark() {

@@ -141,22 +141,13 @@ public class TweetService {
         }
 
         @Override
-        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-            //not sure yet. Log message?
-            Log.e("ERROR! Status code:" + String.valueOf(statusCode), throwable.getMessage());
-            super.onFailure(statusCode, headers, throwable, errorResponse);
-        }
-
-        @Override
-        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-            Log.e("ERROR Status code:" + String.valueOf(statusCode), throwable.getMessage());
-            super.onFailure(statusCode, headers, responseString, throwable);
-        }
-
-        @Override
         public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
             Log.e("ERROR Status code:" + String.valueOf(statusCode), throwable.getMessage());
             super.onFailure(statusCode, headers, throwable, errorResponse);
+
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
         }
 
         public void setOnFeedLoadedListener(OnFeedLoaded listener) {
