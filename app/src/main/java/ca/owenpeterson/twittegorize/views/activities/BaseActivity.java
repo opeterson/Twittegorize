@@ -22,4 +22,5 @@ public class BaseActivity extends ActionBarActivity {
         }
         super.onCreate(savedInstanceState);
     }
+
 }

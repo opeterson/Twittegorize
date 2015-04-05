@@ -27,7 +27,7 @@ public class CategoryViewSelector extends BaseActivity
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private TwitterFeedFragment currentFragment;
-    //private TweetCacheService tweetCacheService = new TweetCacheService(this);
+    private String fragmentName = "CUSTOM_FRAGMENT";
     private CategoryManager categoryManager;
     private final int RETURN_TO_TWEET_LIST = 2;
 
@@ -66,7 +66,7 @@ public class CategoryViewSelector extends BaseActivity
         //create a fragment object palceholder
         TwitterFeedFragment fragment = null;
 
-        String fragmentName = "CUSTOM_FRAGMENT";
+
         // update the main content by replacing fragments
 
         //create a bundle object that will be used to pass arguments to the fragment
@@ -100,7 +100,7 @@ public class CategoryViewSelector extends BaseActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, currentFragment, fragmentName)
-                .commit();
+                .commitAllowingStateLoss();
     }
 
     private void openFragmentForCategory(int position) {
@@ -173,7 +173,7 @@ public class CategoryViewSelector extends BaseActivity
         switch(id) {
             case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, RETURN_TO_TWEET_LIST);
                 break;
             case R.id.action_refresh:
                 currentFragment.refreshFeed();
@@ -210,12 +210,13 @@ public class CategoryViewSelector extends BaseActivity
         switch(requestCode) {
             case RETURN_TO_TWEET_LIST:
                 if (resultCode == RESULT_OK) {
-                    //I'm not sure why I had this here.
-                    //I think I want the user to explicitly refresh the feed.
-                    //may hhave been from early dev.
-                    //currentFragment.refreshFeed();
+                    redrawFragment();
                 }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void redrawFragment() {
+        //TODO: Figure out how to get the list view to refresh when pressing back
     }
 }

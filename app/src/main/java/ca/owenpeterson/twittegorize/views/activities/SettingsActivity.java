@@ -1,5 +1,6 @@
 package ca.owenpeterson.twittegorize.views.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,6 +62,15 @@ public class SettingsActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+//        MenuItem homeButton = (MenuItem) findViewById(android.R.id.home);
+//        homeButton.setChecked(true);
+        super.onBackPressed();
     }
 
     private class SwitchListener implements CompoundButton.OnCheckedChangeListener {
