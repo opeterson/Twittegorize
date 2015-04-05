@@ -3,7 +3,6 @@ package ca.owenpeterson.twittegorize.views.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +31,7 @@ import ca.owenpeterson.twittegorize.rest.TwitterApplication;
 import ca.owenpeterson.twittegorize.utils.JodaDateUtils;
 import ca.owenpeterson.twittegorize.utils.OnDetailTweetLoaded;
 
-public class TweetDetailsActivity extends ActionBarActivity {
+public class TweetDetailsActivity extends BaseActivity {
 
     private ImageView imageProfile;
     private TextView textUserName;

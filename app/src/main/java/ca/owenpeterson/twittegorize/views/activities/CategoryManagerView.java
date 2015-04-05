@@ -2,7 +2,6 @@ package ca.owenpeterson.twittegorize.views.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +19,7 @@ import ca.owenpeterson.twittegorize.data.CategoryManager;
 import ca.owenpeterson.twittegorize.data.TwitterUserManager;
 import ca.owenpeterson.twittegorize.models.Category;
 
-public class CategoryManagerView extends ActionBarActivity {
+public class CategoryManagerView extends BaseActivity {
 
     //creating category items
     private EditText inputCategoryName;

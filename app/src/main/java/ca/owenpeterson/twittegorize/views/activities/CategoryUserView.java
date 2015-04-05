@@ -1,7 +1,6 @@
 package ca.owenpeterson.twittegorize.views.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,10 +13,10 @@ import java.util.List;
 
 import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.data.TwitterUserManager;
-import ca.owenpeterson.twittegorize.models.User;
 import ca.owenpeterson.twittegorize.listviewadapters.UserAdapter;
+import ca.owenpeterson.twittegorize.models.User;
 
-public class CategoryUserView extends ActionBarActivity {
+public class CategoryUserView extends BaseActivity {
 
     private TwitterUserManager userManager;
     private UserAdapter userAdapter;
