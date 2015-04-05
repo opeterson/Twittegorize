@@ -218,5 +218,7 @@ public class CategoryViewSelector extends BaseActivity
 
     private void redrawFragment() {
         //TODO: Figure out how to get the list view to refresh when pressing back
+//        currentFragment.getFragmentManager().beginTransaction().detach(currentFragment).commitAllowingStateLoss();
+//        currentFragment.getFragmentManager().beginTransaction().attach(currentFragment).commitAllowingStateLoss();
     }
 }

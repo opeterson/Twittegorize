@@ -13,7 +13,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -21,7 +23,9 @@
                 android:id="@+id/dark_theme"
                 android:text="@string/text_setting_dark_theme"
                 android:gravity="center_vertical"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:layout_marginBottom="10dp" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,8 +41,46 @@
 
             </LinearLayout>
 
-            </RelativeLayout>
+        </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/always_logout"
+                android:text="@string/text_setting_always_logout"
+                android:gravity="center_vertical"
+                android:textSize="16sp"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/text_setting_desc_always_logout"
+                android:layout_below="@+id/always_logout"
+                android:textSize="10sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_toRightOf="@+id/always_logout">
+
+                <Switch
+                    android:id="@+id/switch_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right"
+                    />
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
     </LinearLayout>
 
