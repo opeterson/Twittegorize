@@ -15,6 +15,8 @@ import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.data.CategoryManager;
 import ca.owenpeterson.twittegorize.models.Category;
 import ca.owenpeterson.twittegorize.rest.TwitterApplication;
+import ca.owenpeterson.twittegorize.utils.AppConstants;
+import ca.owenpeterson.twittegorize.utils.SettingsManager;
 import ca.owenpeterson.twittegorize.views.fragments.NavigationDrawerFragment;
 import ca.owenpeterson.twittegorize.views.fragments.TwitterFeedFragment;
 
@@ -30,6 +32,7 @@ public class CategoryViewSelector extends BaseActivity
     private String fragmentName = "CUSTOM_FRAGMENT";
     private CategoryManager categoryManager;
     private final int RETURN_TO_TWEET_LIST = 2;
+    private SettingsManager settingsManager;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -65,7 +68,6 @@ public class CategoryViewSelector extends BaseActivity
     public void onNavigationDrawerItemSelected(int position) {
         //create a fragment object palceholder
         TwitterFeedFragment fragment = null;
-
 
         // update the main content by replacing fragments
 
@@ -210,15 +212,21 @@ public class CategoryViewSelector extends BaseActivity
         switch(requestCode) {
             case RETURN_TO_TWEET_LIST:
                 if (resultCode == RESULT_OK) {
-                    redrawFragment();
+                    Bundle bundle = data.getExtras();
+
+                    if (bundle != null) {
+                        boolean themeChanged = bundle.getBoolean(AppConstants.Strings.THEME_CHANGED);
+
+                        if (themeChanged) {
+                            refreshFragment();
+                        }
+                    }
                 }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void redrawFragment() {
+    private void refreshFragment() {
         //TODO: Figure out how to get the list view to refresh when pressing back
-//        currentFragment.getFragmentManager().beginTransaction().detach(currentFragment).commitAllowingStateLoss();
-//        currentFragment.getFragmentManager().beginTransaction().attach(currentFragment).commitAllowingStateLoss();
     }
 }

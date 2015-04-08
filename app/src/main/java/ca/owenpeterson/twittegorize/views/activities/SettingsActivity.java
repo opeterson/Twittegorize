@@ -8,12 +8,15 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import ca.owenpeterson.twittegorize.R;
+import ca.owenpeterson.twittegorize.utils.AppConstants;
 import ca.owenpeterson.twittegorize.utils.SettingsManager;
 
 public class SettingsActivity extends BaseActivity {
     private Switch themeSwitch;
+    private Switch logoutSwitch;
     private SettingsManager settingsManager;
     private SwitchListener switchListener;
+    private boolean themeChanged = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,9 @@ public class SettingsActivity extends BaseActivity {
         themeSwitch = (Switch) findViewById(R.id.switch_theme);
         switchListener = new SwitchListener();
         themeSwitch.setOnCheckedChangeListener(switchListener);
+
+        logoutSwitch = (Switch) findViewById(R.id.switch_logout);
+        logoutSwitch.setOnCheckedChangeListener(switchListener);
     }
 
     @Override
@@ -39,6 +45,9 @@ public class SettingsActivity extends BaseActivity {
               themeSwitch.setChecked(false);
           }
         }
+
+        boolean alwaysLogout = settingsManager.getAlwaysLogout();
+        logoutSwitch.setChecked(alwaysLogout);
 
     }
 
@@ -67,6 +76,10 @@ public class SettingsActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(AppConstants.Strings.THEME_CHANGED, themeChanged);
+        intent.putExtras(bundle);
+
         setResult(RESULT_OK, intent);
 //        MenuItem homeButton = (MenuItem) findViewById(android.R.id.home);
 //        homeButton.setChecked(true);
@@ -80,10 +93,17 @@ public class SettingsActivity extends BaseActivity {
 
             switch(id) {
                 case R.id.switch_theme:
+                    themeChanged = true;
                     if (isChecked) {
                         settingsManager.setThemeDark();
                     } else {
                         settingsManager.setThemeLight();
+                    }
+                case R.id.switch_logout:
+                    if (isChecked) {
+                        settingsManager.setAlwaysLogout(true);
+                    } else {
+                        settingsManager.setAlwaysLogout(false);
                     }
             }
         }

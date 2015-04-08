@@ -10,18 +10,22 @@ import com.codepath.oauth.OAuthLoginActionBarActivity;
 import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.data.TweetService;
 import ca.owenpeterson.twittegorize.models.Tweet;
+import ca.owenpeterson.twittegorize.rest.TwitterApplication;
 import ca.owenpeterson.twittegorize.rest.TwitterClient;
 import ca.owenpeterson.twittegorize.utils.OnFeedLoaded;
+import ca.owenpeterson.twittegorize.utils.SettingsManager;
 
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 
     private static final int RETURN_TO_LOGIN = 1;
+    private SettingsManager settingsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        settingsManager = new SettingsManager(this);
     }
 
     // Inflate the menu; this adds items to the action bar if it is present.
@@ -78,6 +82,12 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
         switch(requestCode) {
             case RETURN_TO_LOGIN:
                 if (resultCode == RESULT_OK) {
+                    boolean alwaysLogout = settingsManager.getAlwaysLogout();
+
+                    if (alwaysLogout) {
+                        TwitterApplication.getRestClient().clearAccessToken();
+                    }
+
                     finish();
                 }
         }

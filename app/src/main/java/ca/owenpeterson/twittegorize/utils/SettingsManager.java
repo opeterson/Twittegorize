@@ -34,4 +34,14 @@ public class SettingsManager extends ActionBarActivity {
     public int getCurrentTheme() {
         return sharedPreferences.getInt(AppConstants.Strings.THEME, -1);
     }
+
+    public void setAlwaysLogout(boolean alwaysLogout) {
+        editor.putBoolean(AppConstants.Strings.ALWAYS_LOGOUT, alwaysLogout);
+        editor.commit();
+    }
+
+    public boolean getAlwaysLogout() {
+        boolean alwaysLogout = sharedPreferences.getBoolean(AppConstants.Strings.ALWAYS_LOGOUT, false);
+        return alwaysLogout;
+    }
 }

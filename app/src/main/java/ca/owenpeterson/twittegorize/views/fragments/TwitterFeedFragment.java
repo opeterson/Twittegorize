@@ -64,6 +64,7 @@ public class TwitterFeedFragment extends Fragment {
             }
         };
 
+
         tweetDBLoader.setOnQueryCompleteListener(queryListener);
         tweetDBLoader.execute();
 
@@ -83,6 +84,8 @@ public class TwitterFeedFragment extends Fragment {
 
         itemClickListener = new ItemClickListener();
         tweetsListView.setOnItemClickListener(itemClickListener);
+
+
     }
 
     public void refreshFeed() {
