@@ -19,6 +19,6 @@ public class AppConstants {
     }
 
     public class Integers {
-        public static final int DEFAULT_LIST_LENGTH = 3;
+        public static final int DEFAULT_MENU_ITEM_COUNT = 3;
     }
 }

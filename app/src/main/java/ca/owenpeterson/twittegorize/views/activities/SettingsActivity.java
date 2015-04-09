@@ -74,7 +74,7 @@ public class SettingsActivity extends BaseActivity {
 
         int defaultCategoryIndex = settingsManager.getDefaultCategoryIndex();
         if (defaultCategoryIndex != -1) {
-            int spinnerIndex = defaultCategoryIndex - AppConstants.Integers.DEFAULT_LIST_LENGTH;
+            int spinnerIndex = defaultCategoryIndex - AppConstants.Integers.DEFAULT_MENU_ITEM_COUNT;
             categorySpinner.setSelection(spinnerIndex);
         }
 
@@ -181,7 +181,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     private void handleDefaultCategoryChange(int position) {
-        int defaultIndex = AppConstants.Integers.DEFAULT_LIST_LENGTH + position;
+        int defaultIndex = AppConstants.Integers.DEFAULT_MENU_ITEM_COUNT + position;
         settingsManager.setDefaultCategoryIndex(defaultIndex);
     }
 }
