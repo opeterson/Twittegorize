@@ -33,6 +33,7 @@ public class CategoryViewSelector extends BaseActivity
     private CategoryManager categoryManager;
     private final int RETURN_TO_TWEET_LIST = 2;
     private SettingsManager settingsManager;
+    private long lastCategoryId = 0;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -88,7 +89,6 @@ public class CategoryViewSelector extends BaseActivity
                 //may have to change this to be for result again, so that you can use the onActivityResult method
                 //which will prevent refreshing of the fragment.
                 startActivityForResult(intent, RETURN_TO_TWEET_LIST);
-                //startActivity(intent);
                 break;
             case 2:
                 Toast.makeText(getApplicationContext(), "Help not yet available", Toast.LENGTH_LONG).show();
@@ -114,18 +114,19 @@ public class CategoryViewSelector extends BaseActivity
 
         Category selectedCategory = categories.get(index);
 
-        long Id = selectedCategory.getId();
+        long id = selectedCategory.getId();
 
         Bundle bundle = new Bundle();
         TwitterFeedFragment fragment = null;
 
-        bundle.putLong("categoryId", Id);
+        bundle.putLong("categoryId", id);
 
         bundle.putString("categoryName", selectedCategory.getCategoryName());
 
         fragment = new TwitterFeedFragment();
         fragment.setArguments(bundle);
         setCurrentFragment(fragment);
+        setLastCategoryId(id);
     }
 
     /**
@@ -175,6 +176,8 @@ public class CategoryViewSelector extends BaseActivity
         switch(id) {
             case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
+                long lastCategoryId = getLastCategoryId();
+                intent.putExtra(AppConstants.Strings.CATEGORY_ID, lastCategoryId);
                 startActivityForResult(intent, RETURN_TO_TWEET_LIST);
                 break;
             case R.id.action_refresh:
@@ -218,7 +221,13 @@ public class CategoryViewSelector extends BaseActivity
                         boolean themeChanged = bundle.getBoolean(AppConstants.Strings.THEME_CHANGED);
 
                         if (themeChanged) {
-                            refreshFragment();
+                            long previousCategoryId = bundle.getLong(AppConstants.Strings.CATEGORY_ID);
+                            int themeId = bundle.getInt(AppConstants.Strings.THEME);
+
+                            //setTheme(themeId);
+
+                            rebuildFragment(previousCategoryId);
+
                         }
                     }
                 }
@@ -226,7 +235,34 @@ public class CategoryViewSelector extends BaseActivity
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void refreshFragment() {
-        //TODO: Figure out how to get the list view to refresh when pressing back
+    private void rebuildFragment(long lastCategoryId) {
+
+        if (lastCategoryId != -1) {
+
+            Bundle bundle = new Bundle();
+            TwitterFeedFragment fragment = null;
+
+            bundle.putLong("categoryId", lastCategoryId);
+
+            fragment = new TwitterFeedFragment();
+            fragment.setArguments(bundle);
+            setCurrentFragment(fragment);
+            setLastCategoryId(lastCategoryId);
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, currentFragment, fragmentName)
+                    .commitAllowingStateLoss();
+
+        }
+
+    }
+
+    public long getLastCategoryId() {
+        return lastCategoryId;
+    }
+
+    public void setLastCategoryId(long lastCategoryId) {
+        this.lastCategoryId = lastCategoryId;
     }
 }

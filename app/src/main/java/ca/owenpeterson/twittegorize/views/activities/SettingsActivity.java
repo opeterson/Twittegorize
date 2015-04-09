@@ -17,11 +17,16 @@ public class SettingsActivity extends BaseActivity {
     private SettingsManager settingsManager;
     private SwitchListener switchListener;
     private boolean themeChanged = false;
+    private long previousCategoryId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        Intent previousIntent = getIntent();
+        long lastId = previousIntent.getLongExtra(AppConstants.Strings.CATEGORY_ID, -1);
+        setPreviousCategoryId(lastId);
 
         settingsManager = new SettingsManager(this);
         themeSwitch = (Switch) findViewById(R.id.switch_theme);
@@ -78,11 +83,18 @@ public class SettingsActivity extends BaseActivity {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putBoolean(AppConstants.Strings.THEME_CHANGED, themeChanged);
+
+        if (themeChanged) {
+
+            long categoryId = getPreviousCategoryId();
+            int themeId = settingsManager.getCurrentTheme();
+            bundle.putLong(AppConstants.Strings.CATEGORY_ID, categoryId);
+            bundle.putInt(AppConstants.Strings.THEME, themeId);
+        }
+
         intent.putExtras(bundle);
 
         setResult(RESULT_OK, intent);
-//        MenuItem homeButton = (MenuItem) findViewById(android.R.id.home);
-//        homeButton.setChecked(true);
         super.onBackPressed();
     }
 
@@ -107,5 +119,13 @@ public class SettingsActivity extends BaseActivity {
                     }
             }
         }
+    }
+
+    public long getPreviousCategoryId() {
+        return previousCategoryId;
+    }
+
+    public void setPreviousCategoryId(long previousCategoryId) {
+        this.previousCategoryId = previousCategoryId;
     }
 }
