@@ -4,10 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.Spinner;
 import android.widget.Switch;
 
+import java.util.List;
+
 import ca.owenpeterson.twittegorize.R;
+import ca.owenpeterson.twittegorize.data.CategoryManager;
+import ca.owenpeterson.twittegorize.models.Category;
 import ca.owenpeterson.twittegorize.utils.AppConstants;
 import ca.owenpeterson.twittegorize.utils.SettingsManager;
 
@@ -16,6 +22,9 @@ public class SettingsActivity extends BaseActivity {
     private Switch logoutSwitch;
     private SettingsManager settingsManager;
     private SwitchListener switchListener;
+    private Spinner categorySpinner;
+    private ArrayAdapter<Category> categoryAdapter;
+    private CategoryManager categoryManager;
     private boolean themeChanged = false;
     private long previousCategoryId = -1;
 
@@ -35,6 +44,11 @@ public class SettingsActivity extends BaseActivity {
 
         logoutSwitch = (Switch) findViewById(R.id.switch_logout);
         logoutSwitch.setOnCheckedChangeListener(switchListener);
+
+        categoryManager = new CategoryManager();
+        categorySpinner = (Spinner) findViewById(R.id.spinner_categories_settings);
+        populateCategorySpinner();
+
     }
 
     @Override
@@ -127,5 +141,14 @@ public class SettingsActivity extends BaseActivity {
 
     public void setPreviousCategoryId(long previousCategoryId) {
         this.previousCategoryId = previousCategoryId;
+    }
+
+    private void populateCategorySpinner() {
+        List<Category> categories = categoryManager.getAllCategories();
+
+        if (categories != null) {
+            categoryAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,categories);
+            categorySpinner.setAdapter(categoryAdapter);
+        }
     }
 }

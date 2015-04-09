@@ -37,5 +37,7 @@
     <string name="text_setting_dark_theme">Use Dark Theme</string>
     <string name="text_setting_always_logout">Always Log Out</string>
     <string name="text_setting_desc_always_logout">Always log out when the application is closed</string>
+    <string name="text_setting_default_category">Default Category Selection</string>
+    <string name="text_setting_desc_default_category">Choose which category is default when the app opens</string>
 
 </resources>
