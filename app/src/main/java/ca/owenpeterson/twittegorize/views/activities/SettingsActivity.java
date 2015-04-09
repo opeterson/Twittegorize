@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
@@ -48,6 +50,8 @@ public class SettingsActivity extends BaseActivity {
         categoryManager = new CategoryManager();
         categorySpinner = (Spinner) findViewById(R.id.spinner_categories_settings);
         populateCategorySpinner();
+        SpinnerListener spinnerListener = new SpinnerListener();
+        categorySpinner.setOnItemSelectedListener(spinnerListener);
 
     }
 
@@ -67,6 +71,12 @@ public class SettingsActivity extends BaseActivity {
 
         boolean alwaysLogout = settingsManager.getAlwaysLogout();
         logoutSwitch.setChecked(alwaysLogout);
+
+        int defaultCategoryIndex = settingsManager.getDefaultCategoryIndex();
+        if (defaultCategoryIndex != -1) {
+            int spinnerIndex = defaultCategoryIndex - AppConstants.Integers.DEFAULT_LIST_LENGTH;
+            categorySpinner.setSelection(spinnerIndex);
+        }
 
     }
 
@@ -150,5 +160,28 @@ public class SettingsActivity extends BaseActivity {
             categoryAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,categories);
             categorySpinner.setAdapter(categoryAdapter);
         }
+    }
+
+    private class SpinnerListener implements Spinner.OnItemSelectedListener {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            int spinnerId = parent.getId();
+
+            switch(spinnerId) {
+                case R.id.spinner_categories_settings:
+                    handleDefaultCategoryChange(position);
+                    break;
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    }
+
+    private void handleDefaultCategoryChange(int position) {
+        int defaultIndex = AppConstants.Integers.DEFAULT_LIST_LENGTH + position;
+        settingsManager.setDefaultCategoryIndex(defaultIndex);
     }
 }

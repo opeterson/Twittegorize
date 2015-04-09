@@ -167,7 +167,4 @@ public class CategoryManagerView extends BaseActivity {
         super.onBackPressed();
     }
 
-
-
-
 }

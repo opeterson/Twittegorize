@@ -110,7 +110,7 @@ public class CategoryViewSelector extends BaseActivity
 
         //there are three default items in the list right now.
         //figure out a better way to handle this. Maybe an app constant.
-        int index = position - 3;
+        int index = position - AppConstants.Integers.DEFAULT_LIST_LENGTH;
 
         Category selectedCategory = categories.get(index);
 

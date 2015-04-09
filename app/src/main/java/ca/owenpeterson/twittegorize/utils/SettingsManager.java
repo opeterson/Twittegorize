@@ -44,4 +44,14 @@ public class SettingsManager extends ActionBarActivity {
         boolean alwaysLogout = sharedPreferences.getBoolean(AppConstants.Strings.ALWAYS_LOGOUT, false);
         return alwaysLogout;
     }
+
+    public void setDefaultCategoryIndex(int defaultIndex) {
+        editor.putInt(AppConstants.Strings.DEFAULT_CATEGORY_INDEX, defaultIndex);
+        editor.commit();
+    }
+
+    public int getDefaultCategoryIndex() {
+        int defaultIndex = sharedPreferences.getInt(AppConstants.Strings.DEFAULT_CATEGORY_INDEX, -1);
+        return defaultIndex;
+    }
 }
