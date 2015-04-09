@@ -18,7 +18,6 @@ import ca.owenpeterson.twittegorize.data.CategoryManager;
 import ca.owenpeterson.twittegorize.models.Category;
 import ca.owenpeterson.twittegorize.rest.TwitterApplication;
 import ca.owenpeterson.twittegorize.utils.AppConstants;
-import ca.owenpeterson.twittegorize.utils.SettingsManager;
 import ca.owenpeterson.twittegorize.views.fragments.NavigationDrawerFragment;
 import ca.owenpeterson.twittegorize.views.fragments.TwitterFeedFragment;
 
@@ -34,7 +33,6 @@ public class CategoryViewSelector extends BaseActivity
     private String fragmentName = "CUSTOM_FRAGMENT";
     private CategoryManager categoryManager;
     private final int RETURN_TO_TWEET_LIST = 2;
-    private SettingsManager settingsManager;
     private long lastCategoryId = 0;
 
     /**
@@ -248,12 +246,10 @@ public class CategoryViewSelector extends BaseActivity
         int color = -1;
         TypedValue a = new TypedValue();
         getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
+
         if (a.type >= TypedValue.TYPE_FIRST_COLOR_INT && a.type <= TypedValue.TYPE_LAST_COLOR_INT) {
             // windowBackground is a color
             color = a.data;
-        } else {
-            // windowBackground is not a color, probably a drawable
-            //Drawable d = getActivity().getResources().getDrawable(a.resourceId);
         }
 
         return color;
