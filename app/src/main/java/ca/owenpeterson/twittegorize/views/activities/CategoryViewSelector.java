@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import java.util.List;
@@ -226,6 +228,13 @@ public class CategoryViewSelector extends BaseActivity
 
                             this.setTheme(themeId);
 
+                            FrameLayout layout = (FrameLayout) findViewById(R.id.container);
+                            int backgroundColor = getParentBackgroundColor();
+
+                            if (backgroundColor != -1) {
+                                layout.setBackgroundColor(backgroundColor);
+                            }
+
                             rebuildFragment(previousCategoryId);
 
                         }
@@ -233,6 +242,21 @@ public class CategoryViewSelector extends BaseActivity
                 }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private int getParentBackgroundColor() {
+        int color = -1;
+        TypedValue a = new TypedValue();
+        getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
+        if (a.type >= TypedValue.TYPE_FIRST_COLOR_INT && a.type <= TypedValue.TYPE_LAST_COLOR_INT) {
+            // windowBackground is a color
+            color = a.data;
+        } else {
+            // windowBackground is not a color, probably a drawable
+            //Drawable d = getActivity().getResources().getDrawable(a.resourceId);
+        }
+
+        return color;
     }
 
     private void rebuildFragment(long lastCategoryId) {
@@ -253,7 +277,6 @@ public class CategoryViewSelector extends BaseActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.container, currentFragment, fragmentName)
                     .commitAllowingStateLoss();
-
         }
 
     }
