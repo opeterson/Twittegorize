@@ -224,7 +224,7 @@ public class CategoryViewSelector extends BaseActivity
                             long previousCategoryId = bundle.getLong(AppConstants.Strings.CATEGORY_ID);
                             int themeId = bundle.getInt(AppConstants.Strings.THEME);
 
-                            //setTheme(themeId);
+                            this.setTheme(themeId);
 
                             rebuildFragment(previousCategoryId);
 

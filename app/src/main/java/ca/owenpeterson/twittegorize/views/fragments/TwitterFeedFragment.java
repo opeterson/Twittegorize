@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.utils.AppConstants;
 import ca.owenpeterson.twittegorize.utils.OnFeedLoaded;
 import ca.owenpeterson.twittegorize.utils.OnQueryComplete;
+import ca.owenpeterson.twittegorize.utils.SettingsManager;
 import ca.owenpeterson.twittegorize.views.activities.TweetDetailsActivity;
 
 /**
@@ -40,12 +42,26 @@ public class TwitterFeedFragment extends Fragment {
     private OnQueryComplete queryListener;
     private ItemClickListener itemClickListener;
     private AsyncTweetDBLoader tweetDBLoader;
+    private SettingsManager settingsManager;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        rootView = inflater.inflate(R.layout.fragment_twitter_feed, container, false);
+
+        settingsManager = new SettingsManager(getActivity());
+        int themeId = settingsManager.getCurrentTheme();
+
+        if (themeId != -1) {
+            final Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), themeId);
+
+            LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
+
+            rootView =  localInflater.inflate(R.layout.fragment_twitter_feed, container, false);
+
+        } else {
+            rootView = inflater.inflate(R.layout.fragment_twitter_feed, container, false);
+        }
 
         tweetService = new TweetService(getActivity());
 
