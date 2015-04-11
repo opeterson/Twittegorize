@@ -25,6 +25,7 @@ import java.util.List;
 
 import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.data.CategoryManager;
+import ca.owenpeterson.twittegorize.utils.SettingsManager;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -58,7 +59,7 @@ public class NavigationDrawerFragment extends Fragment {
     private ListView mDrawerListView;
     private View mFragmentContainerView;
 
-    private int mCurrentSelectedPosition = 0;
+    private int mCurrentSelectedPosition = -1;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
@@ -83,8 +84,18 @@ public class NavigationDrawerFragment extends Fragment {
          * This is where you will set the default selection if it is available.
          */
 
-        // Select either the default item (0) or the last selected item.
-        selectItem(mCurrentSelectedPosition);
+        //if there was no selected item stored in state
+        if (-1 == mCurrentSelectedPosition) {
+            //get the default selection from the settings manager and set it.
+            SettingsManager settingsManager = new SettingsManager(getActivity());
+            int defaultCategoryIndex = settingsManager.getDefaultCategoryIndex();
+            selectItem(defaultCategoryIndex);
+        } else {
+            //you could remove this next line to have the app show an informative fragment at
+            //startup, perhaps.
+            mCurrentSelectedPosition = 0;
+            selectItem(mCurrentSelectedPosition);
+        }
     }
 
     @Override
