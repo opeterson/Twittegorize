@@ -89,7 +89,14 @@ public class NavigationDrawerFragment extends Fragment {
             //get the default selection from the settings manager and set it.
             SettingsManager settingsManager = new SettingsManager(getActivity());
             int defaultCategoryIndex = settingsManager.getDefaultCategoryIndex();
-            selectItem(defaultCategoryIndex);
+
+            //if the default index is available from the manager
+            if (-1 != defaultCategoryIndex) {
+                selectItem(defaultCategoryIndex);
+            } else {
+                selectItem(0);
+            }
+
         } else {
             //you could remove this next line to have the app show an informative fragment at
             //startup, perhaps.

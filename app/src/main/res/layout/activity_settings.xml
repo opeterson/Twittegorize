@@ -98,27 +98,37 @@
                 android:layout_marginBottom="10dp" />
 
             <TextView
+                android:id="@+id/desc_default_category"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="@string/text_setting_desc_default_category"
                 android:layout_below="@+id/default_category"
                 android:textSize="10sp"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <Spinner
+                android:id="@+id/spinner_categories_settings"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_toRightOf="@+id/default_category">
+                android:layout_below="@+id/desc_default_category">
 
-                <Spinner
-                    android:id="@+id/spinner_categories_settings"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true">
+            </Spinner>
 
-                </Spinner>
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_toRightOf="@+id/default_category">-->
 
-            </RelativeLayout>
+                <!--<Spinner-->
+                    <!--android:id="@+id/spinner_categories_settings"-->
+                    <!--android:layout_width="200dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:prompt="@string/text_spinner_categories_settings_default">-->
+
+                <!--</Spinner>-->
+
+            <!--</RelativeLayout>-->
 
         </RelativeLayout>
 

@@ -75,6 +75,8 @@ public class SettingsActivity extends BaseActivity {
         int defaultCategoryIndex = settingsManager.getDefaultCategoryIndex();
         if (defaultCategoryIndex != -1) {
             int spinnerIndex = defaultCategoryIndex - AppConstants.Integers.DEFAULT_MENU_ITEM_COUNT;
+            //add 1 to the index to account for the default item of "All Tweets"
+            spinnerIndex += 1;
             categorySpinner.setSelection(spinnerIndex);
         }
 
@@ -135,12 +137,14 @@ public class SettingsActivity extends BaseActivity {
                     } else {
                         settingsManager.setThemeLight();
                     }
+                    break;
                 case R.id.switch_logout:
                     if (isChecked) {
                         settingsManager.setAlwaysLogout(true);
                     } else {
                         settingsManager.setAlwaysLogout(false);
                     }
+                    break;
             }
         }
     }
@@ -155,8 +159,13 @@ public class SettingsActivity extends BaseActivity {
 
     private void populateCategorySpinner() {
         List<Category> categories = categoryManager.getAllCategories();
+        Category defaultCategory = new Category();
+        defaultCategory.setCategoryName("All Tweets");
 
         if (categories != null) {
+
+            //bit of a hack to add a default item to the list that I can use to allow the user to set the default index back to zero.
+            categories.add(0, defaultCategory);
             categoryAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,categories);
             categorySpinner.setAdapter(categoryAdapter);
         }
@@ -181,7 +190,17 @@ public class SettingsActivity extends BaseActivity {
     }
 
     private void handleDefaultCategoryChange(int position) {
-        int defaultIndex = AppConstants.Integers.DEFAULT_MENU_ITEM_COUNT + position;
+
+        int defaultIndex = 0;
+
+        if (position > 0) {
+            //if the user has selected "All Tweets", set the index to the current number of
+            //items that are at the top of the category list plus the position LESS 1 because
+            //of the "All Tweets" item.
+            defaultIndex = AppConstants.Integers.DEFAULT_MENU_ITEM_COUNT + (position - 1);
+        }
+
         settingsManager.setDefaultCategoryIndex(defaultIndex);
+
     }
 }
