@@ -9,6 +9,9 @@ import ca.owenpeterson.twittegorize.utils.AppConstants;
 
 /**
  * Created by Owen on 4/4/2015.
+ *
+ * Uses Shared Preferences to persist settings for the application.
+ * Provides the ability to get setting values from shared preferences.
  */
 public class SettingsManager extends ActionBarActivity {
     private SharedPreferences sharedPreferences;
@@ -16,6 +19,8 @@ public class SettingsManager extends ActionBarActivity {
     private Context context;
     
     public SettingsManager(Context context) {
+
+        //a context seems to be required in order to use shared preferences.
         this.context = context;
         this.sharedPreferences = context.getSharedPreferences(AppConstants.Strings.SETTINGS_PREFERENCES_ID, MODE_PRIVATE);
         this.editor = sharedPreferences.edit();
