@@ -50,11 +50,16 @@ public class TwitterFeedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        settingsManager = new SettingsManager(getActivity());
+        //set the context to a class level variable so that the context can persist across
+        //fragment detatchments.
+        //bug fix for screen rotation crash.
+        this.context = getActivity();
+
+        settingsManager = new SettingsManager(context);
         int themeId = settingsManager.getCurrentTheme();
 
         if (themeId != -1) {
-            final Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), themeId);
+            final Context contextThemeWrapper = new ContextThemeWrapper(context, themeId);
 
             LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
 
@@ -64,17 +69,12 @@ public class TwitterFeedFragment extends Fragment {
             rootView = inflater.inflate(R.layout.fragment_twitter_feed, container, false);
         }
 
-        //set the context to a class level variable so that the context can persist across
-        //fragment detatchments.
-        //bug fix for screen rotation crash.
-        this.context = getActivity().getBaseContext();
-
-        tweetManager = new TweetManager(getActivity());
+        tweetManager = new TweetManager(context);
 
         Bundle argBundle = getArguments();
         this.categoryId = argBundle.getLong(AppConstants.Strings.CATEGORY_ID);
 
-        tweetDBLoader = new AsyncTweetDBLoader(getActivity());
+        tweetDBLoader = new AsyncTweetDBLoader(context);
         queryListener = new OnQueryComplete() {
             @Override
             public void onQueryComplete() {
@@ -118,7 +118,7 @@ public class TwitterFeedFragment extends Fragment {
                 OnQueryComplete listener = new OnQueryComplete() {
                     @Override
                     public void onQueryComplete() {
-                        tweetsAdapter = new TweetsAdapter(getActivity(), tweets);
+                        tweetsAdapter = new TweetsAdapter(context, tweets);
                         tweetsListView.setAdapter(tweetsAdapter);
                     }
                 };
@@ -145,7 +145,7 @@ public class TwitterFeedFragment extends Fragment {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Tweet selectedTweet = tweets.get(position);
             long tweetId = selectedTweet.getTweetId();
-            Intent intent = new Intent(getActivity(), TweetDetailsActivity.class);
+            Intent intent = new Intent(context, TweetDetailsActivity.class);
             intent.putExtra("tweetId", tweetId);
             startActivity(intent);
         }
@@ -154,16 +154,16 @@ public class TwitterFeedFragment extends Fragment {
     private class AsyncTweetDBLoader extends AsyncTask<Void, Void, List<Tweet>> {
 
         private OnQueryComplete listener;
-        private Context context;
+        private Context localContext;
         private ProgressDialog dialog;
 
         public AsyncTweetDBLoader(Context context) {
-            this.context = context;
+            this.localContext = context;
         }
 
         @Override
         protected void onPreExecute() {
-            dialog = new ProgressDialog(context);
+            dialog = new ProgressDialog(localContext);
             dialog.setMessage("Retrieving Your Tweets");
             dialog.show();
             super.onPreExecute();
