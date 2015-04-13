@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
@@ -135,6 +136,7 @@ public class TweetDetailsActivity extends BaseActivity {
 
             switch(id) {
                 case R.id.button_details_reply:
+                    Toast.makeText(TweetDetailsActivity.this, "This feature is not available yet.", Toast.LENGTH_LONG).show();
                     break;
                 case R.id.button_details_view_in_browser:
                     handleOpenLinkExternally();
