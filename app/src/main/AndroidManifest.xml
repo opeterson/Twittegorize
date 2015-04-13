@@ -43,6 +43,8 @@
         <meta-data
             android:name="AA_DB_NAME"
             android:value="/storage/emulated/0/Twittegorize.db" />
+        <!--android:value="/storage/sdcard/Twittegorize.db" />-->
+
         <meta-data
             android:name="AA_DB_VERSION"
             android:value="1" />
