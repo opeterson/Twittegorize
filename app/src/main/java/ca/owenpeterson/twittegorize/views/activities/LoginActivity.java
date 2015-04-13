@@ -49,7 +49,6 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
             settingsManager = new SettingsManager(this);
         }
 
-
     }
 
     // Inflate the menu; this adds items to the action bar if it is present.
