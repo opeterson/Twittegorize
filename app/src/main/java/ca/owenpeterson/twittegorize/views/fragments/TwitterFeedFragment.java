@@ -17,13 +17,13 @@ import android.widget.ListView;
 import java.util.List;
 
 import ca.owenpeterson.twittegorize.R;
+import ca.owenpeterson.twittegorize.applicationpersistence.SettingsManager;
 import ca.owenpeterson.twittegorize.data.TweetManager;
+import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
+import ca.owenpeterson.twittegorize.listeners.OnQueryComplete;
 import ca.owenpeterson.twittegorize.listviewadapters.TweetsAdapter;
 import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.utils.AppConstants;
-import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
-import ca.owenpeterson.twittegorize.listeners.OnQueryComplete;
-import ca.owenpeterson.twittegorize.applicationpersistence.SettingsManager;
 import ca.owenpeterson.twittegorize.views.activities.TweetDetailsActivity;
 
 /**
@@ -43,6 +43,7 @@ public class TwitterFeedFragment extends Fragment {
     private ItemClickListener itemClickListener;
     private AsyncTweetDBLoader tweetDBLoader;
     private SettingsManager settingsManager;
+    private Context context;
 
     @Nullable
     @Override
@@ -62,6 +63,11 @@ public class TwitterFeedFragment extends Fragment {
         } else {
             rootView = inflater.inflate(R.layout.fragment_twitter_feed, container, false);
         }
+
+        //set the context to a class level variable so that the context can persist across
+        //fragment detatchments.
+        //bug fix for screen rotation crash.
+        this.context = getActivity().getBaseContext();
 
         tweetManager = new TweetManager(getActivity());
 
@@ -89,13 +95,14 @@ public class TwitterFeedFragment extends Fragment {
 
     @Override
     public void onResume() {
+
         super.onResume();
     }
 
     private void initFeedItems(List<Tweet> tweets) {
 
         tweetsListView = (ListView) rootView.findViewById(R.id.tweet_list_view);
-        tweetsAdapter = new TweetsAdapter(getActivity(), tweets);
+        tweetsAdapter = new TweetsAdapter(context, tweets);
         tweetsListView.setAdapter(tweetsAdapter);
 
         itemClickListener = new ItemClickListener();
@@ -116,7 +123,7 @@ public class TwitterFeedFragment extends Fragment {
                     }
                 };
 
-                AsyncTweetDBLoader dbLoader = new AsyncTweetDBLoader(getActivity());
+                AsyncTweetDBLoader dbLoader = new AsyncTweetDBLoader(context);
                 dbLoader.setOnQueryCompleteListener(listener);
                 dbLoader.execute();
             }
