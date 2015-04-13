@@ -24,7 +24,7 @@ import java.net.URL;
 import java.util.List;
 
 import ca.owenpeterson.twittegorize.R;
-import ca.owenpeterson.twittegorize.data.TweetService;
+import ca.owenpeterson.twittegorize.data.TweetManager;
 import ca.owenpeterson.twittegorize.listviewadapters.ImageAdapter;
 import ca.owenpeterson.twittegorize.listviewadapters.LinkAdapter;
 import ca.owenpeterson.twittegorize.models.DetailTweet;
@@ -42,7 +42,7 @@ public class TweetDetailsActivity extends BaseActivity {
     private Button buttonReply;
     private Button buttonViewBrowser;
     private TweetLoadedListener tweetLoadedListener;
-    private TweetService tweetService;
+    private TweetManager tweetManager;
     private ListView urlsListView;
     private ListView imagesListView;
     private DetailTweet detailTweet;
@@ -61,7 +61,7 @@ public class TweetDetailsActivity extends BaseActivity {
 
         long tweetId = getIntent().getLongExtra("tweetId", 0);
 
-        tweetService = new TweetService(TweetDetailsActivity.this);
+        tweetManager = new TweetManager(TweetDetailsActivity.this);
         tweetLoadedListener = new TweetLoadedListener();
 
         //call tweetservice for tweet by id with listener

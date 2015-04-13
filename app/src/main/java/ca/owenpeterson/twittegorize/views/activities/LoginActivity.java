@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
 import ca.owenpeterson.twittegorize.R;
-import ca.owenpeterson.twittegorize.data.TweetService;
+import ca.owenpeterson.twittegorize.data.TweetManager;
 import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.rest.TwitterApplication;
 import ca.owenpeterson.twittegorize.rest.TwitterClient;
@@ -62,9 +62,9 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
     // i.e Display application "homepage"
     @Override
     public void onLoginSuccess() {
-        TweetService tweetService = new TweetService(this);
+        TweetManager tweetManager = new TweetManager(this);
 
-        Tweet latestTweet = tweetService.getLatestTweet();
+        Tweet latestTweet = tweetManager.getLatestTweet();
 
         long id = 0;
         if (null != latestTweet) {
@@ -80,9 +80,9 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
         };
 
         if (id != 0) {
-            tweetService.putNewTweetsToDatabase(id, listener);
+            tweetManager.putNewTweetsToDatabase(id, listener);
         } else {
-            tweetService.putTweetsToDatabase(listener);
+            tweetManager.putTweetsToDatabase(listener);
         }
     }
 

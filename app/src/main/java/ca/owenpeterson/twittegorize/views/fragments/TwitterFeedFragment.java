@@ -17,7 +17,7 @@ import android.widget.ListView;
 import java.util.List;
 
 import ca.owenpeterson.twittegorize.R;
-import ca.owenpeterson.twittegorize.data.TweetService;
+import ca.owenpeterson.twittegorize.data.TweetManager;
 import ca.owenpeterson.twittegorize.listviewadapters.TweetsAdapter;
 import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.utils.AppConstants;
@@ -35,7 +35,7 @@ public class TwitterFeedFragment extends Fragment {
     private ListView tweetsListView;
     private TweetsAdapter tweetsAdapter;
     private long categoryId;
-    private TweetService tweetService;
+    private TweetManager tweetManager;
     private List<Tweet> tweets;
     private long latestTweetId;
     private OnFeedLoaded listener;
@@ -63,7 +63,7 @@ public class TwitterFeedFragment extends Fragment {
             rootView = inflater.inflate(R.layout.fragment_twitter_feed, container, false);
         }
 
-        tweetService = new TweetService(getActivity());
+        tweetManager = new TweetManager(getActivity());
 
         Bundle argBundle = getArguments();
         this.categoryId = argBundle.getLong(AppConstants.Strings.CATEGORY_ID);
@@ -72,7 +72,7 @@ public class TwitterFeedFragment extends Fragment {
         queryListener = new OnQueryComplete() {
             @Override
             public void onQueryComplete() {
-                Tweet latestTweet = tweetService.getLatestTweet();
+                Tweet latestTweet = tweetManager.getLatestTweet();
                 latestTweetId = latestTweet.getTweetId();
 
                 setLatestTweetId(latestTweetId);
@@ -141,7 +141,7 @@ public class TwitterFeedFragment extends Fragment {
             }
         };
 
-        tweetService.putNewTweetsToDatabase(getLatestTweetId(), listener);
+        tweetManager.putNewTweetsToDatabase(getLatestTweetId(), listener);
     }
 
     public long getLatestTweetId() {
@@ -186,9 +186,9 @@ public class TwitterFeedFragment extends Fragment {
             List<Tweet> tweets;
 
             if (categoryId == 0) {
-                tweets = tweetService.getAllTweets();
+                tweets = tweetManager.getAllTweets();
             } else {
-                tweets = tweetService.getTweetsByCategoryId(categoryId);
+                tweets = tweetManager.getTweetsByCategoryId(categoryId);
             }
 
             return tweets;
