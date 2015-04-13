@@ -1,9 +1,13 @@
 package ca.owenpeterson.twittegorize.views.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
 
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
@@ -25,6 +29,19 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        ConnectivityManager cm =
+                (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+
+        if(!isConnected)
+        {
+            Toast.makeText(this, "No internet connection found", Toast.LENGTH_LONG).show();
+            finish();
+        }
+
         settingsManager = new SettingsManager(this);
     }
 
