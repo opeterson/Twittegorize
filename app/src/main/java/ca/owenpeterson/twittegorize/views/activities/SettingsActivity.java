@@ -17,7 +17,7 @@ import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.data.CategoryManager;
 import ca.owenpeterson.twittegorize.models.Category;
 import ca.owenpeterson.twittegorize.utils.AppConstants;
-import ca.owenpeterson.twittegorize.utils.SettingsManager;
+import ca.owenpeterson.twittegorize.applicationpersistence.SettingsManager;
 
 public class SettingsActivity extends BaseActivity {
     private Switch themeSwitch;

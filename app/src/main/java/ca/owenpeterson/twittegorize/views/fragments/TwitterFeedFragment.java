@@ -23,7 +23,7 @@ import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.utils.AppConstants;
 import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
 import ca.owenpeterson.twittegorize.listeners.OnQueryComplete;
-import ca.owenpeterson.twittegorize.utils.SettingsManager;
+import ca.owenpeterson.twittegorize.applicationpersistence.SettingsManager;
 import ca.owenpeterson.twittegorize.views.activities.TweetDetailsActivity;
 
 /**

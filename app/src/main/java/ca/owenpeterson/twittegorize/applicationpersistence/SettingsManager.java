@@ -1,10 +1,11 @@
-package ca.owenpeterson.twittegorize.utils;
+package ca.owenpeterson.twittegorize.applicationpersistence;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 
 import ca.owenpeterson.twittegorize.R;
+import ca.owenpeterson.twittegorize.utils.AppConstants;
 
 /**
  * Created by Owen on 4/4/2015.

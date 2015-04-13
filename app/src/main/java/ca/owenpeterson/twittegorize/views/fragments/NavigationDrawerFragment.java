@@ -25,7 +25,7 @@ import java.util.List;
 
 import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.data.CategoryManager;
-import ca.owenpeterson.twittegorize.utils.SettingsManager;
+import ca.owenpeterson.twittegorize.applicationpersistence.SettingsManager;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
