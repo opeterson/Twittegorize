@@ -16,7 +16,7 @@ import ca.owenpeterson.twittegorize.data.TweetManager;
 import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.rest.TwitterApplication;
 import ca.owenpeterson.twittegorize.rest.TwitterClient;
-import ca.owenpeterson.twittegorize.utils.OnFeedLoaded;
+import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
 import ca.owenpeterson.twittegorize.utils.SettingsManager;
 
 

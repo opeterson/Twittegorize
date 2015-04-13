@@ -1,4 +1,4 @@
-package ca.owenpeterson.twittegorize.utils;
+package ca.owenpeterson.twittegorize.listeners;
 
 import ca.owenpeterson.twittegorize.models.DetailTweet;
 

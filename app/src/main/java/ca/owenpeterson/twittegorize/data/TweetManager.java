@@ -20,7 +20,7 @@ import java.util.List;
 import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.models.TweetComparator;
 import ca.owenpeterson.twittegorize.rest.TwitterApplication;
-import ca.owenpeterson.twittegorize.utils.OnFeedLoaded;
+import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
 
 /**
  * Created by Owen on 3/15/2015.

@@ -29,7 +29,7 @@ import ca.owenpeterson.twittegorize.listviewadapters.LinkAdapter;
 import ca.owenpeterson.twittegorize.models.DetailTweet;
 import ca.owenpeterson.twittegorize.rest.TwitterApplication;
 import ca.owenpeterson.twittegorize.utils.JodaDateUtils;
-import ca.owenpeterson.twittegorize.utils.OnDetailTweetLoaded;
+import ca.owenpeterson.twittegorize.listeners.OnDetailTweetLoaded;
 
 public class TweetDetailsActivity extends BaseActivity {
 

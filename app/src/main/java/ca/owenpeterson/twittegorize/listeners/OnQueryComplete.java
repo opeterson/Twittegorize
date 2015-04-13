@@ -1,4 +1,4 @@
-package ca.owenpeterson.twittegorize.utils;
+package ca.owenpeterson.twittegorize.listeners;
 
 /**
  * Created by Owen on 4/2/2015.

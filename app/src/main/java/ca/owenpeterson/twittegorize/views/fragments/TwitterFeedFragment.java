@@ -21,8 +21,8 @@ import ca.owenpeterson.twittegorize.data.TweetManager;
 import ca.owenpeterson.twittegorize.listviewadapters.TweetsAdapter;
 import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.utils.AppConstants;
-import ca.owenpeterson.twittegorize.utils.OnFeedLoaded;
-import ca.owenpeterson.twittegorize.utils.OnQueryComplete;
+import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
+import ca.owenpeterson.twittegorize.listeners.OnQueryComplete;
 import ca.owenpeterson.twittegorize.utils.SettingsManager;
 import ca.owenpeterson.twittegorize.views.activities.TweetDetailsActivity;
 
