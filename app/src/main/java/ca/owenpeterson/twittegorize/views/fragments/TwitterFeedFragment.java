@@ -95,10 +95,6 @@ public class TwitterFeedFragment extends Fragment {
     private void initFeedItems(List<Tweet> tweets) {
 
         tweetsListView = (ListView) rootView.findViewById(R.id.tweet_list_view);
-//        int backgroundColor = getParentBackgroundColor();
-//        if (backgroundColor != -1) {
-//            tweetsListView.setBackgroundColor(backgroundColor);
-//        }
         tweetsAdapter = new TweetsAdapter(getActivity(), tweets);
         tweetsListView.setAdapter(tweetsAdapter);
 
@@ -107,21 +103,6 @@ public class TwitterFeedFragment extends Fragment {
 
 
     }
-
-//    private int getParentBackgroundColor() {
-//        int color = -1;
-//        TypedValue a = new TypedValue();
-//        getActivity().getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
-//        if (a.type >= TypedValue.TYPE_FIRST_COLOR_INT && a.type <= TypedValue.TYPE_LAST_COLOR_INT) {
-//            // windowBackground is a color
-//            color = a.data;
-//        } else {
-//            // windowBackground is not a color, probably a drawable
-//            //Drawable d = getActivity().getResources().getDrawable(a.resourceId);
-//        }
-//
-//        return color;
-//    }
 
     public void refreshFeed() {
         listener = new OnFeedLoaded() {
