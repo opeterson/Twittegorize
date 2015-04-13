@@ -7,7 +7,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
@@ -24,25 +24,32 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 
     private static final int RETURN_TO_LOGIN = 1;
     private SettingsManager settingsManager;
+    private LinearLayout loginLayout;
+    private LinearLayout noConnectionLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        ConnectivityManager cm =
-                (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        loginLayout = (LinearLayout) findViewById(R.id.pane_login);
+        noConnectionLayout = (LinearLayout) findViewById(R.id.pane_no_connection);
+
+        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
         if(!isConnected)
         {
-            Toast.makeText(this, "No internet connection found", Toast.LENGTH_LONG).show();
-            finish();
+            loginLayout.setVisibility(View.INVISIBLE);
+            noConnectionLayout.setVisibility(View.VISIBLE);
+        } else {
+            loginLayout.setVisibility(View.VISIBLE);
+            settingsManager = new SettingsManager(this);
         }
 
-        settingsManager = new SettingsManager(this);
+
     }
 
     // Inflate the menu; this adds items to the action bar if it is present.

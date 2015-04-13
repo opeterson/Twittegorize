@@ -25,27 +25,52 @@
             android:text="@string/text_created_by"
             android:textSize="20sp"/>
 
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_inform_auth"
-            android:textSize="14dp"/>
-
         <LinearLayout
             android:id="@+id/pane_login"
+            android:visibility="gone"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="50dp">
+            android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/button_login"
+            <TextView
+                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="loginToRest"
-                android:text="@string/text_button_login"/>
+                android:text="@string/text_inform_auth"
+                android:layout_gravity="center"
+                android:textSize="14dp"/>
+
+            <LinearLayout
+                android:id="@+id/pane_login_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="50dp">
+
+                <Button
+                    android:id="@+id/button_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="loginToRest"
+                    android:text="@string/text_button_login"/>
             </LinearLayout>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/pane_no_connection"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_no_connection"
+            android:gravity="center"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 </RelativeLayout>

@@ -39,5 +39,6 @@
     <string name="text_setting_desc_always_logout">Always log out when the application is closed</string>
     <string name="text_setting_default_category">Default Category Selection</string>
     <string name="text_setting_desc_default_category">Choose which category is default when the app opens</string>
+    <string name="text_no_connection">No internet connection available. Please check your network settings.</string>
 
 </resources>
