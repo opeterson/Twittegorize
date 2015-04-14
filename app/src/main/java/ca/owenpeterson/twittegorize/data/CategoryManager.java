@@ -9,6 +9,8 @@ import ca.owenpeterson.twittegorize.models.Category;
 
 /**
  * Created by Owen on 3/17/2015.
+ *
+ * Performs operations on the database that are related to the tweet Categories.
  */
 public class CategoryManager {
 
@@ -16,7 +18,6 @@ public class CategoryManager {
      * TODO: wrap all selects in transactions
      * TODO: attempt to create async tasks for DB operations that only involve the DB. (No Twitter Fetches)
      */
-
 
     public boolean addCategory(String categoryName) {
         long id;
@@ -56,14 +57,5 @@ public class CategoryManager {
         List<Category> categories = new Select().from(Category.class).orderBy("Id ASC").execute();
         return categories;
     }
-
-    /**
-
-//    return new Select()
-//    .from(Student.class)
-//    .innerJoin(StudentCourse.class).on("students.id = studentcourses.id")
-//    .where("studentcourses.course = ?", courseId)
-//    .execute();
-     **/
 
 }
