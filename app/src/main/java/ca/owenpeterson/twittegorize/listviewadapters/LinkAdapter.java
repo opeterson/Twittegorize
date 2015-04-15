@@ -14,6 +14,8 @@ import ca.owenpeterson.twittegorize.R;
 
 /**
  * Created by Owen on 3/26/2015.
+ *
+ * Used by the tweet detail activity to create a listview of URLS for the specific tweet.
  */
 public class LinkAdapter extends ArrayAdapter<URL> {
 
