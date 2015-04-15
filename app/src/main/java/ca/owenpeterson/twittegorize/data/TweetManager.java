@@ -25,7 +25,10 @@ import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
 /**
  * Created by Owen on 3/15/2015.
  *
- * Consider renaming this to TweetManager
+ * This class is used both for getting new tweets form twitter, and getting existing tweets from
+ * the database.
+ * TODO: Separate the different functionality into two classes - One for getting responses from
+ * TODO: twitter and another for getting them from the database
  */
 public class TweetManager {
     private Context context;
@@ -38,6 +41,8 @@ public class TweetManager {
     }
 
     public void putTweetsToDatabase(OnFeedLoaded listener) {
+        //TODO: Remove this dialog box and create an Async task that calls this method instead.
+        //Put the dialog box in the async task.
         dialog = new ProgressDialog(context);
         dialog.setMessage("Contacting Twitter");
         dialog.show();
@@ -47,6 +52,8 @@ public class TweetManager {
     }
 
     public void putNewTweetsToDatabase(long tweetId, OnFeedLoaded listener) {
+        //TODO: Remove this dialog box and create an Async task that calls this method instead.
+        //Put the dialog box in the async task.
         dialog = new ProgressDialog(context);
         dialog.setMessage("Contacting Twitter");
         dialog.show();
@@ -82,36 +89,10 @@ public class TweetManager {
         return latestTweet;
     }
 
-//    public DetailTweet getTweetById(long tweetId) {
-//        DetailTweet detailTweet;
-//        DetailTweetResponseHandler detailTweetResponseHandler = new DetailTweetResponseHandler();
-//        //DetailTweetLoadedListener detailTweetLoadedListener = new DetailTweetLoadedListener();
-//        //detailTweetResponseHandler.setOnFeedLoadedListener(detailTweetLoadedListener);
-//        TwitterApplication.getRestClient().getTweetById(tweetId, detailTweetResponseHandler);
-//
-//        detailTweet = detailTweetResponseHandler.getDetailTweet();
-//
-//        return detailTweet;
-//    }
-//
-//
-//    private class DetailTweetResponseHandler extends JsonHttpResponseHandler {
-//
-//        private DetailTweet detailTweet;
-//
-//        @Override
-//        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-//            //build the detailTweet here.
-//            detailTweet = DetailTweet.fromJson(response);
-//            super.onSuccess(statusCode, headers, response);
-//        }
-//
-//        public DetailTweet getDetailTweet() {
-//            return detailTweet;
-//        }
-//
-//    }
-
+    /**
+     * This class is used as the response handler for the call to twitter. When the response is received
+     * all tweets are written to the database.
+     */
     private class TweetResponseHandler extends JsonHttpResponseHandler {
 
         private OnFeedLoaded listener;
