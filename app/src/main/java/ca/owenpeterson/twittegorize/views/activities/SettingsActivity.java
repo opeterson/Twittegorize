@@ -19,6 +19,9 @@ import ca.owenpeterson.twittegorize.models.Category;
 import ca.owenpeterson.twittegorize.utils.AppConstants;
 import ca.owenpeterson.twittegorize.applicationpersistence.SettingsManager;
 
+/**
+ * This view allows the user to change settings for the application.
+ */
 public class SettingsActivity extends BaseActivity {
     private Switch themeSwitch;
     private Switch logoutSwitch;

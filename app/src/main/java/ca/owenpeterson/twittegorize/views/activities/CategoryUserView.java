@@ -16,6 +16,11 @@ import ca.owenpeterson.twittegorize.data.TwitterUserManager;
 import ca.owenpeterson.twittegorize.listviewadapters.UserAdapter;
 import ca.owenpeterson.twittegorize.models.User;
 
+/**
+ * Displays a list of users that are associated with the current category. Allows the user of the app
+ * to add and remove users from the category.
+ * TODO: Figure out how to also allow the user to hit the checkbox to toggle instead of the listview item
+ */
 public class CategoryUserView extends BaseActivity {
 
     private TwitterUserManager userManager;

@@ -19,6 +19,10 @@ import ca.owenpeterson.twittegorize.data.CategoryManager;
 import ca.owenpeterson.twittegorize.data.TwitterUserManager;
 import ca.owenpeterson.twittegorize.models.Category;
 
+/**
+ * View used for managing the user's categories.
+ * Allows the user to create a category, add/remove users from it, and delete the category.
+ */
 public class CategoryManagerView extends BaseActivity {
 
     //creating category items
@@ -122,7 +126,6 @@ public class CategoryManagerView extends BaseActivity {
         selectedCategory = (Category) spinnerCategories.getSelectedItem();
 
         if (selectedCategory != null) {
-            //selectedCategory.delete();
             long categoryId = selectedCategory.getId();
             categoryManager.removeCategory(categoryId);
 
@@ -143,7 +146,7 @@ public class CategoryManagerView extends BaseActivity {
             success = categoryManager.addCategory(catName);
 
             if (success) {
-                //TODO: Add a dialog
+                //TODO: Add a dialog to inform the user that the category has been created
                 inputCategoryName.setText("");
                 populateCategorySpinners();
             }

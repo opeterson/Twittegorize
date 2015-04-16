@@ -21,7 +21,11 @@ import ca.owenpeterson.twittegorize.utils.AppConstants;
 import ca.owenpeterson.twittegorize.views.fragments.NavigationDrawerFragment;
 import ca.owenpeterson.twittegorize.views.fragments.TwitterFeedFragment;
 
-
+/**
+ * Used as the main activity class. Contains a navigation drawer that users can select a different
+ * category from, as well as some other default functionality.
+ * Loads fragments that show the list of tweets for the selected category.
+ */
 public class CategoryViewSelector extends BaseActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 

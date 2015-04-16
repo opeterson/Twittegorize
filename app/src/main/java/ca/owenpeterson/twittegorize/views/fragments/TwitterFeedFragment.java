@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -28,6 +27,8 @@ import ca.owenpeterson.twittegorize.views.activities.TweetDetailsActivity;
 
 /**
  * Created by Owen on 3/14/2015.
+ *
+ * This fragment is used to display the list of tweets for the currently selected category.
  */
 public class TwitterFeedFragment extends Fragment {
 
@@ -45,7 +46,6 @@ public class TwitterFeedFragment extends Fragment {
     private SettingsManager settingsManager;
     private Context context;
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -151,6 +151,11 @@ public class TwitterFeedFragment extends Fragment {
         }
     }
 
+    /**
+     * Async task used to contact the database and get all tweet items that are associaed with the
+     * selected category. Uses a listener to then display all of the tweets in the list once
+     * the query to the database is complete.
+     */
     private class AsyncTweetDBLoader extends AsyncTask<Void, Void, List<Tweet>> {
 
         private OnQueryComplete listener;
@@ -185,6 +190,8 @@ public class TwitterFeedFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Tweet> tweets) {
             super.onPostExecute(tweets);
+
+            //set the tweets on the parent class.
             TwitterFeedFragment.this.tweets = tweets;
             if (dialog.isShowing()) {
                 dialog.dismiss();

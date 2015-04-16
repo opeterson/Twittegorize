@@ -31,6 +31,12 @@ import ca.owenpeterson.twittegorize.rest.TwitterApplication;
 import ca.owenpeterson.twittegorize.utils.JodaDateUtils;
 import ca.owenpeterson.twittegorize.listeners.OnDetailTweetLoaded;
 
+/**
+ * View used to display the selected activity with more detail, including links and image URLS.
+ * In the future I may want to make it so that the image displays automatically using the URL.
+ * I may also want it to show the other replies to the selected tweet, though perhaps the button
+ * to view the tweet on twitter is good enough for that.
+ */
 public class TweetDetailsActivity extends BaseActivity {
 
     private ImageView imageProfile;

@@ -19,7 +19,13 @@ import ca.owenpeterson.twittegorize.rest.TwitterClient;
 import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
 import ca.owenpeterson.twittegorize.applicationpersistence.SettingsManager;
 
-
+/**
+ * Provides the ability for the user to log into thier twitter account using the OAuth2 protocol
+ *
+ * The OAuth2 is handled by a library that was part of a rest client template I got from this GitHub
+ * project: https://github.com/codepath/android-rest-client-template
+ *
+ */
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 
     private static final int RETURN_TO_LOGIN = 1;
