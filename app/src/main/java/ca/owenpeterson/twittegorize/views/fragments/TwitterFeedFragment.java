@@ -107,8 +107,6 @@ public class TwitterFeedFragment extends Fragment {
 
         itemClickListener = new ItemClickListener();
         tweetsListView.setOnItemClickListener(itemClickListener);
-
-
     }
 
     public void refreshFeed() {
