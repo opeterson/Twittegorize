@@ -12,6 +12,8 @@ import ca.owenpeterson.twittegorize.utils.KeyManager;
 
 /**
  * Created by Owen on 3/14/2015.
+ *
+ * Provides the interface between my application and Twitter.
  */
 public class TwitterClient extends OAuthBaseClient {
 

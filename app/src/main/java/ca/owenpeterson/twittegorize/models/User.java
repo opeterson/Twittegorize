@@ -10,6 +10,8 @@ import org.json.JSONObject;
 
 /**
  * Created by Owen on 3/10/2015.
+ *
+ * Model class used to store a user in the database
  */
 @Table(name = "Users")
 public class User extends Model {
@@ -102,10 +104,20 @@ public class User extends Model {
         return u;
     }
 
+    /**
+     * This method was necessary in order to handle a foreign key constraint on the database.
+     * I didn't want to be attempting to insert users when they already exist.
+     * This method queries the database for the userId first and then returns that user if they exist
+     * otherwise the user is saved and the new user object is returned.
+     * @param jsonObject
+     * @return
+     */
     public static User queryOrCreateUser(JSONObject jsonObject) {
 
         User jsonUser = fromJson(jsonObject);
         long userId = jsonUser.getUserId();
+
+        //TODO: create a method in the TwitterUserManager class that handles this instead.
         User existingUser = new Select().from(User.class).where("userId = ?", userId).executeSingle();
 
         if (existingUser != null) {

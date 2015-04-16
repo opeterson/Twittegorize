@@ -10,6 +10,8 @@ import java.util.Locale;
 
 /**
  * Created by Owen on 3/26/2015.
+ *
+ * A centralized location for performing tasks on JodaTime DateTime objects.
  */
 public class JodaDateUtils {
     //this is an array of DateTimeFormats that can be used to parse a Date.

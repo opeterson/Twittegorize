@@ -2,6 +2,8 @@ package ca.owenpeterson.twittegorize.utils;
 
 /**
  * Created by Owen on 3/14/2015.
+ *
+ * Contains constants used throughout the application
  */
 public class AppConstants {
 

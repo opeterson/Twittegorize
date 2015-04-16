@@ -14,6 +14,9 @@ import java.util.ArrayList;
 
 /**
  * Created by Owen on 3/10/2015.
+ *
+ * Model class used to store basic information about a Tweet. Does not contain as much info as
+ * the DetailTweet class.
  */
 @Table(name = "Tweets")
 public class Tweet extends Model {
@@ -57,6 +60,7 @@ public class Tweet extends Model {
         return tweetId;
     }
 
+    //TODO: Convert this into an actual date object instead of a string.
     public String getCreatedDate() {
         return createdDate;
     }

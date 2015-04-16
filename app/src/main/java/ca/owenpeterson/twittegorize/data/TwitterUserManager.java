@@ -11,6 +11,8 @@ import ca.owenpeterson.twittegorize.models.UserCategory;
 
 /**
  * Created by Owen on 3/19/2015.
+ *
+ * Handles database tasks related to Twitter Users.
  */
 public class TwitterUserManager {
 

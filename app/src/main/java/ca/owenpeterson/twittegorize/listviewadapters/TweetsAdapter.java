@@ -30,6 +30,8 @@ import ca.owenpeterson.twittegorize.models.User;
 
 /**
  * Created by Owen on 3/10/2015.
+ *
+ * ArrayAdapter used to display a Tweet in the listView of the TwitterFeedFragment
  */
 public class TweetsAdapter extends ArrayAdapter<Tweet> {
 

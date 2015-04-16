@@ -11,6 +11,10 @@ import java.util.Locale;
 
 /**
  * Created by Owen on 3/16/2015.
+ *
+ * A compararator class used to sort tweets by date for the TwitterFeedFragment list view.
+ * In the future I think I will have this functionality incorporated into the database query for
+ * tweets instead, which may improve performance.
  */
 public class TweetComparator implements Comparator<Tweet> {
 

@@ -6,6 +6,8 @@ import com.activeandroid.annotation.Table;
 
 /**
  * Created by Owen on 3/17/2015.
+ *
+ * This class is used as a model for a Category item.
  */
 @Table(name = "Categories")
 public class Category extends Model {

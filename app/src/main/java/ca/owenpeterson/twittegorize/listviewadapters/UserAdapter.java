@@ -18,6 +18,9 @@ import ca.owenpeterson.twittegorize.models.User;
 
 /**
  * Created by Owen on 3/19/2015.
+ *
+ * ArrayAdapter class used to display a user in the ListView of the CategoryUserView class.
+ * This list is used to add/remove users from a category
  */
 public class UserAdapter extends ArrayAdapter<User> {
 
@@ -37,8 +40,6 @@ public class UserAdapter extends ArrayAdapter<User> {
         this.users = objects;
         userManager = new TwitterUserManager();
     }
-
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -69,6 +70,7 @@ public class UserAdapter extends ArrayAdapter<User> {
 
         long userId = user.getId();
 
+        //if the user is already in the current category, check the checkbox next to thier name.
         if (userIdsInCategory.contains(userId)) {
             checkBox.setChecked(true);
         }
@@ -76,6 +78,8 @@ public class UserAdapter extends ArrayAdapter<User> {
         return view;
     }
 
+    //these overrides were required in order for the list to maintain its state when scrolling.
+    //Otherwise it was showing different users as checked or unchecked when they shouldn't be.
     @Override
 
     public int getViewTypeCount() {

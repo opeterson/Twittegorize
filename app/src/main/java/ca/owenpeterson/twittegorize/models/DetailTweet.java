@@ -15,6 +15,16 @@ import java.util.List;
 
 /**
  * Created by Owen on 3/25/2015.
+ *
+ * This class is used to display a tweet with more detail than is shown in the first list view.
+ * URLS and Images are also added here, but are ignored in the Tweet class. This may change in
+ * future versions.
+ *
+ * When the user clicks on an item in the list view of tweets, a detail screen is shown.
+ * The activity makes a call to twitter for a specific tweet. The ID is passed to the activity from
+ * the list.
+ *
+ * When the call to Twitter is finished, the data is parsed into this model.
  */
 public class DetailTweet {
 

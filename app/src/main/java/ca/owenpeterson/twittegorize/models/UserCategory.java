@@ -6,6 +6,8 @@ import com.activeandroid.annotation.Table;
 
 /**
  * Created by Owen on 3/17/2015.
+ *
+ * Database model used to handle the many-to-many relationship between User and Category objects.
  */
 @Table(name = "UserCategory")
 public class UserCategory extends Model {
