@@ -1,0 +1,9 @@
+* Create a new launcher activity that checks to see if the current token is valid, and if it is,
+go directly to the CategoryManagerView, otherwise show the login page.
+
+* Separate the UI functionality from the data access layer. IE split TweetManager into two different
+classes.
+
+* Do the same as above for TwitterUserManager.
+
+* Write some unit tests, Now that this is no longer a time-restricted school project.
