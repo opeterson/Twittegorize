@@ -3,6 +3,7 @@ package ca.owenpeterson.twittegorize.views.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,12 +25,12 @@ import java.net.URL;
 import java.util.List;
 
 import ca.owenpeterson.twittegorize.R;
+import ca.owenpeterson.twittegorize.listeners.OnDetailTweetLoaded;
 import ca.owenpeterson.twittegorize.listviewadapters.ImageAdapter;
 import ca.owenpeterson.twittegorize.listviewadapters.LinkAdapter;
 import ca.owenpeterson.twittegorize.models.DetailTweet;
 import ca.owenpeterson.twittegorize.rest.TwitterApplication;
 import ca.owenpeterson.twittegorize.utils.JodaDateUtils;
-import ca.owenpeterson.twittegorize.listeners.OnDetailTweetLoaded;
 
 /**
  * View used to display the selected activity with more detail, including links and image URLS.
@@ -152,7 +153,8 @@ public class TweetDetailsActivity extends BaseActivity {
         String tweetId = String.valueOf(detailTweet.getTweetId());
         String userId = String.valueOf(detailTweet.getUser().getUserId());
 
-        String url = "http://twitter.com/" + userId + "/status/" + tweetId;
+        String url = "https://twitter.com/" + userId + "/status/" + tweetId;
+        Log.d("TWEET URL: ", url);
         Intent browser = new Intent (Intent.ACTION_VIEW, Uri.parse(url) );
         startActivity(browser);
     }

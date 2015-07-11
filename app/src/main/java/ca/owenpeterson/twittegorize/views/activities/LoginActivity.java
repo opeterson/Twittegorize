@@ -12,12 +12,12 @@ import android.widget.LinearLayout;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
 import ca.owenpeterson.twittegorize.R;
+import ca.owenpeterson.twittegorize.applicationpersistence.SettingsManager;
 import ca.owenpeterson.twittegorize.data.TweetManager;
+import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
 import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.rest.TwitterApplication;
 import ca.owenpeterson.twittegorize.rest.TwitterClient;
-import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
-import ca.owenpeterson.twittegorize.applicationpersistence.SettingsManager;
 
 /**
  * Provides the ability for the user to log into thier twitter account using the OAuth2 protocol
