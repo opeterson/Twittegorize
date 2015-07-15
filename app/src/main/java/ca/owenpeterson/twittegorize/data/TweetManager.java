@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 
-import com.activeandroid.query.Select;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -12,8 +11,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
@@ -63,30 +60,15 @@ public class TweetManager {
     }
 
     public List<Tweet> getAllTweets() {
-        List<Tweet> tweets = new Select().from(Tweet.class).orderBy("tweetId").execute();
-
-        Collections.sort(tweets, comparator);
-        return tweets;
+        return tweetDAO.getAllTweets();
     }
 
     public List<Tweet> getTweetsByCategoryId(long categoryId) {
-        TwitterUserManager userManager = new TwitterUserManager();
-        List<Long> userIdsForCategory = userManager.getUserIdsInCategory(categoryId);
-
-        Object[] idsArray = userIdsForCategory.toArray();
-        String userIds = Arrays.toString(idsArray);
-        userIds = userIds.replace("[", "");
-        userIds = userIds.replace("]", "");
-
-        List<Tweet> tweets = new Select().from(Tweet.class).where("User IN (" + userIds + ")").orderBy("tweetId DESC").execute();
-
-        return tweets;
-
+        return tweetDAO.getTweetsByCategoryId(categoryId);
     }
 
     public Tweet getLatestTweet() {
-        Tweet latestTweet = new Select().from(Tweet.class).orderBy("Id DESC").limit(1).executeSingle();
-        return latestTweet;
+        return tweetDAO.getLatestTweet();
     }
 
     /**
