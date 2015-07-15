@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 
-import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -17,10 +16,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
 import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.models.TweetComparator;
 import ca.owenpeterson.twittegorize.rest.TwitterApplication;
-import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
 
 /**
  * Created by Owen on 3/15/2015.
@@ -35,6 +34,7 @@ public class TweetManager {
     private ArrayList<Tweet> tweets;
     private TweetComparator comparator = new TweetComparator();
     private ProgressDialog dialog;
+    private TweetDAO tweetDAO = new TweetDAO();
 
     public TweetManager(Context context) {
         this.context = context;
@@ -102,15 +102,8 @@ public class TweetManager {
             super.onSuccess(statusCode, headers, response);
             tweets = Tweet.fromJson(response);
 
-            ActiveAndroid.beginTransaction();
-            try {
-                for (Tweet tweet : tweets) {
-                    tweet.save();
-                }
-                ActiveAndroid.setTransactionSuccessful();
-            }
-            finally {
-                ActiveAndroid.endTransaction();
+            if (tweets != null) {
+                tweetDAO.saveTweetList(tweets);
             }
 
             if (dialog.isShowing()) {

@@ -1,7 +1,9 @@
 package ca.owenpeterson.twittegorize.data;
 
+import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -43,5 +45,19 @@ public class TweetDAO {
     public Tweet getLatestTweet() {
         Tweet latestTweet = new Select().from(Tweet.class).orderBy("Id DESC").limit(1).executeSingle();
         return latestTweet;
+    }
+
+    public void saveTweetList(ArrayList<Tweet>tweets) {
+
+        ActiveAndroid.beginTransaction();
+        try {
+            for (Tweet tweet : tweets) {
+                tweet.save();
+            }
+            ActiveAndroid.setTransactionSuccessful();
+        }
+        finally {
+            ActiveAndroid.endTransaction();
+        }
     }
 }
