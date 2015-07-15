@@ -1,13 +1,8 @@
 package ca.owenpeterson.twittegorize.data;
 
-import com.activeandroid.query.Select;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import ca.owenpeterson.twittegorize.models.User;
-import ca.owenpeterson.twittegorize.models.UserCategory;
 
 /**
  * Created by Owen on 3/19/2015.
@@ -16,81 +11,39 @@ import ca.owenpeterson.twittegorize.models.UserCategory;
  */
 public class TwitterUserManager {
 
+    private UserDAO userDAO;
+    private UserCategoryDAO userCategoryDAO;
+
     public TwitterUserManager() {
-
+        userDAO = new UserDAO();
+        userCategoryDAO = new UserCategoryDAO();
     }
-
-    /**
-     * TODO: wrap all selects in transactions
-     * TODO: attempt to create async tasks for DB operations that only involve the DB. (No Twitter Fetches)
-     * TODO: exception handling
-     */
 
     public List<User> getAllUsers() {
-        List<User> users = Collections.emptyList();
-        users = new Select().from(User.class).orderBy("Id ASC").execute();
-        return users;
+        return userDAO.getAllUsers();
     }
 
-    /**
-     * Provides a list of primary keys for users in a specific category
-     * @param categoryId
-     * @return
-     */
     public List<Long> getUserIdsInCategory(long categoryId) {
-        List<UserCategory> userCategories = Collections.emptyList();
-        userCategories = new Select().from(UserCategory.class).where("categoryId = ?", categoryId).execute();
-        List<Long> ids = new ArrayList<Long>();
-
-        for (UserCategory uc :  userCategories) {
-            Long id = uc.getUserId();
-            ids.add(id);
-        }
-
-        return ids;
+        return userCategoryDAO.getUserIdsInCategory(categoryId);
     }
 
     public void addUserToCategory(long categoryId, long userId) {
-        UserCategory userCategory = new UserCategory();
-        userCategory.setCategoryId(categoryId);
-        userCategory.setUserId(userId);
-        userCategory.save();
+        userCategoryDAO.addUserToCategory(categoryId, userId);
     }
 
     public void removeUserFromCategory(long categoryId, long userId) {
-        UserCategory userCategory = new Select().from(UserCategory.class).where("userId = ?", userId).and("categoryId = ?", categoryId).executeSingle();
-        if (null != userCategory) {
-            userCategory.delete();
-        }
+        userCategoryDAO.removeUserFromCategory(categoryId, userId);
     }
 
     public void removeUserCategoryEntries(long categoryId) {
-        List<UserCategory> userCategories = Collections.emptyList();
-        userCategories = new Select().from(UserCategory.class).where("categoryId = ?", categoryId).execute();
-
-        for (UserCategory uc : userCategories) {
-            uc.delete();
-        }
+        userCategoryDAO.removeUserCategoryEntries(categoryId);
     }
 
-
     public void addUserIdListToCategory(long categoryId, List<Long> usersToAdd) {
-        for (Long userId : usersToAdd) {
-            UserCategory userCategory = new UserCategory();
-            userCategory.setCategoryId(categoryId);
-            userCategory.setUserId(userId);
-            userCategory.save();
-        }
+        userCategoryDAO.addUserIdListToCategory(categoryId, usersToAdd);
     }
 
     public void removeUserIdListFromCategory(long categoryId, List<Long> usersToRemove) {
-
-        //this needs work. get all of the usercategories in one query instead of each time.
-        for (Long userId : usersToRemove) {
-            UserCategory userCategory = new Select().from(UserCategory.class).where("Id = ?", userId).and("categoryId = ?", categoryId).executeSingle();
-            if (null != userCategory) {
-                userCategory.delete();
-            }
-        }
+        userCategoryDAO.removeUserIdListFromCategory(categoryId, usersToRemove);
     }
 }

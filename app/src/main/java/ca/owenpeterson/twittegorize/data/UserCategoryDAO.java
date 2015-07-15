@@ -9,9 +9,18 @@ import java.util.List;
 import ca.owenpeterson.twittegorize.models.UserCategory;
 
 /**
+ * TODO: wrap all selects in transactions
+ * TODO: attempt to create async tasks for DB operations that only involve the DB. (No Twitter Fetches)
+ * TODO: exception handling
+ */
+/**
+ * Used to perform database operations relevant to the UserCategory class.
+ *
  * Created by owen on 7/14/15.
  */
 public class UserCategoryDAO {
+
+    public UserCategoryDAO(){}
     /**
      * Provides a list of primary keys for users in a specific category
      * @param categoryId
@@ -22,6 +31,7 @@ public class UserCategoryDAO {
         userCategories = new Select().from(UserCategory.class).where("categoryId = ?", categoryId).execute();
         List<Long> ids = new ArrayList<Long>();
 
+        //TODO: Move this logic to the calling class and rename this method.
         for (UserCategory uc :  userCategories) {
             Long id = uc.getUserId();
             ids.add(id);
