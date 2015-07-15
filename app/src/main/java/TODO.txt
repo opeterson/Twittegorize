@@ -7,3 +7,6 @@ classes.
 * Do the same as above for TwitterUserManager.
 
 * Write some unit tests, Now that this is no longer a time-restricted school project.
+
+* Create async tasks for contacting twitter and performing database operations, or somethign to that
+effect
