@@ -17,6 +17,7 @@ import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
 import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.models.TweetComparator;
 import ca.owenpeterson.twittegorize.rest.TwitterApplication;
+import ca.owenpeterson.twittegorize.rest.TwitterClient;
 
 /**
  * Created by Owen on 3/15/2015.
@@ -31,10 +32,13 @@ public class TweetManager {
     private ArrayList<Tweet> tweets;
     private TweetComparator comparator = new TweetComparator();
     private ProgressDialog dialog;
-    private TweetDAO tweetDAO = new TweetDAO();
+    private TweetDAO tweetDAO;
+    private TwitterClient twitterClient;
 
     public TweetManager(Context context) {
         this.context = context;
+        tweetDAO = new TweetDAO();
+        twitterClient = TwitterApplication.getRestClient();
     }
 
     public void putTweetsToDatabase(OnFeedLoaded listener) {
@@ -45,7 +49,7 @@ public class TweetManager {
         dialog.show();
         TweetResponseHandler responseHandler = new TweetResponseHandler();
         responseHandler.setOnFeedLoadedListener(listener);
-        TwitterApplication.getRestClient().getHomeTimeline(responseHandler);
+        twitterClient.getHomeTimeline(responseHandler);
     }
 
     public void putNewTweetsToDatabase(long tweetId, OnFeedLoaded listener) {
@@ -56,7 +60,7 @@ public class TweetManager {
         dialog.show();
         TweetResponseHandler responseHandler = new TweetResponseHandler();
         responseHandler.setOnFeedLoadedListener(listener);
-        TwitterApplication.getRestClient().getNewTweets(tweetId, responseHandler);
+        twitterClient.getNewTweets(tweetId, responseHandler);
     }
 
     public List<Tweet> getAllTweets() {
