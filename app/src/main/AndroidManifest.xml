@@ -52,7 +52,7 @@
 
         <meta-data
             android:name="AA_DB_NAME"
-            android:value="/storage/emulated/0/twittegorize.db" />
+            android:value="twittegorize.db" />
 
         <meta-data
             android:name="AA_DB_VERSION"
