@@ -32,14 +32,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="15sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tweet_screen_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="italic"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_toRightOf="@+id/tweet_name"
@@ -55,7 +55,7 @@
                     android:id="@+id/tweet_age"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="13sp"
+                    android:textSize="10sp"
                     android:gravity="right"/>
             </LinearLayout>
 
@@ -65,7 +65,7 @@
             android:id="@+id/tweet_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="15sp"/>
+            android:textSize="14sp"/>
 
         </LinearLayout>
 
