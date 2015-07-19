@@ -7,6 +7,7 @@ import android.util.Log;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
+import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -73,6 +74,19 @@ public class TweetManager {
 
     public Tweet getLatestTweet() {
         return tweetDAO.getLatestTweet();
+    }
+
+    /**
+     *
+     * @param olderThanDate - Delete any tweets that are OLDER than this date.
+     */
+    public void deleteOldTweetsByDate(DateTime olderThanDate) {
+        List<Tweet> oldTweets = tweetDAO.getTweetsOlderThanDate(olderThanDate);
+
+        if (oldTweets.size() > 0) {
+            tweetDAO.deleteTweetList(oldTweets);
+            Log.d("Tweet Cleanup:", "Deleting old tweets!");
+        }
     }
 
     /**

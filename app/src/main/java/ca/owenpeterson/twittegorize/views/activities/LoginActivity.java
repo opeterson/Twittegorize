@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
+import org.joda.time.DateTime;
+
 import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.applicationpersistence.SettingsManager;
 import ca.owenpeterson.twittegorize.data.TweetManager;
@@ -32,6 +34,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
     private SettingsManager settingsManager;
     private LinearLayout loginLayout;
     private LinearLayout noConnectionLayout;
+    private TweetManager tweetManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +71,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
     // i.e Display application "homepage"
     @Override
     public void onLoginSuccess() {
-        TweetManager tweetManager = new TweetManager(this);
+        tweetManager = new TweetManager(this);
 
         Tweet latestTweet = tweetManager.getLatestTweet();
 
@@ -117,6 +120,10 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
                         TwitterApplication.getRestClient().clearAccessToken();
                     }
 
+                    //delete old tweets
+                    DateTime today = new DateTime();
+                    DateTime daysAgo = today.minusDays(5);
+                    tweetManager.deleteOldTweetsByDate(daysAgo);
                     finish();
                 }
         }

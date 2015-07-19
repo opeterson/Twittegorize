@@ -3,6 +3,8 @@ package ca.owenpeterson.twittegorize.data;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,6 +14,8 @@ import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.models.TweetComparator;
 
 /**
+ * This class is used to persist and retrieve tweets from the local SQLite Database
+ *
  * Created by owen on 7/14/15.
  */
 public class TweetDAO {
@@ -36,15 +40,29 @@ public class TweetDAO {
         userIds = userIds.replace("[", "");
         userIds = userIds.replace("]", "");
 
-        List<Tweet> tweets = new Select().from(Tweet.class).where("User IN (" + userIds + ")").orderBy("tweetId DESC").execute();
-
-        return tweets;
-
+        return new Select().from(Tweet.class).where("User IN (" + userIds + ")").orderBy("tweetId DESC").execute();
     }
 
     public Tweet getLatestTweet() {
-        Tweet latestTweet = new Select().from(Tweet.class).orderBy("Id DESC").limit(1).executeSingle();
-        return latestTweet;
+        return new Select().from(Tweet.class).orderBy("Id DESC").limit(1).executeSingle();
+    }
+
+    public List<Tweet> getTweetsOlderThanDate(DateTime olderThanDate) {
+        Long dateInMillis = olderThanDate.getMillis();
+        return new Select().from(Tweet.class).where("createdDate <= " + dateInMillis).execute();
+    }
+
+    public void deleteTweetList(List<Tweet> tweets) {
+        ActiveAndroid.beginTransaction();
+        try {
+            for (Tweet tweet : tweets) {
+                tweet.delete();
+            }
+            ActiveAndroid.setTransactionSuccessful();
+        }
+        finally {
+            ActiveAndroid.endTransaction();
+        }
     }
 
     public void saveTweetList(ArrayList<Tweet>tweets) {
