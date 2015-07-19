@@ -16,17 +16,13 @@ import org.joda.time.Days;
 import org.joda.time.Hours;
 import org.joda.time.Minutes;
 import org.joda.time.Seconds;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.DateTimeFormatterBuilder;
-import org.joda.time.format.DateTimeParser;
 
 import java.util.List;
-import java.util.Locale;
 
 import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.models.User;
+import ca.owenpeterson.twittegorize.utils.JodaDateUtils;
 
 /**
  * Created by Owen on 3/10/2015.
@@ -40,12 +36,6 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
     private TextView bodyView;
     private TextView screenNameView;
     protected TextView tweetAgeView;
-
-    //this is an array of DateTimeFormats that can be used to parse a Date.
-    private DateTimeParser[] parsers = {
-            DateTimeFormat.forPattern("E MMM d HH:mm:ss Z yyyy").withLocale(Locale.CANADA).getParser(),
-            DateTimeFormat.forPattern("E, d MMM yyyy HH:mm:ss Z").withLocale(Locale.CANADA).getParser()};
-    private DateTimeFormatter dateFormatter = new DateTimeFormatterBuilder().append(null, parsers).toFormatter();
 
     public TweetsAdapter(Context context, List<Tweet> tweets) {
         super(context, 0, tweets);
@@ -82,7 +72,7 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
 
 
         tweetAgeView = (TextView) view.findViewById(R.id.tweet_age);
-        String dateString = tweet.getCreatedDate();
+        String dateString = JodaDateUtils.formatDate(tweet.getCreatedDate());
         String age = getFormattedTweetAge(dateString);
         tweetAgeView.setText(age);
 
@@ -92,7 +82,7 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
     public String getFormattedTweetAge(String dateString) {
 
         String formattedAge;
-        DateTime tweetDate = dateFormatter.parseDateTime(dateString);
+        DateTime tweetDate = JodaDateUtils.parseDateTime(dateString);
         DateTime now = new DateTime();
 
         Seconds secondsBetween = Seconds.secondsBetween(tweetDate, now);

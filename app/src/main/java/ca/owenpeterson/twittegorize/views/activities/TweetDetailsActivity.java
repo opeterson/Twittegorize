@@ -19,6 +19,7 @@ import com.squareup.picasso.Picasso;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
+import org.joda.time.DateTime;
 import org.json.JSONObject;
 
 import java.net.URL;
@@ -171,7 +172,7 @@ public class TweetDetailsActivity extends BaseActivity {
             String name = detailTweet.getUser().getName();
             String screenName = detailTweet.getUser().getScreenName();
             String tweetBody = detailTweet.getBody();
-            String createdDate = detailTweet.getCreatedDate();
+            DateTime createdDate = detailTweet.getCreatedDate();
             List<URL> urls = detailTweet.getUrls();
             List<URL> images = detailTweet.getImages();
 

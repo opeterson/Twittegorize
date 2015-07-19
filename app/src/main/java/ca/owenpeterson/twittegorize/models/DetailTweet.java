@@ -3,6 +3,7 @@ package ca.owenpeterson.twittegorize.models;
 import android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,6 +13,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import ca.owenpeterson.twittegorize.utils.JodaDateUtils;
 
 /**
  * Created by Owen on 3/25/2015.
@@ -32,7 +35,7 @@ public class DetailTweet {
     private String body;
     private boolean favorited;
     private boolean retweeted;
-    private String createdDate;
+    private DateTime createdDate;
     private User user;
     private List<URL> urls;
     private List<URL> images;
@@ -42,7 +45,7 @@ public class DetailTweet {
 
     }
 
-    public DetailTweet(long tweetId, String body, String createdDate, User user, List<URL> urls, List<URL> images ) {
+    public DetailTweet(long tweetId, String body, DateTime createdDate, User user, List<URL> urls, List<URL> images ) {
         super();
         this.tweetId = tweetId;
         this.body = body;
@@ -64,7 +67,7 @@ public class DetailTweet {
         return tweetId;
     }
 
-    public String getCreatedDate() {
+    public DateTime getCreatedDate() {
         return createdDate;
     }
 
@@ -99,7 +102,7 @@ public class DetailTweet {
             tweet.tweetId = jsonObject.getLong("id");
             tweet.favorited = jsonObject.getBoolean("favorited");
             tweet.retweeted = jsonObject.getBoolean("retweeted");
-            tweet.createdDate = jsonObject.getString("created_at");
+            tweet.createdDate = JodaDateUtils.parseDateTime(jsonObject.getString("created_at"));
             tweet.user = User.queryOrCreateUser(jsonObject.getJSONObject("user"));
 
             JSONObject entities = jsonObject.getJSONObject("entities");

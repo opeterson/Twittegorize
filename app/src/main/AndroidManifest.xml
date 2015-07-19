@@ -52,7 +52,7 @@
 
         <meta-data
             android:name="AA_DB_NAME"
-        android:value="twittegorize.db" />
+            android:value="/storage/emulated/0/twittegorize.db" />
 
         <meta-data
             android:name="AA_DB_VERSION"
@@ -63,6 +63,9 @@
             ca.owenpeterson.twittegorize.models.User,
             ca.owenpeterson.twittegorize.models.Category,
             ca.owenpeterson.twittegorize.models.UserCategory" />
+
+        <meta-data android:name="AA_SERIALIZERS"
+            android:value="ca.owenpeterson.twittegorize.utils.JodaDateTimeSerializer" />
 
         <activity
             android:name=".views.activities.CategoryManagerView"

@@ -18,13 +18,12 @@ public class JodaDateUtils {
     private static DateTimeParser[] parsers = {
             DateTimeFormat.forPattern("E, d MMM yyyy HH:mm:ss zzz").withLocale(Locale.CANADA).getParser(),
             DateTimeFormat.forPattern("E, d MMM yyyy HH:mm:ss Z").withLocale(Locale.CANADA).getParser(),
-            DateTimeFormat.forPattern("E MMM d HH:mm:ss Z yyyy").withLocale(Locale.CANADA).getParser()};
+            DateTimeFormat.forPattern("E MMM d HH:mm:ss Z yyyy").withLocale(Locale.CANADA).getParser(),
+            DateTimeFormat.forPattern("E, d MMM yyyy HH:mm a").withLocale(Locale.CANADA).getParser()};
     private static DateTimeFormatter dateFormatter = new DateTimeFormatterBuilder().append(null, parsers).toFormatter();
 
-    public static String formatDate(String originalDateString) {
-        DateTime date = dateFormatter.parseDateTime(originalDateString);
-        String formattedDate = date.toString(AppConstants.Dates.DISPLAY_DATE_FORMAT, Locale.CANADA);
-
+    public static String formatDate(DateTime originalDate) {
+        String formattedDate = originalDate.toString(AppConstants.Dates.DISPLAY_DATE_FORMAT, Locale.CANADA);
         return formattedDate;
     }
 

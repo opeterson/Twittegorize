@@ -6,11 +6,14 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import ca.owenpeterson.twittegorize.utils.JodaDateUtils;
 
 /**
  * Created by Owen on 3/10/2015.
@@ -31,7 +34,7 @@ public class Tweet extends Model {
     private boolean retweeted;
 
     @Column(name = "createdDate")
-    private String createdDate;
+    private DateTime createdDate;
 
     @Column(name = "User", onUniqueConflict = Column.ConflictAction.REPLACE, onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     private User user;
@@ -40,7 +43,7 @@ public class Tweet extends Model {
         super();
     }
 
-    public Tweet(long tweetId, String body, String createdDate, User user ) {
+    public Tweet(long tweetId, String body, DateTime createdDate, User user ) {
         super();
         this.tweetId = tweetId;
         this.body = body;
@@ -61,7 +64,7 @@ public class Tweet extends Model {
     }
 
     //TODO: Convert this into an actual date object instead of a string.
-    public String getCreatedDate() {
+    public DateTime getCreatedDate() {
         return createdDate;
     }
 
@@ -80,7 +83,7 @@ public class Tweet extends Model {
             tweet.tweetId = jsonObject.getLong("id");
             tweet.favorited = jsonObject.getBoolean("favorited");
             tweet.retweeted = jsonObject.getBoolean("retweeted");
-            tweet.createdDate = jsonObject.getString("created_at");
+            tweet.createdDate = JodaDateUtils.parseDateTime(jsonObject.getString("created_at"));
             tweet.user = User.queryOrCreateUser(jsonObject.getJSONObject("user"));
         } catch (JSONException e) {
             Log.e("ERROR", e.getMessage());

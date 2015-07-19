@@ -4,8 +4,6 @@ import org.joda.time.DateTime;
 
 import java.util.Comparator;
 
-import ca.owenpeterson.twittegorize.utils.JodaDateUtils;
-
 /**
  * Created by Owen on 3/16/2015.
  *
@@ -20,8 +18,8 @@ public class TweetComparator implements Comparator<Tweet> {
     @Override
     public int compare(Tweet lhs, Tweet rhs) {
 
-        leftDate = JodaDateUtils.parseDateTime(lhs.getCreatedDate());
-        rightDate = JodaDateUtils.parseDateTime(rhs.getCreatedDate());
+        leftDate = lhs.getCreatedDate();
+        rightDate = rhs.getCreatedDate();
 
         return rightDate.compareTo(leftDate);
     }
