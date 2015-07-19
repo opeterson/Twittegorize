@@ -10,3 +10,9 @@ classes.
 
 * Create async tasks for contacting twitter and performing database operations, or somethign to that
 effect
+
+* Add setting for profile image quality.
+
+* add setting to not load images at all, and perhaps show a placeholder.
+
+* When the user clicks a profile image, display the original image in a new view.

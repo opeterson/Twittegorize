@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Hours;
@@ -54,6 +55,7 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
 
         imageView = (ImageView) view.findViewById(R.id.image_profile);
         String imageURL = user.getProfileImageUrl();
+        imageURL = StringUtils.replace(imageURL, "_normal", "_bigger");
         Picasso.with(this.getContext()).load(imageURL).noFade().fit().into(imageView);
 
         screenNameView = (TextView) view.findViewById(R.id.tweet_screen_name);

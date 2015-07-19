@@ -3,7 +3,6 @@ package ca.owenpeterson.twittegorize.views.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -156,7 +155,6 @@ public class TweetDetailsActivity extends BaseActivity {
         String screenName = String.valueOf(detailTweet.getUser().getScreenName());
 
         String url = "https://twitter.com/" + screenName + "/status/" + tweetId;
-        Log.d("TWEET URL: ", url);
         Intent browser = new Intent (Intent.ACTION_VIEW, Uri.parse(url) );
         startActivity(browser);
     }
@@ -167,7 +165,7 @@ public class TweetDetailsActivity extends BaseActivity {
             String imageURL = detailTweet.getUser().getProfileImageUrl();
 
             //add a setting for this, high quality images, hide images, etc
-            imageURL = StringUtils.replace(imageURL, "normal", "bigger");
+            imageURL = StringUtils.replace(imageURL, "_normal", "_bigger");
 
             String name = detailTweet.getUser().getName();
             String screenName = detailTweet.getUser().getScreenName();
@@ -218,7 +216,6 @@ public class TweetDetailsActivity extends BaseActivity {
 
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-            //build the detailTweet here.
             detailTweet = DetailTweet.fromJson(response);
             listener.onDetailTweetLoaded(detailTweet);
             super.onSuccess(statusCode, headers, response);
