@@ -28,13 +28,13 @@ public class TwitterClient extends OAuthBaseClient {
     }
 
     public void getHomeTimeline(AsyncHttpResponseHandler handler) {
-        String url = getApiUrl("statuses/home_timeline.json?count=100");
+        String url = getApiUrl("statuses/home_timeline.json?count=200");
         client.get(url, null, handler);
     }
 
     public void  getNewTweets(long tweetId,AsyncHttpResponseHandler handler) {
         String id = String.valueOf(tweetId);
-        String url = getApiUrl("statuses/home_timeline.json?since_id=" + id);
+        String url = getApiUrl("statuses/home_timeline.json?count=200&since_id=" + id);
         client.get(url, null, handler);
     }
 
