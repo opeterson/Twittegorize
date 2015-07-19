@@ -22,7 +22,6 @@ import java.util.List;
 import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.models.User;
-import ca.owenpeterson.twittegorize.utils.JodaDateUtils;
 
 /**
  * Created by Owen on 3/10/2015.
@@ -72,17 +71,16 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
 
 
         tweetAgeView = (TextView) view.findViewById(R.id.tweet_age);
-        String dateString = JodaDateUtils.formatDate(tweet.getCreatedDate());
-        String age = getFormattedTweetAge(dateString);
+        DateTime tweetDate = tweet.getCreatedDate();
+        String age = getFormattedTweetAge(tweetDate);
         tweetAgeView.setText(age);
 
         return view;
     }
 
-    public String getFormattedTweetAge(String dateString) {
+    public String getFormattedTweetAge(DateTime tweetDate) {
 
         String formattedAge;
-        DateTime tweetDate = JodaDateUtils.parseDateTime(dateString);
         DateTime now = new DateTime();
 
         Seconds secondsBetween = Seconds.secondsBetween(tweetDate, now);
