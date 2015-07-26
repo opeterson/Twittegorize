@@ -29,3 +29,5 @@ May not be the exact steps but should be a good guideline.
 * Save retweeted users in a different table than the users table.
 
 * Add the appropriate methods to the DAO Classes for persisting User and RetweetedUser Objects. See object code for TODOS.
+
+* Create the appropriate methods in the DAO classes for deleting retweeted Users after X days. Add code to perform the cleanup.
