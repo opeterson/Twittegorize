@@ -151,7 +151,6 @@ public class TweetDetailsActivity extends BaseActivity {
 
     private void handleOpenLinkExternally() {
         String tweetId = String.valueOf(detailTweet.getTweetId());
-        //String userId = String.valueOf(detailTweet.getUser().getUserId());
         String screenName = String.valueOf(detailTweet.getUser().getScreenName());
 
         String url = "https://twitter.com/" + screenName + "/status/" + tweetId;

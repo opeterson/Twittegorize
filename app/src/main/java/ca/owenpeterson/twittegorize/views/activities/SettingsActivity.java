@@ -25,6 +25,7 @@ import ca.owenpeterson.twittegorize.applicationpersistence.SettingsManager;
 public class SettingsActivity extends BaseActivity {
     private Switch themeSwitch;
     private Switch logoutSwitch;
+    private Switch openTwitterDefaultSwitch;
     private SettingsManager settingsManager;
     private SwitchListener switchListener;
     private Spinner categorySpinner;
@@ -50,6 +51,9 @@ public class SettingsActivity extends BaseActivity {
         logoutSwitch = (Switch) findViewById(R.id.switch_logout);
         logoutSwitch.setOnCheckedChangeListener(switchListener);
 
+        openTwitterDefaultSwitch = (Switch) findViewById(R.id.switch_open_twitter);
+        openTwitterDefaultSwitch.setOnCheckedChangeListener(switchListener);
+
         categoryManager = new CategoryManager();
         categorySpinner = (Spinner) findViewById(R.id.spinner_categories_settings);
         populateCategorySpinner();
@@ -74,6 +78,9 @@ public class SettingsActivity extends BaseActivity {
 
         boolean alwaysLogout = settingsManager.getAlwaysLogout();
         logoutSwitch.setChecked(alwaysLogout);
+
+        boolean openTwitterDefault = settingsManager.getOpenTwitterDefault();
+        openTwitterDefaultSwitch.setChecked(openTwitterDefault);
 
         int defaultCategoryIndex = settingsManager.getDefaultCategoryIndex();
         if (defaultCategoryIndex != -1) {
@@ -142,11 +149,10 @@ public class SettingsActivity extends BaseActivity {
                     }
                     break;
                 case R.id.switch_logout:
-                    if (isChecked) {
-                        settingsManager.setAlwaysLogout(true);
-                    } else {
-                        settingsManager.setAlwaysLogout(false);
-                    }
+                    settingsManager.setAlwaysLogout(isChecked);
+                    break;
+                case R.id.switch_open_twitter:
+                    settingsManager.setOpenTwitterDefault(isChecked);
                     break;
             }
         }

@@ -60,4 +60,14 @@ public class SettingsManager extends ActionBarActivity {
         int defaultIndex = sharedPreferences.getInt(AppConstants.Strings.DEFAULT_CATEGORY_INDEX, -1);
         return defaultIndex;
     }
+
+    public void setOpenTwitterDefault(boolean openTwitterDefault) {
+        editor.putBoolean(AppConstants.Strings.OPEN_TWITTER_DEFAULT, openTwitterDefault);
+        editor.commit();
+    }
+
+    public boolean getOpenTwitterDefault() {
+        boolean openTwitterDefault = sharedPreferences.getBoolean(AppConstants.Strings.OPEN_TWITTER_DEFAULT, false);
+        return openTwitterDefault;
+    }
 }

@@ -3,6 +3,7 @@ package ca.owenpeterson.twittegorize.views.fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -45,6 +46,7 @@ public class TwitterFeedFragment extends Fragment {
     private AsyncTweetDBLoader tweetDBLoader;
     private SettingsManager settingsManager;
     private Context context;
+    private boolean openTwitterDefault;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,6 +59,7 @@ public class TwitterFeedFragment extends Fragment {
 
         settingsManager = new SettingsManager(context);
         int themeId = settingsManager.getCurrentTheme();
+        openTwitterDefault = settingsManager.getOpenTwitterDefault();
 
         if (themeId != -1) {
             final Context contextThemeWrapper = new ContextThemeWrapper(context, themeId);
@@ -143,9 +146,21 @@ public class TwitterFeedFragment extends Fragment {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Tweet selectedTweet = tweets.get(position);
             long tweetId = selectedTweet.getTweetId();
-            Intent intent = new Intent(context, TweetDetailsActivity.class);
-            intent.putExtra("tweetId", tweetId);
-            startActivity(intent);
+            if (openTwitterDefault) {
+                /**
+                 * TODO: move this funtcion to a separate class of some kind
+                 * because it is repeated in the tweetDetails view.
+                 */
+                String screenName = String.valueOf(selectedTweet.getUser().getScreenName());
+
+                String url = "https://twitter.com/" + screenName + "/status/" + tweetId;
+                Intent browser = new Intent (Intent.ACTION_VIEW, Uri.parse(url) );
+                startActivity(browser);
+            } else {
+                Intent intent = new Intent(context, TweetDetailsActivity.class);
+                intent.putExtra("tweetId", tweetId);
+                startActivity(intent);
+            }
         }
     }
 
