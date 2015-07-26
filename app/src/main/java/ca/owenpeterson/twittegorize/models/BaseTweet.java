@@ -7,6 +7,8 @@ import org.joda.time.DateTime;
 
 /**
  * Created by owen on 7/26/15.
+ *
+ * This class is used to contain the common properties between a Tweet and a Retweet.
  */
 public abstract class BaseTweet extends Model {
 
