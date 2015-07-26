@@ -16,3 +16,12 @@ effect
 * add setting to not load images at all, and perhaps show a placeholder.
 
 * When the user clicks a profile image, display the original image in a new view.
+
+* Solve the retweet issue. When a tweet is a retweet, get the retweeted_status, which will need to be a new entity.
+when the tweet is a retweet and the retweeted_status value is present, save the retweet to a new table called retweets.
+Then, the original tweet should reference this retweet. Can be nullable because not all tweets are retweets
+
+When loading the list of tweets (TweetsAdapter), you will have to check to see if the tweet is a retweet.
+If it is, inflate a different view that will indicate a retweet, and then load the body of the tweet from the retweet table instead of the original tweet.
+
+May not be the exact steps but should be a good guideline.
