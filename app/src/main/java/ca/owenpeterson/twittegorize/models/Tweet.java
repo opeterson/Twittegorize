@@ -22,67 +22,17 @@ import ca.owenpeterson.twittegorize.utils.JodaDateUtils;
 @Table(name = "Tweets")
 public class Tweet extends BaseTweet {
 
-//    @Column(name = "tweetId", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
-//    private long tweetId;
-//
-//    @Column(name = "body")
-//    private String body;
-//
-//    private boolean favorited;
-//    private boolean retweeted;
-//
-//    @Column(name = "createdDate")
-//    private DateTime createdDate;
-//
-//    @Column(name = "User", onUniqueConflict = Column.ConflictAction.REPLACE, onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
-//    private User user;
-
     public Tweet() {
         super();
     }
 
     public Tweet(long tweetId, String body, DateTime createdDate, User user ) {
         super(tweetId, body, createdDate, user);
-        //super();
-//        this.tweetId = tweetId;
-//        this.body = body;
-//        this.createdDate = createdDate;
-//        this.user = user;
     }
-
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public String getBody() {
-//        return body;
-//    }
-//
-//    public long getTweetId() {
-//        return tweetId;
-//    }
-//
-//    public DateTime getCreatedDate() {
-//        return createdDate;
-//    }
-//
-//    public boolean isFavorited() {
-//        return favorited;
-//    }
-//
-//    public boolean isRetweeted() {
-//        return retweeted;
-//    }
 
     public static Tweet fromJson(JSONObject jsonObject) {
         Tweet tweet = new Tweet();
         try {
-//            tweet.body = jsonObject.getString("text");
-//            tweet.tweetId = jsonObject.getLong("id");
-//            tweet.favorited = jsonObject.getBoolean("favorited");
-//            tweet.retweeted = jsonObject.getBoolean("retweeted");
-//            tweet.createdDate = JodaDateUtils.parseDateTime(jsonObject.getString("created_at"));
-//            tweet.user = User.queryOrCreateUser(jsonObject.getJSONObject("user"));
 
             tweet.setBody(jsonObject.getString("text"));
             tweet.setTweetId(jsonObject.getLong("id"));
