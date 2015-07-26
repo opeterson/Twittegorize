@@ -27,12 +27,23 @@ public class Tweet extends BaseTweet {
     @Column(name = "retweet", onUniqueConflict = Column.ConflictAction.REPLACE, onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     private Retweet retweet;
 
+    @Column(name = "User", onUniqueConflict = Column.ConflictAction.REPLACE, onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
+    private User user;
+
     public Tweet() {
         super();
     }
 
     public Tweet(long tweetId, String body, DateTime createdDate, User user) {
-        super(tweetId, body, createdDate, user);
+        super(tweetId, body, createdDate);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Retweet getRetweet() {

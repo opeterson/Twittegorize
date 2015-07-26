@@ -2,6 +2,7 @@ package ca.owenpeterson.twittegorize.models;
 
 import android.util.Log;
 
+import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
 import org.joda.time.DateTime;
@@ -16,12 +17,23 @@ import ca.owenpeterson.twittegorize.utils.JodaDateUtils;
 @Table(name="Retweets")
 public class Retweet extends BaseTweet {
 
+    @Column(name = "User", onUniqueConflict = Column.ConflictAction.REPLACE, onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
+    private RetweetedUser retweetedUser;
+
     public Retweet() {
         super();
     }
 
-    public Retweet(long tweetId, String body, DateTime createdDate, User user) {
-        super(tweetId, body, createdDate, user);
+    public Retweet(long tweetId, String body, DateTime createdDate, RetweetedUser user) {
+        super(tweetId, body, createdDate);
+    }
+
+    public RetweetedUser getRetweetedUser() {
+        return retweetedUser;
+    }
+
+    public void setRetweetedUser(RetweetedUser retweetedUser) {
+        this.retweetedUser = retweetedUser;
     }
 
     public static Retweet fromJson(JSONObject jsonObject) {
@@ -32,7 +44,7 @@ public class Retweet extends BaseTweet {
             retweet.setFavorited(jsonObject.getBoolean("favorited"));
             retweet.setRetweeted(jsonObject.getBoolean("retweeted"));
             retweet.setCreatedDate(JodaDateUtils.parseDateTime(jsonObject.getString("created_at")));
-            retweet.setUser(User.queryOrCreateUser(jsonObject.getJSONObject("user")));
+            retweet.setRetweetedUser(RetweetedUser.queryOrCreateUser(jsonObject.getJSONObject("user")));
             retweet.save();
         } catch (JSONException e) {
             Log.e("ERROR", e.getMessage());

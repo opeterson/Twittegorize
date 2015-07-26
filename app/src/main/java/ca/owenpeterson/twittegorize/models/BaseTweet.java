@@ -24,20 +24,12 @@ public abstract class BaseTweet extends Model {
     @Column(name = "createdDate")
     private DateTime createdDate;
 
-    @Column(name = "User", onUniqueConflict = Column.ConflictAction.REPLACE, onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
-    private User user;
-
     public BaseTweet(){}
 
-    public BaseTweet(long tweetId, String body, DateTime createdDate, User user) {
+    public BaseTweet(long tweetId, String body, DateTime createdDate) {
         this.tweetId = tweetId;
         this.body = body;
         this.createdDate = createdDate;
-        this.user = user;
-    }
-
-    public User getUser() {
-        return user;
     }
 
     public String getBody() {
@@ -80,7 +72,4 @@ public abstract class BaseTweet extends Model {
         this.createdDate = createdDate;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

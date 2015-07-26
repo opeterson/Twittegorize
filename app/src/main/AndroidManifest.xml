@@ -63,7 +63,8 @@
             ca.owenpeterson.twittegorize.models.User,
             ca.owenpeterson.twittegorize.models.Category,
             ca.owenpeterson.twittegorize.models.UserCategory,
-            ca.owenpeterson.twittegorize.models.Retweet"/>
+            ca.owenpeterson.twittegorize.models.Retweet,
+            ca.owenpeterson.twittegorize.models.RetweetedUser"/>
 
         <meta-data android:name="AA_SERIALIZERS"
             android:value="ca.owenpeterson.twittegorize.utils.JodaDateTimeSerializer" />
