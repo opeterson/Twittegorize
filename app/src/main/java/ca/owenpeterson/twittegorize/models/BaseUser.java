@@ -5,8 +5,10 @@ import com.activeandroid.annotation.Column;
 
 /**
  * Created by owen on 7/26/15.
+ *
+ * A model class used to hold the common properties of a User
  */
-public class BaseUser extends Model {
+public abstract class BaseUser extends Model {
 
     @Column(name = "name")
     private String name;
