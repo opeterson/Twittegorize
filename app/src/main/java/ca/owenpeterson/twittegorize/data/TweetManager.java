@@ -111,11 +111,11 @@ public class TweetManager {
             List retweetedUsers = resultsMap.get(AppConstants.Strings.RETWEETED_USERS);
             //tweets = Tweet.fromJson(response);
 
+            //TODO: save the lists in the correct order here. Use transactions!
+            //retweetedUsers, users, retweets, then tweets.
             if (tweets != null) {
                 tweetDAO.saveTweetList(tweets);
             }
-
-            //TODO: save the other lists in the correct order here. Use transactions!
 
             if (dialog.isShowing()) {
                 dialog.dismiss();
