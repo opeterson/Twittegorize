@@ -13,12 +13,17 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
+import ca.owenpeterson.twittegorize.models.Retweet;
+import ca.owenpeterson.twittegorize.models.RetweetedUser;
 import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.models.TweetComparator;
+import ca.owenpeterson.twittegorize.models.User;
 import ca.owenpeterson.twittegorize.rest.TwitterApplication;
 import ca.owenpeterson.twittegorize.rest.TwitterClient;
+import ca.owenpeterson.twittegorize.utils.AppConstants;
 
 /**
  * Created by Owen on 3/15/2015.
@@ -101,13 +106,19 @@ public class TweetManager {
         public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
             super.onSuccess(statusCode, headers, response);
 
-            //TODO: Use twitter Feed Response Parser here to generate all object lists and THEN
-            //save all objects in transactions.
-            tweets = Tweet.fromJson(response);
+            TwitterFeedResponseParser feedResponseParser = new TwitterFeedResponseParser();
+            Map<String, List> resultsMap = feedResponseParser.parseResponse(response);
+            List<Tweet> tweets = resultsMap.get(AppConstants.Strings.TWEETS);
+            List<User> users = resultsMap.get(AppConstants.Strings.USERS);
+            List<Retweet> retweets = resultsMap.get(AppConstants.Strings.RETWEETS);
+            List<RetweetedUser> retweetedUsers = resultsMap.get(AppConstants.Strings.RETWEETED_USERS);
+            //tweets = Tweet.fromJson(response);
 
             if (tweets != null) {
                 tweetDAO.saveTweetList(tweets);
             }
+
+            //TODO: save the other lists in the correct order here. Use transactions!
 
             if (dialog.isShowing()) {
                 dialog.dismiss();

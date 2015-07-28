@@ -15,6 +15,10 @@ public class AppConstants {
         public static final String THEME_CHANGED = "THEME_CHANGED";
         public static final String DEFAULT_CATEGORY_INDEX = "DEFAULT_CATEGORY_INDEX";
         public static final String OPEN_TWITTER_DEFAULT = "OPEN_TWITTER_DEFAULT";
+        public static final String TWEETS = "TWEETS";
+        public static final String USERS = "USERS";
+        public static final String RETWEETS = "RETWEETS";
+        public static final String RETWEETED_USERS = "RETWEETED_USERS";
     }
 
     public class Dates {

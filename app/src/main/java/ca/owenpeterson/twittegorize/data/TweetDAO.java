@@ -5,7 +5,6 @@ import com.activeandroid.query.Select;
 
 import org.joda.time.DateTime;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -65,7 +64,7 @@ public class TweetDAO {
         }
     }
 
-    public void saveTweetList(ArrayList<Tweet>tweets) {
+    public void saveTweetList(List<Tweet>tweets) {
 
         ActiveAndroid.beginTransaction();
         try {

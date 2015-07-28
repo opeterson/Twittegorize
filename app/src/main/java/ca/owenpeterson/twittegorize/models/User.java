@@ -87,6 +87,38 @@ public class User extends Model {
         return friendsCount;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public void setScreenName(String screenName) {
+        this.screenName = screenName;
+    }
+
+    public void setProfileBgImageUrl(String profileBgImageUrl) {
+        this.profileBgImageUrl = profileBgImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
+
+    public void setNumTweets(int numTweets) {
+        this.numTweets = numTweets;
+    }
+
+    public void setFollowersCount(int followersCount) {
+        this.followersCount = followersCount;
+    }
+
+    public void setFriendsCount(int friendsCount) {
+        this.friendsCount = friendsCount;
+    }
+
     public static User fromJson(JSONObject json) {
         User u = new User();
         try {
