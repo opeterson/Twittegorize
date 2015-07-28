@@ -100,6 +100,9 @@ public class TweetManager {
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
             super.onSuccess(statusCode, headers, response);
+
+            //TODO: Use twitter Feed Response Parser here to generate all object lists and THEN
+            //save all objects in transactions.
             tweets = Tweet.fromJson(response);
 
             if (tweets != null) {
