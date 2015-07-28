@@ -16,11 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
-import ca.owenpeterson.twittegorize.models.Retweet;
-import ca.owenpeterson.twittegorize.models.RetweetedUser;
 import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.models.TweetComparator;
-import ca.owenpeterson.twittegorize.models.User;
 import ca.owenpeterson.twittegorize.rest.TwitterApplication;
 import ca.owenpeterson.twittegorize.rest.TwitterClient;
 import ca.owenpeterson.twittegorize.utils.AppConstants;
@@ -108,10 +105,10 @@ public class TweetManager {
 
             TwitterFeedResponseParser feedResponseParser = new TwitterFeedResponseParser();
             Map<String, List> resultsMap = feedResponseParser.parseResponse(response);
-            List<Tweet> tweets = resultsMap.get(AppConstants.Strings.TWEETS);
-            List<User> users = resultsMap.get(AppConstants.Strings.USERS);
-            List<Retweet> retweets = resultsMap.get(AppConstants.Strings.RETWEETS);
-            List<RetweetedUser> retweetedUsers = resultsMap.get(AppConstants.Strings.RETWEETED_USERS);
+            List tweets = resultsMap.get(AppConstants.Strings.TWEETS);
+            List users = resultsMap.get(AppConstants.Strings.USERS);
+            List retweets = resultsMap.get(AppConstants.Strings.RETWEETS);
+            List retweetedUsers = resultsMap.get(AppConstants.Strings.RETWEETED_USERS);
             //tweets = Tweet.fromJson(response);
 
             if (tweets != null) {
