@@ -36,11 +36,17 @@ public class TweetManager {
     private TweetComparator comparator = new TweetComparator();
     private ProgressDialog dialog;
     private TweetDAO tweetDAO;
+    private RetweetedUserDAO retweetedUserDAO;
+    private UserDAO userDAO;
+    private RetweetDAO retweetDAO;
     private TwitterClient twitterClient;
 
     public TweetManager(Context context) {
         this.context = context;
         tweetDAO = new TweetDAO();
+        retweetedUserDAO = new RetweetedUserDAO();
+        userDAO = new UserDAO();
+        retweetDAO = new RetweetDAO();
         twitterClient = TwitterApplication.getRestClient();
     }
 
@@ -104,17 +110,37 @@ public class TweetManager {
             super.onSuccess(statusCode, headers, response);
 
             TwitterFeedResponseParser feedResponseParser = new TwitterFeedResponseParser();
+
+            //TODO: Make this an async task with listener so the UI doesn't lock up.
             Map<String, List> resultsMap = feedResponseParser.parseResponse(response);
             List tweets = resultsMap.get(AppConstants.Strings.TWEETS);
-            List users = resultsMap.get(AppConstants.Strings.USERS);
+            //List users = resultsMap.get(AppConstants.Strings.USERS);
             List retweets = resultsMap.get(AppConstants.Strings.RETWEETS);
-            List retweetedUsers = resultsMap.get(AppConstants.Strings.RETWEETED_USERS);
+            //List retweetedUsers = resultsMap.get(AppConstants.Strings.RETWEETED_USERS);
             //tweets = Tweet.fromJson(response);
 
             //TODO: save the lists in the correct order here. Use transactions!
             //retweetedUsers, users, retweets, then tweets.
+
+            boolean success = false;
+//            if (retweetedUsers != null) {
+//                success = retweetedUserDAO.saveRetweetedUserList(retweetedUsers);
+//            }
+//
+//            if (users != null && success) {
+//                success = userDAO.saveUserList(users);
+//            }
+
+            if (retweets != null) {
+                success = retweetDAO.saveRetweetList(retweets);
+            }
+
             if (tweets != null) {
-                tweetDAO.saveTweetList(tweets);
+                success = tweetDAO.saveTweetList(tweets);
+            }
+
+            if (!success) {
+                Log.e("SAVE PROCESS FAILURE", "Saving twitter entities to database failed.");
             }
 
             if (dialog.isShowing()) {

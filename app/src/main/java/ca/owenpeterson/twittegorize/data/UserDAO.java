@@ -1,5 +1,6 @@
 package ca.owenpeterson.twittegorize.data;
 
+import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 
 import java.util.List;
@@ -19,5 +20,23 @@ public class UserDAO {
         List<User> users;
         users = new Select().from(User.class).orderBy("Id ASC").execute();
         return users;
+    }
+
+    public boolean saveUserList(List<User> users) {
+        boolean success = false;
+
+        ActiveAndroid.beginTransaction();
+        try {
+            for (User u : users) {
+                u.save();
+            }
+            ActiveAndroid.setTransactionSuccessful();
+            success = true;
+        }
+        finally {
+            ActiveAndroid.endTransaction();
+        }
+
+        return success;
     }
 }

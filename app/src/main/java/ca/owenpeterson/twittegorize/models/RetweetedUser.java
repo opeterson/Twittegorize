@@ -1,10 +1,6 @@
 package ca.owenpeterson.twittegorize.models;
 
 import com.activeandroid.annotation.Table;
-import com.activeandroid.query.Select;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by owen on 7/26/15.
@@ -23,18 +19,18 @@ public class RetweetedUser extends BaseUser {
         super(name, userId, screenName, profileImageUrl);
     }
 
-    public static RetweetedUser fromJson(JSONObject json) {
-        RetweetedUser u = new RetweetedUser();
-        try {
-            u.setName(json.getString("name"));
-            u.setUserId(json.getLong("id"));
-            u.setScreenName(json.getString("screen_name"));
-            u.setProfileImageUrl(json.getString("profile_image_url"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return u;
-    }
+//    public static RetweetedUser fromJson(JSONObject json) {
+//        RetweetedUser u = new RetweetedUser();
+//        try {
+//            u.setName(json.getString("name"));
+//            u.setUserId(json.getLong("id"));
+//            u.setScreenName(json.getString("screen_name"));
+//            u.setProfileImageUrl(json.getString("profile_image_url"));
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        return u;
+//    }
 
     /**
      * This method was necessary in order to handle a foreign key constraint on the database.
@@ -44,20 +40,20 @@ public class RetweetedUser extends BaseUser {
      * @param jsonObject
      * @return
      */
-    public static RetweetedUser queryOrCreateUser(JSONObject jsonObject) {
-
-        RetweetedUser jsonUser = fromJson(jsonObject);
-        long userId = jsonUser.getUserId();
-
-        //TODO: create a method in the TwitterUserManager class that handles this instead.
-        RetweetedUser existingUser = new Select().from(RetweetedUser.class).where("userId = ?", userId).executeSingle();
-
-        if (existingUser != null) {
-            return existingUser;
-        } else {
-            jsonUser.save();
-            return jsonUser;
-        }
-    }
+//    public static RetweetedUser queryOrCreateUser(JSONObject jsonObject) {
+//
+//        RetweetedUser jsonUser = fromJson(jsonObject);
+//        long userId = jsonUser.getUserId();
+//
+//        //TODO: create a method in the TwitterUserManager class that handles this instead.
+//        RetweetedUser existingUser = new Select().from(RetweetedUser.class).where("userId = ?", userId).executeSingle();
+//
+//        if (existingUser != null) {
+//            return existingUser;
+//        } else {
+//            jsonUser.save();
+//            return jsonUser;
+//        }
+//    }
 
 }

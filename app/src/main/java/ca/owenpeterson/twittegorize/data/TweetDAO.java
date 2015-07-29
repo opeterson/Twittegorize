@@ -64,7 +64,8 @@ public class TweetDAO {
         }
     }
 
-    public void saveTweetList(List<Tweet>tweets) {
+    public boolean saveTweetList(List<Tweet> tweets) {
+        boolean success = false;
 
         ActiveAndroid.beginTransaction();
         try {
@@ -72,9 +73,12 @@ public class TweetDAO {
                 tweet.save();
             }
             ActiveAndroid.setTransactionSuccessful();
+            success = true;
         }
         finally {
             ActiveAndroid.endTransaction();
         }
+
+        return success;
     }
 }

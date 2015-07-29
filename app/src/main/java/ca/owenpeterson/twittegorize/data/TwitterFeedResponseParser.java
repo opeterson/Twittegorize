@@ -18,31 +18,39 @@ import ca.owenpeterson.twittegorize.models.Retweet;
 import ca.owenpeterson.twittegorize.models.RetweetedUser;
 import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.models.User;
+import ca.owenpeterson.twittegorize.utils.AppConstants;
 import ca.owenpeterson.twittegorize.utils.JodaDateUtils;
 
 /**
  * Created by owen on 7/27/15.
  */
 public class TwitterFeedResponseParser {
+    List<Tweet> tweets = new ArrayList<>(200);
+    //List<User> users = new ArrayList<>(200);
+    List<Retweet> retweets = new ArrayList<>(200);
+    //List<RetweetedUser> retweetedUsers = new ArrayList<>(200);
 
     public TwitterFeedResponseParser() {
     }
 
     public Map<String, List> parseResponse(JSONArray response) {
-        List<Tweet> tweets = new ArrayList<>(response.length());
-        List<User> users = new ArrayList<>();
-        List<Retweet> retweets = new ArrayList<>();
-        List<RetweetedUser> retweetedUsers = new ArrayList<>();
+//        List<Tweet> tweets = new ArrayList<>(response.length());
+//        List<User> users = new ArrayList<>();
+//        List<Retweet> retweets = new ArrayList<>();
+//        List<RetweetedUser> retweetedUsers = new ArrayList<>();
         Map<String, List> resultMap = new HashMap<String, List>();
 
-        populateListsFromJson(response, tweets, users, retweets, retweetedUsers);
+        populateListsFromJson(response);
 
-        //TODO: Put the populated lists into the map!
+        resultMap.put(AppConstants.Strings.TWEETS, tweets);
+        //resultMap.put(AppConstants.Strings.USERS, users);
+        resultMap.put(AppConstants.Strings.RETWEETS, retweets);
+        //resultMap.put(AppConstants.Strings.RETWEETED_USERS, retweetedUsers);
 
         return resultMap;
     }
 
-    private void populateListsFromJson(JSONArray jsonArray, List<Tweet> tweets, List<User> users, List<Retweet> retweets, List<RetweetedUser> retweetedUsers) {
+    private void populateListsFromJson(JSONArray jsonArray) {
         for (int i=0; i < jsonArray.length(); i++) {
             JSONObject tweetJson = null;
             try {
@@ -58,15 +66,21 @@ public class TwitterFeedResponseParser {
                 tweets.add(tweet);
             }
 
-            if (tweet.getUser() != null) {
-                users.add(tweet.getUser());
-            }
+//            if (tweet.getUser() != null) {
+//                if (!users.contains(tweet.getUser())) {
+//                    users.add(tweet.getUser());
+//                }
+//            }
 
             if (tweet.getRetweet() != null) {
-                retweets.add(tweet.getRetweet());
+                if(!retweets.contains(tweet.getRetweet())) {
+                    retweets.add(tweet.getRetweet());
 
-                if (tweet.getRetweet().getRetweetedUser() != null) {
-                    retweetedUsers.add(tweet.getRetweet().getRetweetedUser());
+//                    if (tweet.getRetweet().getRetweetedUser() != null) {
+//                        if(!retweetedUsers.contains(tweet.getRetweet().getRetweetedUser())) {
+//                            retweetedUsers.add(tweet.getRetweet().getRetweetedUser());
+//                        }
+//                    }
                 }
             }
         }
@@ -94,7 +108,6 @@ public class TwitterFeedResponseParser {
     }
 
     public User queryOrCreateUser(JSONObject jsonObject) {
-
         User jsonUser = createUserFromJson(jsonObject);
         long userId = jsonUser.getUserId();
 
@@ -104,6 +117,7 @@ public class TwitterFeedResponseParser {
         if (existingUser != null) {
             return existingUser;
         } else {
+            jsonUser.save();
             return jsonUser;
         }
     }
@@ -125,7 +139,8 @@ public class TwitterFeedResponseParser {
         return u;
     }
 
-    private RetweetedUser createRetweetedUserFromJson(JSONObject json, RetweetedUser retweetedUser) {
+    private RetweetedUser createRetweetedUserFromJson(JSONObject json) {
+        RetweetedUser retweetedUser = new RetweetedUser();
         try {
             retweetedUser.setName(json.getString("name"));
             retweetedUser.setUserId(json.getLong("id"));
@@ -144,7 +159,7 @@ public class TwitterFeedResponseParser {
             retweet.setFavorited(jsonObject.getBoolean("favorited"));
             retweet.setRetweeted(jsonObject.getBoolean("retweeted"));
             retweet.setCreatedDate(JodaDateUtils.parseDateTime(jsonObject.getString("created_at")));
-            retweet.setRetweetedUser(queryOrCreateRetweetedUser(jsonObject.getJSONObject("user")));
+            retweet.setRetweetedUser(findOrCreateRetweetedUser(jsonObject.getJSONObject("user")));
         } catch (JSONException e) {
             Log.e("ERROR", e.getMessage());
             return null;
@@ -152,17 +167,18 @@ public class TwitterFeedResponseParser {
         return retweet;
     }
 
-    private RetweetedUser queryOrCreateRetweetedUser(JSONObject jsonObject) {
+    private RetweetedUser findOrCreateRetweetedUser(JSONObject jsonObject) {
 
-        RetweetedUser jsonUser = new RetweetedUser();
-        jsonUser = createRetweetedUserFromJson(jsonObject, jsonUser);
+        RetweetedUser jsonUser = createRetweetedUserFromJson(jsonObject);
         long userId = jsonUser.getUserId();
 
+        //TODO: create a method in the TwitterUserManager class that handles this instead.
         RetweetedUser existingUser = new Select().from(RetweetedUser.class).where("userId = ?", userId).executeSingle();
 
         if (existingUser != null) {
             return existingUser;
         } else {
+            jsonUser.save();
             return jsonUser;
         }
     }
