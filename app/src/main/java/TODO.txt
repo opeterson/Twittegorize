@@ -33,3 +33,7 @@ May not be the exact steps but should be a good guideline.
 * Create the appropriate methods in the DAO classes for deleting retweeted Users after X days. Add code to perform the cleanup.
 
 * Remove properties from User that are in the BaseUser class.
+
+* Fix this mess you made with the TwitterFeedResponseParser class
+
+* Create User utils class that can be used to do the "Query or create User actions"

@@ -109,9 +109,9 @@ public class TweetManager {
         public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
             super.onSuccess(statusCode, headers, response);
 
+            //TODO: Make this an async task with listener so the UI doesn't lock up. No dialog.
+            //TODO: listener name: feedResponseParsed - when finished, dismiss dialog below.
             TwitterFeedResponseParser feedResponseParser = new TwitterFeedResponseParser();
-
-            //TODO: Make this an async task with listener so the UI doesn't lock up.
             Map<String, List> resultsMap = feedResponseParser.parseResponse(response);
             List tweets = resultsMap.get(AppConstants.Strings.TWEETS);
             //List users = resultsMap.get(AppConstants.Strings.USERS);
@@ -122,7 +122,6 @@ public class TweetManager {
             //TODO: save the lists in the correct order here. Use transactions!
             //retweetedUsers, users, retweets, then tweets.
 
-            boolean success = false;
 //            if (retweetedUsers != null) {
 //                success = retweetedUserDAO.saveRetweetedUserList(retweetedUsers);
 //            }
@@ -131,16 +130,13 @@ public class TweetManager {
 //                success = userDAO.saveUserList(users);
 //            }
 
+            //TODO: Move these to the parser.
             if (retweets != null) {
-                success = retweetDAO.saveRetweetList(retweets);
+                retweetDAO.saveRetweetList(retweets);
             }
 
             if (tweets != null) {
-                success = tweetDAO.saveTweetList(tweets);
-            }
-
-            if (!success) {
-                Log.e("SAVE PROCESS FAILURE", "Saving twitter entities to database failed.");
+                tweetDAO.saveTweetList(tweets);
             }
 
             if (dialog.isShowing()) {
