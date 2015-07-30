@@ -13,13 +13,11 @@ import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ca.owenpeterson.twittegorize.listeners.FeedResponseParsed;
 import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
 import ca.owenpeterson.twittegorize.models.Tweet;
-import ca.owenpeterson.twittegorize.models.TweetComparator;
 import ca.owenpeterson.twittegorize.rest.TwitterApplication;
 import ca.owenpeterson.twittegorize.rest.TwitterClient;
 
@@ -33,21 +31,13 @@ import ca.owenpeterson.twittegorize.rest.TwitterClient;
  */
 public class TweetManager {
     private Context context;
-    private ArrayList<Tweet> tweets;
-    private TweetComparator comparator = new TweetComparator();
     private ProgressDialog dialog;
     private TweetDAO tweetDAO;
-    private RetweetedUserDAO retweetedUserDAO;
-    private UserDAO userDAO;
-    private RetweetDAO retweetDAO;
     private TwitterClient twitterClient;
 
     public TweetManager(Context context) {
         this.context = context;
         tweetDAO = new TweetDAO();
-        retweetedUserDAO = new RetweetedUserDAO();
-        userDAO = new UserDAO();
-        retweetDAO = new RetweetDAO();
         twitterClient = TwitterApplication.getRestClient();
     }
 
