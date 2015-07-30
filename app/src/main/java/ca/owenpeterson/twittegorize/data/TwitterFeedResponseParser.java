@@ -3,8 +3,6 @@ package ca.owenpeterson.twittegorize.data;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.activeandroid.query.Select;
-
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,10 +13,9 @@ import java.util.List;
 
 import ca.owenpeterson.twittegorize.listeners.FeedResponseParsed;
 import ca.owenpeterson.twittegorize.models.Retweet;
-import ca.owenpeterson.twittegorize.models.RetweetedUser;
 import ca.owenpeterson.twittegorize.models.Tweet;
-import ca.owenpeterson.twittegorize.models.User;
 import ca.owenpeterson.twittegorize.utils.JodaDateUtils;
+import ca.owenpeterson.twittegorize.utils.UserUtil;
 
 /**
  * This is an async task that processes a json twitter response into tweets, retweets, users
@@ -103,58 +100,12 @@ public class TwitterFeedResponseParser extends AsyncTask<Void, Void, Void>{
                 tweet.setRetweet(retweet);
             }
             tweet.setCreatedDate(JodaDateUtils.parseDateTime(jsonObject.getString("created_at")));
-            tweet.setUser(queryOrCreateUser(jsonObject.getJSONObject("user")));
+            tweet.setUser(UserUtil.queryOrCreateUser(jsonObject.getJSONObject("user")));
         } catch (JSONException e) {
             Log.e("ERROR", e.getMessage());
             return null;
         }
         return tweet;
-    }
-
-    //TODO move this
-    private User queryOrCreateUser(JSONObject jsonObject) {
-        User jsonUser = createUserFromJson(jsonObject);
-        long userId = jsonUser.getUserId();
-
-        //TODO: create a method in the TwitterUserManager class that handles this instead.
-        User existingUser = new Select().from(User.class).where("userId = ?", userId).executeSingle();
-
-        if (existingUser != null) {
-            return existingUser;
-        } else {
-            jsonUser.save();
-            return jsonUser;
-        }
-    }
-
-    private User createUserFromJson(JSONObject json) {
-        User u = new User();
-        try {
-            u.setName(json.getString("name"));
-            u.setUserId(json.getLong("id"));
-            u.setScreenName(json.getString("screen_name"));
-            u.setProfileBgImageUrl(json.getString("profile_background_image_url"));
-            u.setProfileImageUrl(json.getString("profile_image_url"));
-            u.setNumTweets(json.getInt("statuses_count"));
-            u.setFollowersCount(json.getInt("followers_count"));
-            u.setFriendsCount(json.getInt("friends_count"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return u;
-    }
-
-    private RetweetedUser createRetweetedUserFromJson(JSONObject json) {
-        RetweetedUser retweetedUser = new RetweetedUser();
-        try {
-            retweetedUser.setName(json.getString("name"));
-            retweetedUser.setUserId(json.getLong("id"));
-            retweetedUser.setScreenName(json.getString("screen_name"));
-            retweetedUser.setProfileImageUrl(json.getString("profile_image_url"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return retweetedUser;
     }
 
     private Retweet createRetweetFromJson(JSONObject jsonObject, Retweet retweet) {
@@ -164,7 +115,7 @@ public class TwitterFeedResponseParser extends AsyncTask<Void, Void, Void>{
             retweet.setFavorited(jsonObject.getBoolean("favorited"));
             retweet.setRetweeted(jsonObject.getBoolean("retweeted"));
             retweet.setCreatedDate(JodaDateUtils.parseDateTime(jsonObject.getString("created_at")));
-            retweet.setRetweetedUser(queryOrCreateRetweetedUser(jsonObject.getJSONObject("user")));
+            retweet.setRetweetedUser(UserUtil.queryOrCreateRetweetedUser(jsonObject.getJSONObject("user")));
         } catch (JSONException e) {
             Log.e("ERROR", e.getMessage());
             return null;
@@ -172,20 +123,5 @@ public class TwitterFeedResponseParser extends AsyncTask<Void, Void, Void>{
         return retweet;
     }
 
-    //TODO move this
-    private RetweetedUser queryOrCreateRetweetedUser(JSONObject jsonObject) {
 
-        RetweetedUser jsonUser = createRetweetedUserFromJson(jsonObject);
-        long userId = jsonUser.getUserId();
-
-        //TODO: create a method in the TwitterUserManager class that handles this instead.
-        RetweetedUser existingUser = new Select().from(RetweetedUser.class).where("userId = ?", userId).executeSingle();
-
-        if (existingUser != null) {
-            return existingUser;
-        } else {
-            jsonUser.save();
-            return jsonUser;
-        }
-    }
 }
