@@ -35,5 +35,3 @@ May not be the exact steps but should be a good guideline.
 * Remove properties from User that are in the BaseUser class.
 
 * Fix this mess you made with the TwitterFeedResponseParser class
-
-* Create User utils class that can be used to do the "Query or create User actions"

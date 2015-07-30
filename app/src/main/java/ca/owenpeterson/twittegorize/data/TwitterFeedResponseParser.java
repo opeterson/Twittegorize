@@ -3,9 +3,7 @@ package ca.owenpeterson.twittegorize.data;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -14,8 +12,7 @@ import java.util.List;
 import ca.owenpeterson.twittegorize.listeners.FeedResponseParsed;
 import ca.owenpeterson.twittegorize.models.Retweet;
 import ca.owenpeterson.twittegorize.models.Tweet;
-import ca.owenpeterson.twittegorize.utils.JodaDateUtils;
-import ca.owenpeterson.twittegorize.utils.UserUtil;
+import ca.owenpeterson.twittegorize.utils.TweetUtil;
 
 /**
  * This is an async task that processes a json twitter response into tweets, retweets, users
@@ -66,7 +63,7 @@ public class TwitterFeedResponseParser extends AsyncTask<Void, Void, Void>{
             }
 
             Tweet tweet = new Tweet();
-            tweet = createTweetfromJson(tweetJson, tweet);
+            tweet = TweetUtil.createTweetfromJson(tweetJson, tweet);
             if (tweet != null) {
                 tweets.add(tweet);
             }
@@ -86,42 +83,4 @@ public class TwitterFeedResponseParser extends AsyncTask<Void, Void, Void>{
             tweetDAO.saveTweetList(tweets);
         }
     }
-
-    private Tweet createTweetfromJson(JSONObject jsonObject, Tweet tweet) {
-        try {
-            tweet.setBody(jsonObject.getString("text"));
-            tweet.setTweetId(jsonObject.getLong("id"));
-            tweet.setFavorited(jsonObject.getBoolean("favorited"));
-            tweet.setRetweeted(jsonObject.getBoolean("retweeted"));
-
-            if (StringUtils.contains(tweet.getBody(), "RT @")) {
-                Retweet retweet = new Retweet();
-                retweet = createRetweetFromJson(jsonObject.getJSONObject("retweeted_status"), retweet);
-                tweet.setRetweet(retweet);
-            }
-            tweet.setCreatedDate(JodaDateUtils.parseDateTime(jsonObject.getString("created_at")));
-            tweet.setUser(UserUtil.queryOrCreateUser(jsonObject.getJSONObject("user")));
-        } catch (JSONException e) {
-            Log.e("ERROR", e.getMessage());
-            return null;
-        }
-        return tweet;
-    }
-
-    private Retweet createRetweetFromJson(JSONObject jsonObject, Retweet retweet) {
-        try {
-            retweet.setBody(jsonObject.getString("text"));
-            retweet.setTweetId(jsonObject.getLong("id"));
-            retweet.setFavorited(jsonObject.getBoolean("favorited"));
-            retweet.setRetweeted(jsonObject.getBoolean("retweeted"));
-            retweet.setCreatedDate(JodaDateUtils.parseDateTime(jsonObject.getString("created_at")));
-            retweet.setRetweetedUser(UserUtil.queryOrCreateRetweetedUser(jsonObject.getJSONObject("user")));
-        } catch (JSONException e) {
-            Log.e("ERROR", e.getMessage());
-            return null;
-        }
-        return retweet;
-    }
-
-
 }
