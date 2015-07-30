@@ -1,7 +1,9 @@
 package ca.owenpeterson.twittegorize.data;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -13,14 +15,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+import ca.owenpeterson.twittegorize.listeners.FeedResponseParsed;
 import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
 import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.models.TweetComparator;
 import ca.owenpeterson.twittegorize.rest.TwitterApplication;
 import ca.owenpeterson.twittegorize.rest.TwitterClient;
-import ca.owenpeterson.twittegorize.utils.AppConstants;
 
 /**
  * Created by Owen on 3/15/2015.
@@ -99,7 +100,8 @@ public class TweetManager {
 
     /**
      * This class is used as the response handler for the call to twitter. When the response is received
-     * all tweets are written to the database.
+     * it is passed to the TwitterFeedResponseParser class which parses the response into individual entities
+     * and writes those entities to the database.
      */
     private class TweetResponseHandler extends JsonHttpResponseHandler {
 
@@ -109,42 +111,18 @@ public class TweetManager {
         public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
             super.onSuccess(statusCode, headers, response);
 
-            //TODO: Make this an async task with listener so the UI doesn't lock up. No dialog.
-            //TODO: listener name: feedResponseParsed - when finished, dismiss dialog below.
-            TwitterFeedResponseParser feedResponseParser = new TwitterFeedResponseParser();
-            Map<String, List> resultsMap = feedResponseParser.parseResponse(response);
-            List tweets = resultsMap.get(AppConstants.Strings.TWEETS);
-            //List users = resultsMap.get(AppConstants.Strings.USERS);
-            List retweets = resultsMap.get(AppConstants.Strings.RETWEETS);
-            //List retweetedUsers = resultsMap.get(AppConstants.Strings.RETWEETED_USERS);
-            //tweets = Tweet.fromJson(response);
+            TwitterFeedResponseParser feedResponseParser = new TwitterFeedResponseParser(response);
+            feedResponseParser.setOnFeedResponseParsedListener(new FeedResponseParsed() {
+                @Override
+                public void OnFeedResponseParsed() {
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                    listener.onFeedLoaded();
+                }
+            });
 
-            //TODO: save the lists in the correct order here. Use transactions!
-            //retweetedUsers, users, retweets, then tweets.
-
-//            if (retweetedUsers != null) {
-//                success = retweetedUserDAO.saveRetweetedUserList(retweetedUsers);
-//            }
-//
-//            if (users != null && success) {
-//                success = userDAO.saveUserList(users);
-//            }
-
-            //TODO: Move these to the parser.
-            if (retweets != null) {
-                retweetDAO.saveRetweetList(retweets);
-            }
-
-            if (tweets != null) {
-                tweetDAO.saveTweetList(tweets);
-            }
-
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
-
-            listener.onFeedLoaded();
-
+            feedResponseParser.execute();
         }
 
         @Override
@@ -156,7 +134,17 @@ public class TweetManager {
                 dialog.dismiss();
             }
 
-            //TODO: add code here to show an error dialog.
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage("Contacting twitter failed. Please try again later.")
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
         }
 
         public void setOnFeedLoadedListener(OnFeedLoaded listener) {
