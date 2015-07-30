@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ca.owenpeterson.twittegorize.utils.JodaDateUtils;
+import ca.owenpeterson.twittegorize.utils.UserUtil;
 
 /**
  * Created by Owen on 3/25/2015.
@@ -42,7 +43,6 @@ public class DetailTweet {
     private List<String> hashTags;
 
     public DetailTweet() {
-
     }
 
     public DetailTweet(long tweetId, String body, DateTime createdDate, User user, List<URL> urls, List<URL> images ) {
@@ -103,7 +103,7 @@ public class DetailTweet {
             tweet.favorited = jsonObject.getBoolean("favorited");
             tweet.retweeted = jsonObject.getBoolean("retweeted");
             tweet.createdDate = JodaDateUtils.parseDateTime(jsonObject.getString("created_at"));
-            tweet.user = User.queryOrCreateUser(jsonObject.getJSONObject("user"));
+            tweet.user = UserUtil.queryOrCreateUser(jsonObject.getJSONObject("user"));
 
             JSONObject entities = jsonObject.getJSONObject("entities");
 
