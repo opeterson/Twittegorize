@@ -18,7 +18,6 @@ public class TweetUtil {
         //prevent instantiation
     }
 
-
     public static Tweet createTweetfromJson(JSONObject jsonObject, Tweet tweet) {
         try {
             tweet.setBody(jsonObject.getString("text"));
@@ -29,6 +28,7 @@ public class TweetUtil {
             if (StringUtils.contains(tweet.getBody(), "RT @")) {
                 Retweet retweet = createRetweetFromJson(jsonObject.getJSONObject("retweeted_status"));
                 tweet.setRetweet(retweet);
+                tweet.setIsRetweeting(true);
             }
             tweet.setCreatedDate(JodaDateUtils.parseDateTime(jsonObject.getString("created_at")));
             tweet.setUser(UserUtil.queryOrCreateUser(jsonObject.getJSONObject("user")));
