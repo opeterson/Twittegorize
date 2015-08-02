@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -56,15 +57,23 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
         }
 
         if(tweet.isRetweeting()) {
+            updateRetweetedBy(view, View.VISIBLE);
             populateRetweetView(view, tweet);
         } else {
+            updateRetweetedBy(view, View.GONE);
             populateTweetView(view, tweet);
         }
 
         return view;
     }
 
+    private void updateRetweetedBy(View view, int gone) {
+        LinearLayout retweetLayout = (LinearLayout) view.findViewById(R.id.pane_retweeted_by);
+        retweetLayout.setVisibility(gone);
+    }
+
     private void populateRetweetView(View view, Tweet tweet) {
+
         retweetorName = (TextView) view.findViewById(R.id.retweetor_name);
         String retweetor = tweet.getUser().getName();
         retweetorName.setText(retweetor);
