@@ -145,13 +145,25 @@ public class TwitterFeedFragment extends Fragment {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Tweet selectedTweet = tweets.get(position);
-            long tweetId = selectedTweet.getTweetId();
+            Long tweetId;
+
+            if (selectedTweet.isRetweeting()) {
+                tweetId = selectedTweet.getRetweet().getTweetId();
+            } else {
+                tweetId = selectedTweet.getTweetId();
+            }
+
             if (openTwitterDefault) {
                 /**
                  * TODO: move this funtcion to a separate class of some kind
                  * because it is repeated in the tweetDetails view.
                  */
-                String screenName = String.valueOf(selectedTweet.getUser().getScreenName());
+                String screenName = "";
+                if (selectedTweet.isRetweeting()) {
+                    screenName = String.valueOf(selectedTweet.getRetweet().getRetweetedUser().getScreenName());
+                } else {
+                    screenName = String.valueOf(selectedTweet.getUser().getScreenName());
+                }
 
                 String url = "https://twitter.com/" + screenName + "/status/" + tweetId;
                 Intent browser = new Intent (Intent.ACTION_VIEW, Uri.parse(url) );
