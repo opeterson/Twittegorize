@@ -17,11 +17,6 @@ effect
 
 * When the User clicks a profile image, display the original image in a new view.
 
-* When loading the list of tweets (TweetsAdapter), you will have to check to see if the tweet is a retweet.
-If it is, inflate a different view that will indicate a retweet, and then load the body of the tweet from the retweet table instead of the original tweet.
-
-May not be the exact steps but should be a good guideline.
-
 * Add the appropriate methods to the DAO Classes for persisting User and RetweetedUser Objects. See object code for TODOS.
 
 * Create the appropriate methods in the DAO classes for deleting retweeted Users after X days. Add code to perform the cleanup.
