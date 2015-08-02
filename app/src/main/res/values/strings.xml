@@ -42,5 +42,6 @@
     <string name="text_no_connection">No internet connection available. Please check your network settings.</string>
     <string name="text_setting_open_twitter_default">Go To Twitter</string>
     <string name="text_setting_desc_open_twitter_default">When clicking a tweet in the list, go to directly to Twitter</string>
+    <string name="text_retweeted">Retweeted</string>
 
 </resources>
