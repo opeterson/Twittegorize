@@ -21,6 +21,8 @@ import org.joda.time.Seconds;
 import java.util.List;
 
 import ca.owenpeterson.twittegorize.R;
+import ca.owenpeterson.twittegorize.data.RetweetToTweetTransformer;
+import ca.owenpeterson.twittegorize.models.Retweet;
 import ca.owenpeterson.twittegorize.models.Tweet;
 import ca.owenpeterson.twittegorize.models.User;
 
@@ -35,7 +37,8 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
     private TextView nameView;
     private TextView bodyView;
     private TextView screenNameView;
-    protected TextView tweetAgeView;
+    private TextView tweetAgeView;
+    private TextView retweetorName;
 
     public TweetsAdapter(Context context, List<Tweet> tweets) {
         super(context, 0, tweets);
@@ -45,12 +48,34 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
 
+        Tweet tweet = getItem(position);
+
         if (null == view) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.tweet_item, null);
         }
 
-        Tweet tweet = getItem(position);
+        if(tweet.isRetweeting()) {
+            populateRetweetView(view, tweet);
+        } else {
+            populateTweetView(view, tweet);
+        }
+
+        return view;
+    }
+
+    private void populateRetweetView(View view, Tweet tweet) {
+        retweetorName = (TextView) view.findViewById(R.id.retweetor_name);
+        String retweetor = tweet.getUser().getName();
+        retweetorName.setText(retweetor);
+
+        Retweet retweetedTweet = tweet.getRetweet();
+        RetweetToTweetTransformer transformer = new RetweetToTweetTransformer(retweetedTweet);
+        Tweet transformedRetweet = transformer.transform();
+        populateTweetView(view, transformedRetweet);
+    }
+
+    private void populateTweetView(View view, Tweet tweet) {
         User user = tweet.getUser();
 
         imageView = (ImageView) view.findViewById(R.id.image_profile);
@@ -76,8 +101,6 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
         DateTime tweetDate = tweet.getCreatedDate();
         String age = getFormattedTweetAge(tweetDate);
         tweetAgeView.setText(age);
-
-        return view;
     }
 
     public String getFormattedTweetAge(DateTime tweetDate) {

@@ -29,21 +29,4 @@ public class Retweet extends BaseTweet {
     public void setRetweetedUser(RetweetedUser retweetedUser) {
         this.retweetedUser = retweetedUser;
     }
-
-//    public static Retweet fromJson(JSONObject jsonObject) {
-//        Retweet retweet = new Retweet();
-//        try {
-//            retweet.setBody(jsonObject.getString("text"));
-//            retweet.setTweetId(jsonObject.getLong("id"));
-//            retweet.setFavorited(jsonObject.getBoolean("favorited"));
-//            retweet.setRetweeted(jsonObject.getBoolean("retweeted"));
-//            retweet.setCreatedDate(JodaDateUtils.parseDateTime(jsonObject.getString("created_at")));
-//            retweet.setRetweetedUser(RetweetedUser.queryOrCreateUser(jsonObject.getJSONObject("user")));
-//            retweet.save();
-//        } catch (JSONException e) {
-//            Log.e("ERROR", e.getMessage());
-//            return null;
-//        }
-//        return retweet;
-//    }
 }
