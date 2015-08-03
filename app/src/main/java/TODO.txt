@@ -18,7 +18,3 @@ effect
 * When the User clicks a profile image, display the original image in a new view.
 
 * Add the appropriate methods to the DAO Classes for persisting User and RetweetedUser Objects. See object code for TODOS.
-
-* Create the appropriate methods in the DAO classes for deleting retweeted Users after X days. Add code to perform the cleanup.
-
-

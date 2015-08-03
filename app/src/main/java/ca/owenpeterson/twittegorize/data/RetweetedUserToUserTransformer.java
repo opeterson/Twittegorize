@@ -4,6 +4,7 @@ import ca.owenpeterson.twittegorize.models.RetweetedUser;
 import ca.owenpeterson.twittegorize.models.User;
 
 /**
+ * Transforms a Retweeted user into a regular User
  * Created by owen on 8/2/15.
  */
 public class RetweetedUserToUserTransformer {
