@@ -15,6 +15,7 @@ import org.joda.time.DateTime;
 
 import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.applicationpersistence.SettingsManager;
+import ca.owenpeterson.twittegorize.data.RetweetManager;
 import ca.owenpeterson.twittegorize.data.TweetManager;
 import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
 import ca.owenpeterson.twittegorize.models.Tweet;
@@ -35,6 +36,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
     private LinearLayout loginLayout;
     private LinearLayout noConnectionLayout;
     private TweetManager tweetManager;
+    private RetweetManager retweetManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
     @Override
     public void onLoginSuccess() {
         tweetManager = new TweetManager(this);
+        retweetManager = new RetweetManager();
 
         Tweet latestTweet = tweetManager.getLatestTweet();
 
@@ -120,10 +123,13 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
                         TwitterApplication.getRestClient().clearAccessToken();
                     }
 
-                    //delete old tweets
+                    //delete old Tweets
                     DateTime today = new DateTime();
-                    DateTime daysAgo = today.minusDays(5);
+                    DateTime daysAgo = today.minusDays(3);
                     tweetManager.deleteOldTweetsByDate(daysAgo);
+
+                    //delete old Retweets
+                    retweetManager.deleteOldRetweetsByDate(daysAgo);
                     finish();
                 }
         }
