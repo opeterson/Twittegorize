@@ -2,6 +2,7 @@ package ca.owenpeterson.twittegorize.utils;
 
 import com.activeandroid.query.Select;
 
+import org.joda.time.DateTime;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -73,6 +74,7 @@ public class UserUtil {
             retweetedUser.setUserId(json.getLong("id"));
             retweetedUser.setScreenName(json.getString("screen_name"));
             retweetedUser.setProfileImageUrl(json.getString("profile_image_url"));
+            retweetedUser.setCreatedDate(DateTime.now());
         } catch (JSONException e) {
             e.printStackTrace();
         }
