@@ -66,11 +66,11 @@ public class TwitterFeedResponseParser extends AsyncTask<Void, Void, Void>{
             tweet = TweetUtil.createTweetfromJson(tweetJson, tweet);
             if (tweet != null) {
                 tweets.add(tweet);
-            }
 
-            if (tweet.getRetweet() != null) {
-                if(!retweets.contains(tweet.getRetweet())) {
-                    retweets.add(tweet.getRetweet());
+                if (tweet.getRetweet() != null) {
+                    if(!retweets.contains(tweet.getRetweet())) {
+                        retweets.add(tweet.getRetweet());
+                    }
                 }
             }
         }
