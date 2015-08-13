@@ -18,3 +18,6 @@ effect
 * When the User clicks a profile image, display the original image in a new view.
 
 * Add the appropriate methods to the DAO Classes for persisting User and RetweetedUser Objects. See object code for TODOS.
+
+* When a tweet has been deleted from Twitter, and the user attemps to view it with the app using data from the database
+show an error message when the details can't be loaded

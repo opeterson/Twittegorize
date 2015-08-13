@@ -126,6 +126,8 @@ public class DetailTweet {
         JSONArray images = null;
         List<URL> imagesURLs = new ArrayList<>();
 
+        //Log.d("ENTITIES VALUE:\n", entities.toString());
+
         try {
             images = entities.getJSONArray("media");
 
@@ -139,7 +141,7 @@ public class DetailTweet {
                 String expandedURL = "";
                 try {
                     urlElement = images.getJSONObject(i);
-                    expandedURL = urlElement.getString("expanded_url");
+                    expandedURL = urlElement.getString("media_url");
                 } catch (JSONException ex) {
                     Log.e("DetailTweet", "Could not extract Images from tweet. \n" + ex.getMessage());
                 }

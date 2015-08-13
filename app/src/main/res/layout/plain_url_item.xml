@@ -9,7 +9,7 @@
         android:layout_marginBottom="5dp"
         android:id="@+id/text_details_url_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:autoLink="web"/>
 
 </LinearLayout>
