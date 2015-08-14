@@ -25,3 +25,5 @@ show an error message when the details can't be loaded
 * Clicking on image in TweetDetailsActivity will show a larger version of the image, either in a web view or some other means.
 
 * Add support for videos to TweetDetailsActivity
+
+* need a way to indiciate that the image is loading. Like the .placeholder(draable.whatever) in picasso.

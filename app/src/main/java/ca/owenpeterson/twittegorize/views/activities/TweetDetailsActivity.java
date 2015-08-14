@@ -208,7 +208,7 @@ public class TweetDetailsActivity extends BaseActivity {
                         ImageView imageView = (ImageView) imageItemView.findViewById(R.id.details_image_item);
 
                         imageUrlText.setText(detailImageUrl.toString());
-                        Picasso.with(imageItemView.getContext()).load(detailImageUrl.toString()).into(imageView);
+                        Picasso.with(imageItemView.getContext()).load(detailImageUrl.toString()).placeholder(R.drawable.ic_launcher).into(imageView);
                         imageViewLayout.addView(imageItemView);
                     }
                     imageLayout.setVisibility(LinearLayout.VISIBLE);
