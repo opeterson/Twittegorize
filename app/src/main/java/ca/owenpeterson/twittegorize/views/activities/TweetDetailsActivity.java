@@ -1,8 +1,10 @@
 package ca.owenpeterson.twittegorize.views.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -78,8 +80,6 @@ public class TweetDetailsActivity extends BaseActivity {
         textScreenName = (TextView) findViewById(R.id.text_details_tweet_screen_name);
         textTweetBody = (TextView) findViewById(R.id.text_details_tweet_body);
         textCreatedDate = (TextView) findViewById(R.id.text_details_date_created);
-        urlsListView = (ListView) findViewById(R.id.list_view_urls);
-        imagesListView = (ListView) findViewById(R.id.list_view_images);
         entitiesLayout = (LinearLayout) findViewById(R.id.pane_entities);
         linkLayout = (LinearLayout) findViewById(R.id.subpane_links);
         imageLayout = (LinearLayout) findViewById(R.id.subpane_images);
@@ -186,16 +186,31 @@ public class TweetDetailsActivity extends BaseActivity {
 
             if (hasLinks || hasImages) {
                 entitiesLayout.setVisibility(LinearLayout.VISIBLE);
+                LayoutInflater inflater = (LayoutInflater) TweetDetailsActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
                 if (hasLinks) {
-                    linkAdapter = new LinkAdapter(TweetDetailsActivity.this, urls);
-                    urlsListView.setAdapter(linkAdapter);
+                    LinearLayout urlLayout = (LinearLayout) findViewById(R.id.urls_layout);
+                    for (URL url : urls) {
+                        View urlItemView = inflater.inflate(R.layout.plain_url_item, null);
+                        TextView urlTextView = (TextView) urlItemView.findViewById(R.id.text_details_url_item);
+                        urlTextView.setText(url.toString());
+                        urlLayout.addView(urlItemView);
+                    }
                     linkLayout.setVisibility(LinearLayout.VISIBLE);
                 }
 
                 if(hasImages) {
-                    imageAdapter = new ImageAdapter(TweetDetailsActivity.this, images);
-                    imagesListView.setAdapter(imageAdapter);
+                    LinearLayout imageViewLayout = (LinearLayout) findViewById(R.id.images_layout);
+
+                    for (URL detailImageUrl : images) {
+                        View imageItemView = inflater.inflate(R.layout.plain_image_item, null);
+                        TextView imageUrlText = (TextView) imageItemView.findViewById(R.id.text_details_image_item);
+                        ImageView imageView = (ImageView) imageItemView.findViewById(R.id.details_image_item);
+
+                        imageUrlText.setText(detailImageUrl.toString());
+                        Picasso.with(imageItemView.getContext()).load(detailImageUrl.toString()).into(imageView);
+                        imageViewLayout.addView(imageItemView);
+                    }
                     imageLayout.setVisibility(LinearLayout.VISIBLE);
                 }
             }

@@ -17,6 +17,7 @@ import ca.owenpeterson.twittegorize.R;
  *
  * Used by the tweet detail activity to create a listview of URLS for the specific tweet.
  */
+@Deprecated
 public class LinkAdapter extends ArrayAdapter<URL> {
 
     private TextView link;

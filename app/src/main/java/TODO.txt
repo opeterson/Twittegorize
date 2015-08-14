@@ -21,3 +21,7 @@ effect
 
 * When a tweet has been deleted from Twitter, and the user attemps to view it with the app using data from the database
 show an error message when the details can't be loaded
+
+* Clicking on image in TweetDetailsActivity will show a larger version of the image, either in a web view or some other means.
+
+* Add support for videos to TweetDetailsActivity

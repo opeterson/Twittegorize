@@ -21,6 +21,7 @@ import ca.owenpeterson.twittegorize.R;
  *
  * Used by the tweet detail activity to create a listview of image URLS for the specific tweet.
  */
+@Deprecated
 public class ImageAdapter extends ArrayAdapter<URL> {
 
     private TextView imageURL;
@@ -42,7 +43,7 @@ public class ImageAdapter extends ArrayAdapter<URL> {
         }
 
         imageURL = (TextView) view.findViewById(R.id.text_details_image_item);
-        imageView = (ImageView) view.findViewById(R.id.list_item_image);
+        //imageView = (ImageView) view.findViewById(R.id.list_item_image);
 
         URL url = getItem(position);
 

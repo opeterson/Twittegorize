@@ -128,11 +128,13 @@
                     android:layout_marginTop="10dp"
                     android:textSize="14sp"/>
 
-                <ListView
-                    android:id="@+id/list_view_urls"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:id="@+id/urls_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"></ListView>
+                    android:layout_height="wrap_content">
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -149,10 +151,12 @@
                     android:layout_marginTop="10dp"
                     android:textSize="14sp"/>
 
-                <ListView
-                    android:id="@+id/list_view_images"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:id="@+id/images_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></ListView>
+                    android:layout_height="wrap_content">
+                </LinearLayout>
 
             </LinearLayout>
 
