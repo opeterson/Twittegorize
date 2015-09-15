@@ -53,6 +53,11 @@ public class TweetManager {
         twitterClient.getNewTweets(tweetId, responseHandler);
     }
 
+    public int getNewTweetCount(long tweetId) {
+        TweetCountResponseHandler tweetCountResponseHandler = new TweetCountResponseHandler();
+        return 0;
+    }
+
     public List<Tweet> getAllTweets() {
         return tweetDAO.getAllTweets();
     }
@@ -118,6 +123,25 @@ public class TweetManager {
                     });
             AlertDialog alert = builder.create();
             alert.show();
+        }
+
+        public void setOnFeedLoadedListener(OnFeedLoaded listener) {
+            this.listener = listener;
+        }
+    }
+
+    //TODO: Create a new class that these inner classes can extend, since some functionality is shared
+    //between them, such as having a listener.
+    private class TweetCountResponseHandler extends JsonHttpResponseHandler {
+        private OnFeedLoaded listener;
+
+        @Override
+        public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+            super.onSuccess(statusCode, headers, response);
+
+            //TODO: Figure out how to get the value out of the class.
+            int tweetCount = response.length();
+
         }
 
         public void setOnFeedLoadedListener(OnFeedLoaded listener) {

@@ -78,7 +78,7 @@ public class TwitterFeedFragment extends Fragment {
         Bundle argBundle = getArguments();
         this.categoryId = argBundle.getLong(AppConstants.Strings.CATEGORY_ID);
 
-        tweetDBLoader = new AsyncTweetDBLoader(context);
+        tweetDBLoader = new AsyncTweetDBLoader(context, false);
         queryListener = new OnQueryComplete() {
             @Override
             public void onQueryComplete() {
@@ -137,7 +137,7 @@ public class TwitterFeedFragment extends Fragment {
                     }
                 };
 
-                AsyncTweetDBLoader dbLoader = new AsyncTweetDBLoader(context);
+                AsyncTweetDBLoader dbLoader = new AsyncTweetDBLoader(context, true);
                 dbLoader.setOnQueryCompleteListener(listener);
                 dbLoader.execute();
             }
@@ -204,17 +204,21 @@ public class TwitterFeedFragment extends Fragment {
 
         private OnQueryComplete listener;
         private Context localContext;
+        private Boolean isRefreshAction;
         private ProgressDialog dialog;
 
-        public AsyncTweetDBLoader(Context context) {
+        public AsyncTweetDBLoader(Context context, Boolean isRefreshAction) {
             this.localContext = context;
+            this.isRefreshAction = isRefreshAction;
         }
 
         @Override
         protected void onPreExecute() {
-            dialog = new ProgressDialog(localContext);
-            dialog.setMessage("Retrieving Your Tweets");
-            dialog.show();
+            if (isRefreshAction) {
+                dialog = new ProgressDialog(localContext);
+                dialog.setMessage("Retrieving Your Tweets");
+                dialog.show();
+            }
             super.onPreExecute();
         }
 
@@ -237,7 +241,7 @@ public class TwitterFeedFragment extends Fragment {
 
             //set the tweets on the parent class.
             TwitterFeedFragment.this.tweets = tweets;
-            if (dialog.isShowing()) {
+            if (isRefreshAction && dialog.isShowing()) {
                 dialog.dismiss();
             }
 
