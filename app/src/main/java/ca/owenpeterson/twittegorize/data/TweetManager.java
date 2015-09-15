@@ -42,22 +42,12 @@ public class TweetManager {
     }
 
     public void putTweetsToDatabase(OnFeedLoaded listener) {
-        //TODO: Remove this dialog box and create an Async task that calls this method instead.
-        //Put the dialog box in the async task.
-        dialog = new ProgressDialog(context);
-        dialog.setMessage("Contacting Twitter");
-        dialog.show();
         TweetResponseHandler responseHandler = new TweetResponseHandler();
         responseHandler.setOnFeedLoadedListener(listener);
         twitterClient.getHomeTimeline(responseHandler);
     }
 
     public void putNewTweetsToDatabase(long tweetId, OnFeedLoaded listener) {
-        //TODO: Remove this dialog box and create an Async task that calls this method instead.
-        //Put the dialog box in the async task.
-        dialog = new ProgressDialog(context);
-        dialog.setMessage("Contacting Twitter");
-        dialog.show();
         TweetResponseHandler responseHandler = new TweetResponseHandler();
         responseHandler.setOnFeedLoadedListener(listener);
         twitterClient.getNewTweets(tweetId, responseHandler);
@@ -105,9 +95,6 @@ public class TweetManager {
             feedResponseParser.setOnFeedResponseParsedListener(new FeedResponseParsed() {
                 @Override
                 public void OnFeedResponseParsed() {
-                    if (dialog.isShowing()) {
-                        dialog.dismiss();
-                    }
                     listener.onFeedLoaded();
                 }
             });
@@ -119,10 +106,6 @@ public class TweetManager {
         public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
             Log.e("ERROR Status code:" + String.valueOf(statusCode), throwable.getMessage());
             super.onFailure(statusCode, headers, throwable, errorResponse);
-
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
 
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage("Contacting twitter failed. Please try again later.")

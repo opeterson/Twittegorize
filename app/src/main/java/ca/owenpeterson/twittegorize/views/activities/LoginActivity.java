@@ -91,7 +91,8 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
         };
 
         if (id != 0) {
-            tweetManager.putNewTweetsToDatabase(id, listener);
+            //don't call twitter, just trigger the listener to go straight to the activity.
+            listener.onFeedLoaded();
         } else {
             tweetManager.putTweetsToDatabase(listener);
         }

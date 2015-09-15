@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -81,8 +82,7 @@ public class TwitterFeedFragment extends Fragment {
         queryListener = new OnQueryComplete() {
             @Override
             public void onQueryComplete() {
-                Tweet latestTweet = tweetManager.getLatestTweet();
-                latestTweetId = latestTweet.getTweetId();
+                latestTweetId = getLatestTweetIdFromDatabase();
 
                 setLatestTweetId(latestTweetId);
                 initFeedItems(tweets);
@@ -98,8 +98,21 @@ public class TwitterFeedFragment extends Fragment {
 
     @Override
     public void onResume() {
-
         super.onResume();
+        latestTweetId = getLatestTweetIdFromDatabase();
+
+        //TODO: Check to see if there are any new tweets first!
+        if (latestTweetId != 0) {
+            OnFeedLoaded listener = new OnFeedLoaded() {
+                @Override
+                public void onFeedLoaded() {
+
+                    Toast.makeText(getActivity().getApplicationContext(), "New tweets available. Click Refresh to view!", Toast.LENGTH_LONG).show();
+                }
+            };
+
+            tweetManager.putNewTweetsToDatabase(latestTweetId, listener);
+        }
     }
 
     private void initFeedItems(List<Tweet> tweets) {
@@ -139,6 +152,12 @@ public class TwitterFeedFragment extends Fragment {
 
     private void setLatestTweetId(long id) {
         this.latestTweetId = id;
+    }
+
+    private long getLatestTweetIdFromDatabase() {
+        Tweet latestTweet = tweetManager.getLatestTweet();
+        latestTweetId = latestTweet.getTweetId();
+        return latestTweetId;
     }
 
     private class ItemClickListener implements AdapterView.OnItemClickListener {
