@@ -19,8 +19,8 @@ public class TwitterClient extends OAuthBaseClient {
 
     public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class;
     public static final String REST_URL = "https://api.twitter.com/1.1/";
-    public static final String REST_CONSUMER_KEY = KeyManager.getConsumerKey();
-    public static final String REST_CONSUMER_SECRET = KeyManager.getConsumerSecret();
+    public static final String REST_CONSUMER_KEY = KeyManager.CONSUMER_KEY;
+    public static final String REST_CONSUMER_SECRET = KeyManager.CONSUMER_SECRET;
     public static final String REST_CALLBACK_URL = "oauth://ca.owenpeterson.twittergorize";
 
     public TwitterClient(Context context) {
