@@ -12,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.List;
@@ -48,6 +50,8 @@ public class TwitterFeedFragment extends Fragment {
     private SettingsManager settingsManager;
     private Context context;
     private boolean openTwitterDefault;
+    private Button newTweetsButton;
+    private RelativeLayout buttonLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,6 +93,9 @@ public class TwitterFeedFragment extends Fragment {
             }
         };
 
+        newTweetsButton = (Button) rootView.findViewById(R.id.new_tweets_button);
+        buttonLayout = (RelativeLayout) rootView.findViewById(R.id.new_tweets_button_layout);
+        buttonLayout.setVisibility(View.GONE);
 
         tweetDBLoader.setOnQueryCompleteListener(queryListener);
         tweetDBLoader.execute();
@@ -106,8 +113,7 @@ public class TwitterFeedFragment extends Fragment {
             OnFeedLoaded listener = new OnFeedLoaded() {
                 @Override
                 public void onFeedLoaded() {
-
-                    Toast.makeText(getActivity().getApplicationContext(), "New tweets available. Click Refresh to view!", Toast.LENGTH_LONG).show();
+                    buttonLayout.setVisibility(View.VISIBLE);
                 }
             };
 
@@ -177,7 +183,7 @@ public class TwitterFeedFragment extends Fragment {
                  * TODO: move this funtcion to a separate class of some kind
                  * because it is repeated in the tweetDetails view.
                  */
-                String screenName = "";
+                String screenName;
                 if (selectedTweet.isRetweeting()) {
                     screenName = String.valueOf(selectedTweet.getRetweet().getRetweetedUser().getScreenName());
                 } else {

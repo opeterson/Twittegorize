@@ -12,12 +12,13 @@
         android:layout_centerVertical="true"/>
 
     <RelativeLayout
-        android:id="@+id/new_tweets_button"
+        android:id="@+id/new_tweets_button_layout"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_alignParentBottom="true">
 
         <Button
+            android:id="@+id/new_tweets_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
