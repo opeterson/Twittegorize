@@ -21,6 +21,7 @@ import java.util.List;
 
 import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.applicationpersistence.SettingsManager;
+import ca.owenpeterson.twittegorize.data.TweetDAO;
 import ca.owenpeterson.twittegorize.data.TweetManager;
 import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
 import ca.owenpeterson.twittegorize.listeners.OnQueryComplete;
@@ -94,6 +95,12 @@ public class TwitterFeedFragment extends Fragment {
         };
 
         newTweetsButton = (Button) rootView.findViewById(R.id.new_tweets_button);
+        newTweetsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reloadTweetsFromDatabase();
+            }
+        });
         buttonLayout = (RelativeLayout) rootView.findViewById(R.id.new_tweets_button_layout);
         buttonLayout.setVisibility(View.GONE);
 
@@ -106,18 +113,24 @@ public class TwitterFeedFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        latestTweetId = getLatestTweetIdFromDatabase();
+        final long latestTweetIdBeforeUpdate = getLatestTweetIdFromDatabase();
 
         //TODO: Check to see if there are any new tweets first!
+        //TODO: Convert this whole concept to a service that checks for new tweets in the background.
         if (latestTweetId != 0) {
             OnFeedLoaded listener = new OnFeedLoaded() {
                 @Override
                 public void onFeedLoaded() {
-                    buttonLayout.setVisibility(View.VISIBLE);
+                    long latestTweetIdSinceUpdate = getLatestTweetIdFromDatabase();
+                    //TODO: THis is not working correctly. More testing required.
+                    if (latestTweetIdSinceUpdate > latestTweetIdBeforeUpdate) {
+                        buttonLayout.setVisibility(View.VISIBLE);
+                        buttonLayout.postDelayed(new Runnable() { public void run() { buttonLayout.setVisibility(View.GONE); } }, 5000);
+                    }
                 }
             };
 
-            tweetManager.putNewTweetsToDatabase(latestTweetId, listener);
+            tweetManager.putNewTweetsToDatabase(latestTweetIdBeforeUpdate, listener);
         }
     }
 
@@ -150,6 +163,11 @@ public class TwitterFeedFragment extends Fragment {
         };
 
         tweetManager.putNewTweetsToDatabase(getLatestTweetId(), listener);
+    }
+
+    public void reloadTweetsFromDatabase() {
+        List<Tweet> tweets = tweetManager.getAllTweets();
+        initFeedItems(tweets);
     }
 
     public long getLatestTweetId() {
