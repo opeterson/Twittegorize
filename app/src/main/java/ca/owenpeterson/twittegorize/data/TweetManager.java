@@ -58,6 +58,10 @@ public class TweetManager {
         return 0;
     }
 
+    public int getTweetCount() {
+        return tweetDAO.getTweetCount();
+    }
+
     public List<Tweet> getAllTweets() {
         return tweetDAO.getAllTweets();
     }

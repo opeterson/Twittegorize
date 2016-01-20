@@ -24,7 +24,7 @@ public class TweetDAO {
     public TweetDAO(){}
 
     public List<Tweet> getAllTweets() {
-        List<Tweet> tweets = new Select().from(Tweet.class).orderBy("tweetId").execute();
+        List<Tweet> tweets = new Select().from(Tweet.class).execute();
 
         Collections.sort(tweets, comparator);
         return tweets;
@@ -43,7 +43,12 @@ public class TweetDAO {
     }
 
     public Tweet getLatestTweet() {
-        return new Select().from(Tweet.class).orderBy("Id DESC").limit(1).executeSingle();
+        //TODO: There must be a better way to do this.
+        return getAllTweets().get(0);
+    }
+
+    public int getTweetCount() {
+        return new Select().from(Tweet.class).execute().size();
     }
 
     public List<Tweet> getTweetsOlderThanDate(DateTime olderThanDate) {

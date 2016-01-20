@@ -98,6 +98,8 @@ public class TwitterFeedFragment extends Fragment {
         newTweetsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                buttonLayout.setVisibility(View.GONE);
+                //refreshFeed();
                 reloadTweetsFromDatabase();
             }
         });
@@ -114,18 +116,17 @@ public class TwitterFeedFragment extends Fragment {
     public void onResume() {
         super.onResume();
         final long latestTweetIdBeforeUpdate = getLatestTweetIdFromDatabase();
+        final int tweetCountBeforeCheck = tweetManager.getTweetCount();
 
-        //TODO: Check to see if there are any new tweets first!
         //TODO: Convert this whole concept to a service that checks for new tweets in the background.
         if (latestTweetId != 0) {
             OnFeedLoaded listener = new OnFeedLoaded() {
                 @Override
                 public void onFeedLoaded() {
-                    long latestTweetIdSinceUpdate = getLatestTweetIdFromDatabase();
-                    //TODO: THis is not working correctly. More testing required.
-                    if (latestTweetIdSinceUpdate > latestTweetIdBeforeUpdate) {
-                        buttonLayout.setVisibility(View.VISIBLE);
-                        buttonLayout.postDelayed(new Runnable() { public void run() { buttonLayout.setVisibility(View.GONE); } }, 5000);
+                    int tweetCountAfterCheck = tweetManager.getTweetCount();
+                    if (tweetCountAfterCheck > tweetCountBeforeCheck) {
+                          buttonLayout.setVisibility(View.VISIBLE);
+                          buttonLayout.postDelayed(new Runnable() { public void run() { buttonLayout.setVisibility(View.GONE); } }, 5000);
                     }
                 }
             };
@@ -166,7 +167,7 @@ public class TwitterFeedFragment extends Fragment {
     }
 
     public void reloadTweetsFromDatabase() {
-        List<Tweet> tweets = tweetManager.getAllTweets();
+        tweets = tweetManager.getAllTweets();
         initFeedItems(tweets);
     }
 
