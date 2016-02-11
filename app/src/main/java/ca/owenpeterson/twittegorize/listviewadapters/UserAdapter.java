@@ -15,6 +15,7 @@ import java.util.List;
 import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.data.TwitterUserManager;
 import ca.owenpeterson.twittegorize.models.User;
+import ca.owenpeterson.twittegorize.views.activities.CategoryUserView;
 
 /**
  * Created by Owen on 3/19/2015.

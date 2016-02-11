@@ -15,6 +15,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
             android:focusable="false"
+            android:clickable="false"
             android:focusableInTouchMode="false"
             android:enabled="false"
             />
