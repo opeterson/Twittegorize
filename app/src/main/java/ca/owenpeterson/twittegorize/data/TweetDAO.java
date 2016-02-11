@@ -44,7 +44,12 @@ public class TweetDAO {
 
     public Tweet getLatestTweet() {
         //TODO: There must be a better way to do this.
-        return getAllTweets().get(0);
+        List<Tweet> tweets = getAllTweets();
+        Tweet tweet = null;
+        if (tweets.size() > 0) {
+            tweet = tweets.get(0);
+        }
+        return tweet;
     }
 
     public int getTweetCount() {

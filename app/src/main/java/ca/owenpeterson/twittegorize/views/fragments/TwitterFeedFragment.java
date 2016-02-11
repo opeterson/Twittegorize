@@ -181,7 +181,9 @@ public class TwitterFeedFragment extends Fragment {
 
     private long getLatestTweetIdFromDatabase() {
         Tweet latestTweet = tweetManager.getLatestTweet();
-        latestTweetId = latestTweet.getTweetId();
+        if (null != latestTweet) {
+            latestTweetId = latestTweet.getTweetId();
+        }
         return latestTweetId;
     }
 
