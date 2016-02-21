@@ -17,10 +17,13 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import org.joda.time.DateTime;
+
 import java.util.List;
 
 import ca.owenpeterson.twittegorize.R;
 import ca.owenpeterson.twittegorize.applicationpersistence.SettingsManager;
+import ca.owenpeterson.twittegorize.data.RetweetManager;
 import ca.owenpeterson.twittegorize.data.TweetDAO;
 import ca.owenpeterson.twittegorize.data.TweetManager;
 import ca.owenpeterson.twittegorize.listeners.OnFeedLoaded;
@@ -42,6 +45,7 @@ public class TwitterFeedFragment extends Fragment {
     private TweetsAdapter tweetsAdapter;
     private long categoryId;
     private TweetManager tweetManager;
+    private RetweetManager retweetManager;
     private List<Tweet> tweets;
     private long latestTweetId;
     private OnFeedLoaded listener;
@@ -79,6 +83,7 @@ public class TwitterFeedFragment extends Fragment {
         }
 
         tweetManager = new TweetManager(context);
+        retweetManager = new RetweetManager();
 
         Bundle argBundle = getArguments();
         this.categoryId = argBundle.getLong(AppConstants.Strings.CATEGORY_ID);
@@ -131,6 +136,7 @@ public class TwitterFeedFragment extends Fragment {
                 }
             };
 
+            deleteOldTweets();
             tweetManager.putNewTweetsToDatabase(latestTweetIdBeforeUpdate, listener);
         }
     }
@@ -163,6 +169,7 @@ public class TwitterFeedFragment extends Fragment {
             }
         };
 
+        deleteOldTweets();
         tweetManager.putNewTweetsToDatabase(getLatestTweetId(), listener);
     }
 
@@ -185,6 +192,16 @@ public class TwitterFeedFragment extends Fragment {
             latestTweetId = latestTweet.getTweetId();
         }
         return latestTweetId;
+    }
+
+    private void deleteOldTweets() {
+        //delete old Tweets
+        DateTime today = new DateTime();
+        DateTime daysAgo = today.minusDays(3);
+        tweetManager.deleteOldTweetsByDate(daysAgo);
+
+        //delete old Retweets
+        retweetManager.deleteOldRetweetsByDate(daysAgo);
     }
 
     private class ItemClickListener implements AdapterView.OnItemClickListener {

@@ -123,13 +123,6 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
                         TwitterApplication.getRestClient().clearAccessToken();
                     }
 
-                    //delete old Tweets
-                    DateTime today = new DateTime();
-                    DateTime daysAgo = today.minusDays(3);
-                    tweetManager.deleteOldTweetsByDate(daysAgo);
-
-                    //delete old Retweets
-                    retweetManager.deleteOldRetweetsByDate(daysAgo);
                     finish();
                 }
         }
