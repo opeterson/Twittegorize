@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -114,10 +115,14 @@ public class CategoryManagerView extends BaseActivity {
     private void handleCategoryUserModify() {
         Category selectedCategory;
         selectedCategory = (Category) spinnerModifyCategories.getSelectedItem();
-        long categoryId = selectedCategory.getId();
-        Intent intent = new Intent(this, CategoryUserView.class);
-        intent.putExtra("categoryId", categoryId);
-        startActivity(intent);
+        if (null != selectedCategory) {
+            long categoryId = selectedCategory.getId();
+            Intent intent = new Intent(this, CategoryUserView.class);
+            intent.putExtra("categoryId", categoryId);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "You must create a category first!", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void handleDeleteCategory() {
